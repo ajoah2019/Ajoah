@@ -1,1 +1,114 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>ajoah2019</title><link href=static/css/app.30790115300ab27614ce176899523b62.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=static/js/manifest.37a2ecbb1d1b7e6c9ada.js></script><script type=text/javascript src=static/js/vendor.e00e51762311e00a2108.js></script><script type=text/javascript src=static/js/app.b22ce679862c47a75225.js></script></body></html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!-- Firebase 연결 -->
+  <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyDD84-nLqygHpqVN7jlZOjgZ4one6TdyUc",
+      authDomain: "ajoah-2121f.firebaseapp.com",
+      databaseURL: "https://ajoah-2121f.firebaseio.com",
+      projectId: "ajoah-2121f",
+      storageBucket: "ajoah-2121f.appspot.com",
+      messagingSenderId: "512593003059",
+      appId: "1:512593003059:web:a253df39ea0bd93b585946"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <!-- Vue 연결 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+</head>
+
+<body>
+
+  <p>Getting started with Firebase</p>
+  <h1 id="bigOne"></h1>
+
+  <div id="app">
+    <input v-model="ID_in">
+
+    <h1 > DB 에서 가져온 값[ {{ID_out}} ] </h1>
+    <button type="submit" @click="writeDB()">
+      DB write
+    </button>
+    <button type="submit" @click="readDB()">
+      DB Read
+    </button>
+    <button type="submit" @click="updateDB()">
+      DB Update
+    </button>
+    <button type="submit" @click="deleteDB()">
+      DB Delete
+    </button>
+    <pre>
+      {{$data}}
+    </pre>
+  </div>
+</body>
+
+
+<!-- 데이터 가져오기 --> 
+<script type="text/javascript">
+
+
+
+  // getting the text value from the database
+  var bigOne = document.getElementById('bigOne');
+  var dbRef = firebase.database().ref().child('text');
+  dbRef.on('value', snap => bigOne.innerText = snap.val());
+
+  new Vue({
+    el: '#app',
+    data: {
+      ID: '2',
+      ID_in: '',
+      ID_out: '',
+    },
+    methods: {
+      writeDB: function () {
+        event.preventDefault();
+        firebase.database().ref('/').update(
+          {
+            'text': this.ID_in
+          });
+
+        alert('writeDB 실행' + this.ID_in);
+      },
+      readDB: function () {
+        event.preventDefault();
+        var stt;
+        firebase.database().ref('/text').on('value', function (snapshot) {
+          stt = snapshot.val();
+        });
+          this.ID_out = stt;
+          alert('readDB 실행' +  this.ID_out);
+      },
+      updateDB: function () {
+        event.preventDefault();
+        firebase.database().ref('/').update(
+          {
+            'text': this.ID_in
+          });
+        alert('updateDB 실행');
+      },
+      deleteDB: function () {
+        event.preventDefault();
+        firebase.database().ref('/').update(
+          {
+            'text': null
+          });
+        alert('deleteDB 실행');
+      }
+    }
+  });
+</script>
+
+</html>

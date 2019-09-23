@@ -9,4 +9,4 @@
 - Raspberry Pi 3
 - Python 3.x
 - Python Telepot
-- ...
+- Vue.js

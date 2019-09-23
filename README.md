@@ -10,3 +10,4 @@
 - Python 3.x
 - Python Telepot
 - Vue.js
+- Vuetify

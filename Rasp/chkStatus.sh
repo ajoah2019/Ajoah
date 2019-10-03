@@ -1,4 +1,16 @@
 #!/bin/sh
+
+echo 'chkStatus.sh start'
+
+APPNAME=ajoah
+APP_DIR=/var/etc/MyData
+REVISION=$(expr substr $(git rev-parse HEAD) 1 7)
+
+docker build --tag $APPNAME:$REVISION .
+docker stop $APPNAME
+docker rm $APPNAME
+docker run -it --name $APPNAME -v $PWD/toiletID.txt/:/var/etc/MyData/toiletID.txt -p 80:80 $APPNAME:$REVISION
+
 while [ 0 = 0 ]
 do 
     # 1. Get server data for update
@@ -20,7 +32,13 @@ do
         echo "  myHEAD [$myHEAD] \n serHEAD [$serHEAD]"
         # 5. rebuild 
         git pull
-        sudo sh ./build.sh
+        REVISION=$(expr substr $(git rev-parse HEAD) 1 7)
+
+        docker build --tag $APPNAME:$REVISION .
+        docker stop $APPNAME
+        docker rm $APPNAME
+        docker run -it --name $APPNAME -v $PWD/toiletID.txt/:/var/etc/MyData/toiletID.txt -p 80:80 $APPNAME:$REVISION
+
     fi
     
     sleep 2

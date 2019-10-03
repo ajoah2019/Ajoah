@@ -1,0 +1,460 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <title>Learning Materialize</title>
+    <style>
+        /* label color */
+        
+        .input-field label {
+            color: #000;
+        }
+        /* label focus color */
+        
+        .input-field input[type=text]:focus+label {
+            color: #000;
+        }
+        /* label underline focus color */
+        
+        .input-field input[type=text]:focus {
+            border-bottom: 1px solid #000;
+            box-shadow: 0 1px 0 0 #000;
+        }
+        /* valid color */
+        
+        .input-field input[type=text].valid {
+            border-bottom: 1px solid #000;
+            box-shadow: 0 1px 0 0 #000;
+        }
+        /* invalid color */
+        
+        .input-field input[type=text].invalid {
+            border-bottom: 1px solid #000;
+            box-shadow: 0 1px 0 0 #000;
+        }
+        /* icon prefix focus color */
+        
+        .input-field .prefix.active {
+            color: #000;
+        }
+    </style>
+
+</head>
+
+
+
+<body>
+
+    <div class="navbar-fixed">
+        <nav class="nav-wrapper indigo">
+            <div class="container">
+                <a href="#" class="brand-logo">AJOAH~!</a>
+                <a href="#" class="sidenav-trigger" data-target="mobile-links">
+                    <i class="material-icons">menu</i>
+                </a>
+                <ul class="right hide-on-med-and-down">
+                    <!-- <li><a href="" class="btn white indigo-text">새로고침</a></li> -->
+                    <li><a href="" class="">새로고침</a></li>
+                    <li><a href="#view_reservation" class="modal-trigger">예약자보기</a></li>
+                    <li><a href="#reserve" class="modal-trigger">예약하기</a></li>
+                    <li><a href="#about" class="modal-trigger">About</a></li>
+                    <li><a href="#contact" class="modal-trigger">Contact</a></li>
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <ul class="sidenav" id="mobile-links">
+        <li><a href="#view_reservation" class="modal-trigger">예약자보기</a></li>
+        <li><a href="#reserve" class="modal-trigger">예약하기</a></li>
+        <li><a href="#about" class="modal-trigger">About</a></li>
+        <li><a href="#contact" class="modal-trigger">Contact</a></li>
+    </ul>
+
+
+
+    <div class="container">
+
+
+        <!-- 화장실현황 -->
+        <div class="row">
+
+            <!-- 화장실 선택 Select Box-->
+            <div class="col s6 l12 left">
+                <div class="input-field col s12 left">
+                    <select>
+                        <optgroup label="연호빌딩 8층">
+                        <option value="1">연호8층 남자</option>
+                        <option value="2">연호8층 여자</option>
+                        </optgroup>
+                        <optgroup label="연호빌딩 7층">
+                        <option value="3">연호7층 남자</option>
+                        <option value="4">연호7층 여자</option>
+                        </optgroup>
+                    </select>
+                    <!-- <label>화장실을 선택하세요</label> -->
+                </div>
+            </div>
+
+
+            <div class="col s12 l12">
+                <span class="card-title right">10초 후 자동 새로고침</span>
+            </div>
+
+
+
+            <!-- 연호8층 남자 #1  -->
+            <div class="col s12 l6">
+                <div class="card indigo darken-1 hoverable">
+                    <div class="card-content white-text">
+                        <span class="card-title">연호8층 남자#1</span>
+                        <span class="badge white-text pink">사용중</span>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="card-action">
+                        <a href="" class="">3분 경과</a>
+                        <a href="" class="">오늘 3명 이용</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 연호8층 남자 #2  -->
+            <div class="col s12 l6">
+                <div class="card indigo darken-1 hoverable">
+                    <div class="card-content white-text">
+                        <span class="card-title">연호8층 남자#2</span>
+                        <span class="badge black-text yellow pulse">비었음</span>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="card-action">
+                        <a href="" class="">5분 전</a>
+                        <a href="">오늘 2명 이용</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 예약자현황  -->
+            <div class="col s12 l6">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        <span class="card-title">3명 예약중</span>
+                        <!-- <span class="badge black-text yellow pulse">예약자보기</span> -->
+                    </div>
+                    <div class="divider"></div>
+                    <div class="card-action">
+                        <a href="" class="">모바일웹 10명</a>
+                        <a href="">텔레그램 15명</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="row">
+                <div class="col s12 l12">
+                    <div class="card blue-grey darken-1">
+                        <div class="row">
+                            <div class="col s6 card-content white-text">
+                                <span class="card-title">3명 예약중</span>
+                            </div>
+                            <div class="col s6">
+                                <div>
+                                    <a id="#reserve" class="waves-effect waves-light btn tooltipped modal-trigger" data-position="top" data-tooltip="I am a tooltip" href="#view_reservation">예약자보기</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <div class="row">
+                                <div class="col s6">
+                                    <span>
+                                        <a href="#!" class="">모바일웹 10명</a>
+                                    </span>
+                                </div>
+                                <div class="col s6">
+                                    <div>
+                                        <a href="#!">텔레그램 15명</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+
+        <!-- [삭제예정] 하단 버튼리스트  -->
+        <!-- <div class="row ">
+                <div class="col s12 l6 ">
+                    <div class="row ">
+                        <div class="col s4 l4 ">
+                            <span class="card ">
+                                <a class="waves-effect waves-light btn " href="# ">새로고침</a>
+                            </span>
+                                </div>
+                                <div class="col s4 l4 ">
+                                    <span class="card ">
+                                <a class="waves-effect waves-light btn modal-trigger " href="#reserve ">예약하기</a>                                
+                            </span>
+                                </div>
+                                <div class="col s4 l4 ">
+                                    <span class="card ">
+                                <a class="waves-effect waves-light btn modal-trigger " href="#about ">About</a>
+                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+    </div>
+
+    <!-- 예약하기 확인창 Modal Structure -->
+    <div id="reserveconfirm" class="modal">
+        <div class="modal-content">
+            <h6>화장실 예약하시겠습니까?</h4>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">취소</a>
+            <a href="#reserve" class="modal-close waves-effect waves-green btn-flat modal-trigger">확인</a>
+        </div>
+    </div>
+    <!-- 예약하기 Modal Structure -->
+
+    <!-- 예약하기 Modal Structure -->
+    <div id="reserve" class="modal">
+        <div class="modal-content">
+            <!-- <h6>화장실 예약하시겠습니까?</h4> -->
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input id="icon_prefix" type="text" class="validate" data-length="20">
+                            <label for="icon_prefix">이름(별명)</label>
+                            <span class="helper-text" data-error="wrong" data-success="right">이름(별명)입력해 주세요</span>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="input-field col s12 ">
+                            <i class="material-icons prefix">phone</i>
+                            <input id="icon_telephone" type="tel" class="validate" data-length="12">
+                            <label for="icon_telephone">핸드폰번호</label>
+                            <span class="helper-text" data-error="wrong" data-success="right">- 빼고 숫자만 입력</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">mode_edit</i>
+                            <input id="icon_verification_no" type="text" class="validate" data-length="6">
+                            <label for="icon_verification_no">인증번호</label>
+                            <span class="helper-text " data-error="wrong" data-success="right"></span>
+                        </div>
+                        <div class="input-field col s6">
+                            <div class="btn">
+                                <span>인증번호받기</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">취소</a>
+                        <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="M.toast({html: '예약 신청 되었습니다.', classes: 'rounded', completeCallback: function(){alert( '예약이 완료되었습니다.')}}) ">예약</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 예약하기 Modal Structure -->
+
+    <!-- 인증하기 Modal Structure -->
+    <div id="verify" class="modal">
+        <div class="modal-content">
+            <!-- <h6>화장실 예약하시겠습니까?</h4> -->
+            <div class="row">
+                <div class="row">
+                    <div class="col s12 m6">
+                        <div class="card blue-grey darken-1">
+                            <div class="card-content white-text">
+                                <!-- <span class="card-title">인증필요</span> -->
+                                <h6>- 인증필요</h6>
+                                <p>AJOAH 서비스를 사용하려면 인증이 필요합니다.</p>
+                            </div>
+                            <div class="card-content white-text">
+                                <!-- <span class="card-title">인증질문</span> -->
+                                <h6>- 인증질문</h6>
+                                <p>AJOAH 만든이 3명의 중간글자를 입력하세요.<br/>(힌트 : 송*수, 윤*민, 정*현)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="답변을 입력해 주세요" id="solution" type="text" class="validate" data-length="3">
+                                <label for="solution">인증답변</label>
+                                <span class="helper-text " data-error="wrong" data-success="right"></span>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer ">
+                            <a href="#! " class="modal-close waves-effect waves-green btn-flat ">취소</a>
+                            <a href="#! " class="modal-close waves-effect waves-green btn-flat " onclick="M.toast({html: '인증 신청 되었습니다.', classes: 'rounded', completeCallback: function(){alert( '인증 성공 되었습니다.')}}) ">인증하기</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- 인증하기 Modal Structure -->
+
+
+    <!-- About Modal Structure -->
+    <div id="about" class="modal ">
+        <div class="modal-content ">
+            <h6>Another Joy Of Ah~~~!</h6>
+        </div>
+        <div class="modal-footer ">
+            <a href="#! " class="modal-close waves-effect waves-green btn-flat ">확인</a>
+        </div>
+    </div>
+    <!-- About Modal Structure -->
+
+    <!-- Contact Modal Structure -->
+    <div id="contact" class="modal ">
+        <div class="modal-content ">
+            <h6>송준수, 윤경민, 정종현</h6>
+        </div>
+        <div class="modal-footer ">
+            <a href="#! " class="modal-close waves-effect waves-green btn-flat ">확인</a>
+        </div>
+    </div>
+    <!-- Contact Modal Structure -->
+
+
+    <!-- 예약자보기 - materizecss 샘플 하단 모달 -->
+    <div id="view_reservation" class="modal bottom-sheet ">
+        <div class="modal-content ">
+            <h3 class="header ">예약자현황</h3>
+            <ul class="collection ">
+                <li class="collection-item avatar ">
+                    <i class="material-icons circle blue ">남</i>
+                    <span class="title left-align ">송준수</span>
+                    <p>연호8층 예약
+                        <br> 25분전 예약
+                    </p>
+                    <!-- <a href="#! " class="secondary-content ">
+                            <i class="material-icons ">grade</i>
+                        </a> -->
+                </li>
+                <li class="collection-item avatar ">
+                    <i class="material-icons circle blue ">남</i>
+                    <span class="title ">김훈균</span>
+                    <p>연호8층 예약
+                        <br> 25분전 예약
+                    </p>
+                    <!-- <a href="#! " class="secondary-content ">
+                            <i class="material-icons ">grade</i>
+                        </a> -->
+                </li>
+                <li class="collection-item avatar ">
+                    <i class="material-icons circle blue ">남</i>
+                    <span class="title ">윤경민</span>
+                    <p>연호8층 예약
+                        <br> 9분전 예약
+                    </p>
+                    <!-- <a href="#! " class="secondary-content ">
+                            <i class="material-icons ">grade</i>
+                        </a> -->
+                </li>
+                <li class="collection-item avatar ">
+                    <i class="material-icons circle blue ">남</i>
+                    <span class="title ">정종현</span>
+                    <p>연호8층 예약
+                        <br> 3분전 예약
+                    </p>
+                    <!-- <a href="#! " class="secondary-content ">
+                                <i class="material-icons ">grade</i>
+                            </a> -->
+                </li>
+                <li class="collection-item avatar ">
+                    <i class="material-icons circle red ">여</i>
+                    <span class="title ">아이린</span>
+                    <p>연호8층
+                        <br> 10분전 예약
+                    </p>
+                    <!-- <a href="#! " class="secondary-content ">
+                            <i class="material-icons ">grade</i>
+                        </a> -->
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+    <!-- 예약자보기 - materizecss 샘플 하단 모달 -->
+
+    <!-- Floating Action Button -->
+    <!-- <div class="fixed-action-btn ">
+        <a class="btn-floating btn-large red ">
+            <i class="large material-icons ">mode_edit</i>
+        </a>
+        <ul>
+            <li><a class="btn-floating red "><i class="material-icons ">insert_chart</i></a></li>
+            <li><a class="btn-floating yellow darken-1 "><i class="material-icons ">format_quote</i></a></li>
+            <li><a class="btn-floating green "><i class="material-icons ">publish</i></a></li>
+            <li><a class="btn-floating blue "><i class="material-icons ">attach_file</i></a></li>
+        </ul>
+    </div> -->
+
+    <!-- <div class="row">
+        <a href="#!" class="btn tooltipped col s4 offset-s4 l2 offset-l1" data-html="true" data-position="bottom" data-tooltip="1"> Bottom</a>
+        <a href="#!" class="btn tooltipped col s4 offset-s4 l2 offset-l1" data-position="top" data-tooltip="2"> Top</a>
+        <a href="#!" class="btn tooltipped col s4 offset-s4 l2 offset-l1" data-position="left" data-tooltip="3"> Left</a>
+        <a href="#!" class="btn tooltipped col s4 offset-s4 l2 offset-l1" data-position="right" data-tooltip="4"> Right</a>
+    </div> -->
+
+
+    <div class="fixed-action-btn toolbar ">
+        <a class="btn-floating btn-large red ">
+            <i class="large material-icons">mode_edit</i>
+        </a>
+        <ul>
+            <li class="waves-effect waves-light"><a href="#verify" class="waves-effect waves-light btn modal-trigger"><i class="material-icons ">insert_chart</i></a></li>
+            <li class="waves-effect waves-light"><a href="#reserveconfirm" class="waves-effect waves-light btn modal-trigger"><i class="material-icons ">format_quote</i></a></li>
+            <li class="waves-effect waves-light"><a href="#view_reservation" class="waves-effect waves-light btn modal-trigger"><i class="material-icons ">publish</i></a></li>
+            <li class="waves-effect waves-light"><a href="#about" class="waves-effect waves-light btn modal-trigger"><i class="material-icons ">attach_file</i></a></li>
+        </ul>
+    </div>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.sidenav').sidenav();
+        });
+
+        $(document).ready(function() {
+            $('select').formSelect();
+        });
+
+        $(document).ready(function() {
+            $('.modal').modal();
+        });
+
+        $(document).ready(function() {
+            $('input#icon_prefix, input#icon_telephone, input#icon_verification_no, input#solution').characterCounter();
+        });
+
+        $('.fixed-action-btn').floatingActionButton({
+            toolbarEnabled: true
+        });
+    </script>
+</body>
+
+</html>

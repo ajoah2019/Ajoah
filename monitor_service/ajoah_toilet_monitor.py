@@ -40,7 +40,7 @@ def logprint(outStr):
         strTMP = '['+str(SENSOR_NUMBER)+']'+outStr+'\n'
         f.write(strTMP)
         if isTest:
-            print(strTMP)
+            print(strTMP,end='')
 
 def useSpace(toiletID):
     # 사용하는 데이터 전송

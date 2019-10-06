@@ -1,12 +1,12 @@
 # Ajoah 2019
 
-## Member
-- 송준수
-- 윤경민
-- 정종현
+## Developer
+- 송준수 Principal Engr.
+- 윤경민 Senior Engr.
+- 정종현 Senior Engr.
 
 ## Architect
-- Raspberry Pi 3
+- Raspberry Pi 3 B+ 
 - Python 3.x
 - Python Telepot
 - Vue.js

@@ -5,11 +5,36 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 from datetime import datetime
+import argparse
 
+
+# interpret Args
+parser = argparse.ArgumentParser()
+parser.add_argument('SENSOR_NUMBER', type=int,
+                help="What is the Sensor number?[1 or 2]")
+
+parser.add_argument('SENSOR_FILENAME', type=str,
+                help="What is the Sensor filename?[exL toilet01.txt]")
+
+
+
+args = parser.parse_args()
+
+SENSOR_NUMBER = args.SENSOR_NUMBER
+SENSOR_FILENAME = args.SENSOR_FILENAME
+print('SensorNumber['+str(SENSOR_NUMBER)+']')
+print('SensorFile['+str(SENSOR_FILENAME)+']')
+
+
+# data Init 
 isTest=True
 
+pirPin=0
+if SENSOR_NUMBER == 1 :
+    pirPin =7
+else SENSOR_NUMBER == 2 :
+    pirPin = 8
 GPIO.setmode(GPIO.BCM)
-pirPin =7 
 GPIO.setup(pirPin, GPIO.IN, GPIO.PUD_UP)
 
 timelaps=0.2
@@ -36,6 +61,7 @@ def useSpace(toiletID):
     # 사용하는 데이터 전송
     ref = db.reference('current/'+toiletID)
     ref.update({
+        'name' : toiletName,
         'using' : True,
         'using_from':getSysDt(),
         'last_update' : getSysDt()
@@ -46,12 +72,13 @@ def useSpace(toiletID):
     # 결과값 히스토리 저장 
     ref = db.reference('history/'+toiletID)
     ref.update({
-            getSysDt() :toilet_status
+            getSysDt()+'-'+toiletID :toilet_status
     })
 def notUseSpace(toiletID):
     # 사용하는 데이터 전송
     ref = db.reference('current/'+toiletID)
     ref.update({
+        'name' : toiletName,
         'using' : False,
         'free_from':getSysDt(),
         'last_update' : getSysDt()
@@ -62,18 +89,26 @@ def notUseSpace(toiletID):
     # 결과값 히스토리 저장 
     ref = db.reference('history/'+toiletID)
     ref.update({
-            getSysDt() :toilet_status
+            getSysDt()+'-'+toiletID :toilet_status
     })
 
 
 # Main
 
-# 1. 화장실 ID 가져오기 
+# 1. 화장실 ID / Name 가져오기 
 toiletID=''
+toiletName=''
 testIDX=0  #Test var
 with open("toiletID.txt", "r") as f:
-    data = f.read()    
-    toiletID=data.split('=')[1]
+    data = f.read().split('\n')
+    print
+    for idx in range(len(data)):
+        if idx==0:
+            print('id'+data[idx].split('\"')[1])
+            toiletID=data[idx].split('\"')[1]
+        elif idx==1:
+            print('name'+data[idx].split('\"')[1])
+            toiletName=data[idx].split('\"')[1]
 
 # 2. 실행
 while True:

@@ -10,10 +10,10 @@ with open("toiletID.txt", "r") as f:
     print
     for idx in range(len(data)):
         if idx==0:
-            print('id'+data[idx].split('\"')[1])
+            print('id: '+data[idx].split('\"')[1])
             toiletID=data[idx].split('\"')[1]
         elif idx==1:
-            print('name'+data[idx].split('\"')[1])
+            print('name: '+data[idx].split('\"')[1])
             toiletName=data[idx].split('\"')[1]
 
 # MockUp.py

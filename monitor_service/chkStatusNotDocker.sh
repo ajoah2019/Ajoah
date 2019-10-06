@@ -3,10 +3,7 @@
 echo 'chkStatus.sh start'
 
 #RUNFILE=ajoah_toilet_monitor.py
-RUNFILE=Mockup.py
-APPNAME=ajoah
-APP_DIR=/var/etc/MyData
-REVISION=$(expr substr $(git rev-parse HEAD) 1 7)
+RUNFILE=Mockup_ajoah_toilet_monitor.py
 
 # 0. delete all python cmd 
 RUN_PID=`ps -a | grep python3 | awk '{print $1 }'`
@@ -18,7 +15,8 @@ do
 done
 
 # 0.1 Run base program
-python3 ajoah2019/$RUNFILE &
+python3 $RUNFILE &
+python3 $RUNFILE &
 RUN_PID=`ps -a | grep python3 | awk '{print $1 }'`
 echo "[$RUN_PID]"
 
@@ -44,18 +42,21 @@ do
         echo "  myHEAD [$myHEAD] \n serHEAD [$serHEAD]"
         # 5. rebuild 
         git pull
-        REVISION=$(expr substr $(git rev-parse HEAD) 1 7)
+	for pid in $RUN_PID
+	do
+	    echo "kill -8 $pid"
+            kill -8 $pid
+            sleep 3
+	done
 
-        echo "kill -8 $RUN_PID"
-        kill -8 $RUN_PID
-        sleep 5
+        python3 $RUNFILE &
+	python3 $RUNFILE &
 
-        python3 ajoah2019/$RUNFILE &
         RUN_PID=`ps -a | grep python3 | awk '{print $1 }'`
         echo "[$RUN_PID"]
         
     fi
     
-    sleep 3
+    sleep 5
 done
 

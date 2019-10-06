@@ -2,8 +2,8 @@
 
 echo 'chkStatus.sh start'
 
-RUNFILE=ajoah_toilet_monitor.py
-#RUNFILE=Mockup_ajoah_toilet_monitor.py
+#RUNFILE=ajoah_toilet_monitor.py
+RUNFILE=Mockup_ajoah_toilet_monitor.py
 
 # 0. delete all python cmd 
 RUN_PID=`ps -a | grep python3 | awk '{print $1 }'`
@@ -15,8 +15,8 @@ do
 done
 
 # 0.1 Run base program
-python3 $RUNFILE 1 &
-python3 $RUNFILE 2 &
+python3 $RUNFILE &
+python3 $RUNFILE &
 RUN_PID=`ps -a | grep python3 | awk '{print $1 }'`
 echo "[$RUN_PID]"
 
@@ -49,8 +49,8 @@ do
             sleep 3
 	done
 
-        python3 $RUNFILE 1 &
-	python3 $RUNFILE 2 &
+        python3 $RUNFILE &
+	python3 $RUNFILE &
 
         RUN_PID=`ps -a | grep python3 | awk '{print $1 }'`
         echo "[$RUN_PID"]

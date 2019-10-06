@@ -2,7 +2,7 @@ from __future__ import print_function
 from dbAjoah import *
 import RPi.GPIO as GPIO
 import argparse
-
+from time import sleep
 
 # interpret Args
 parser = argparse.ArgumentParser()
@@ -19,9 +19,10 @@ print('SensorNumber['+str(SENSOR_NUMBER)+']')
 isTest=True
 
 pirPin=0
+
 if SENSOR_NUMBER == 1 :
     pirPin =7
-else SENSOR_NUMBER == 2 :
+elif SENSOR_NUMBER == 2 :
     pirPin = 8
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(pirPin, GPIO.IN, GPIO.PUD_UP)
@@ -36,7 +37,7 @@ detectCnt=0
 # 함수 정의
 def testprint(outStr):
     if isTest:
-        print(outStr)
+        print('['+str(SENSOR_NUMBER)+']',outStr)
 
 
 def useSpace(toiletID):
@@ -98,13 +99,13 @@ while True:
     detectCnt=0
     for i in range(int(timeInterval/timelaps)):
         if isTest:
-            print(timeidx*timelaps, end=': ')
+            print('['+str(timeidx*timelaps), end=']')
 
         if GPIO.input(pirPin) == True:
             testprint("Motion detected!")
             detectCnt+=1
-        else:
-            testprint(" ")
+        #else:
+            #testprint(" ")
         sleep(timelaps)
         timeidx+=1
         

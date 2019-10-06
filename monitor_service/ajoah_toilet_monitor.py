@@ -35,10 +35,12 @@ detectCnt=0
 
 
 # 함수 정의
-def testprint(outStr):
-    if isTest:
-        print('['+str(SENSOR_NUMBER)+']',outStr)
-
+def logprint(outStr):
+    with open("ajoah_toilet_monitor.log","a") as f:
+        strTMP = '['+str(SENSOR_NUMBER)+']'+outStr+'\n'
+        f.write(strTMP)
+        if isTest:
+            print(strTMP)
 
 def useSpace(toiletID):
     # 사용하는 데이터 전송
@@ -87,10 +89,10 @@ with open("toiletInfo.txt", "r") as f:
     print
     for idx in range(len(data)):
         if idx==0:
-            print('id'+data[idx].split('\"')[1])
+            logprint('id'+data[idx].split('\"')[1])
             toiletID=data[idx].split('\"')[1]
         elif idx==1:
-            print('name'+data[idx].split('\"')[1])
+            logprint('name'+data[idx].split('\"')[1])
             toiletName=data[idx].split('\"')[1]
 
 # 2. 실행
@@ -100,25 +102,25 @@ while True:
     for i in range(int(timeInterval/timelaps)):
         if isTest:
             print('['+str(timeidx*timelaps), end=']')
-
+            logprint('['+str(timeidx*timelaps)+']')
         if GPIO.input(pirPin) == True:
-            testprint("Motion detected!")
+            logprint("Motion detected!")
             detectCnt+=1
         #else:
-            #testprint(" ")
+            #logprint(" ")
         sleep(timelaps)
         timeidx+=1
         
-    #testprint('detectCnt ['+str(detectCnt)+']')
-    #testprint('threshold ['+str(threshold)+']')
+    #logprint('detectCnt ['+str(detectCnt)+']')
+    #logprint('threshold ['+str(threshold)+']')
 
 
     if detectCnt > threshold :
-        testprint('this is Human')
-        testprint('UseSpace')
+        logprint('this is Human')
+        logprint('UseSpace')
         useSpace(toiletID)
     else :
-        print('notUseSpace')
+        logprint('notUseSpace')
         notUseSpace(toiletID)
 
 

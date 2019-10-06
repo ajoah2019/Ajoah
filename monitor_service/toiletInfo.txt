@@ -1,0 +1,2 @@
+toiletID="Y7:M:02"  
+toiletName="연호빌딩7층:남자:1칸"

@@ -1,10 +1,6 @@
 from __future__ import print_function
+from dbAjoah import *
 import RPi.GPIO as GPIO
-from time import sleep
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import db
-from datetime import datetime
 import argparse
 
 
@@ -13,17 +9,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument('SENSOR_NUMBER', type=int,
                 help="What is the Sensor number?[1 or 2]")
 
-parser.add_argument('SENSOR_FILENAME', type=str,
-                help="What is the Sensor filename?[exL toilet01.txt]")
-
-
-
 args = parser.parse_args()
 
 SENSOR_NUMBER = args.SENSOR_NUMBER
-SENSOR_FILENAME = args.SENSOR_FILENAME
 print('SensorNumber['+str(SENSOR_NUMBER)+']')
-print('SensorFile['+str(SENSOR_FILENAME)+']')
 
 
 # data Init 
@@ -44,19 +33,12 @@ threshold=4  #total count 4s/timelaps
 detectCnt=0
 
 
-#Firebase database 인증 및 앱 초기화
-cred = credentials.Certificate('ajoah_key.json')
-firebase_admin.initialize_app(cred,{
-    'databaseURL' : 'https://ajoah-2121f.firebaseio.com/'
-})
-
 # 함수 정의
 def testprint(outStr):
     if isTest:
         print(outStr)
-        
-def getSysDt():
-    return datetime.fromtimestamp(datetime.now().timestamp()).strftime('%Y-%m-%d %H:%M:%S')
+
+
 def useSpace(toiletID):
     # 사용하는 데이터 전송
     ref = db.reference('current/'+toiletID)
@@ -99,7 +81,7 @@ def notUseSpace(toiletID):
 toiletID=''
 toiletName=''
 testIDX=0  #Test var
-with open("toiletID.txt", "r") as f:
+with open("toiletInfo.txt", "r") as f:
     data = f.read().split('\n')
     print
     for idx in range(len(data)):

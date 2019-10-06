@@ -1,2 +1,2 @@
-toiletID="Y7:M:02"  
+toiletID="Y7:M:01"  
 toiletName="연호빌딩7층:남자:1칸"

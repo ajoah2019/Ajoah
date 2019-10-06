@@ -5,7 +5,7 @@ import time
 toiletID=''
 toiletName=''
 testIDX=0  #Test var
-with open("toiletID.txt", "r") as f:
+with open("toiletInfo.txt", "r") as f:
     data = f.read().split('\n')
     print
     for idx in range(len(data)):

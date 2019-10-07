@@ -1,5 +1,5 @@
 from __future__ import print_function
-from dbAjoah import *
+from dbRealtimeAjoah import *
 import RPi.GPIO as GPIO
 import argparse
 from time import sleep

@@ -1,11 +1,11 @@
-from dbAjoah import *
+from dbFirestoreAjoah import *
 import time
 
 # 1. 화장실 ID / Name 가져오기 
 toiletID=''
 toiletName=''
 testIDX=0  #Test var
-with open("toiletInfo.txt", "r") as f:
+with open("toiletInfo.txt", "r",encoding="UTF8") as f:
     data = f.read().split('\n')
     print
     for idx in range(len(data)):

@@ -11,6 +11,11 @@ export default new Router({
             component: Index
         },
         {
+            path: '/ajoah',
+            name: 'Index',
+            component: Index
+        },
+        {
             path: '/!',
             name: 'Index',
             component: Index

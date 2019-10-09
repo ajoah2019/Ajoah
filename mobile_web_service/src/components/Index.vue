@@ -20,15 +20,22 @@
     </div>      
     <!-- 화장실 선택 Select Box-->       
 
-    <!-- [2] 화장실 현황 리스트-->       
+
+    <!-- [2] 화장실 현황 리스트-->
+
+    <div class="container">
+        <div class="row" >             
+            <div class="col s12 l12">
+                    <span class="card-title right">10초 후 자동 새로고침</span>
+            </div> 
+        </div> 
+    </div> 
+
      <div class="container">
-        <!-- <h2>연호 8층</h2> -->
-        <div class="row" >
-             <div class="col s12 l12">
-                <span class="card-title right">10초 후 자동 새로고침</span>
-            </div>
-            <div class="col s12 l6">
-                <div class="card hoverable" v-for="toilet_current in toilet_currents" :key="toilet_current.id">
+        <!-- <h2>연호 8층</h2> --> 
+        <div class="row" >             
+            <div class="col s12 l6" v-for="toilet_current in toilet_currents" :key="toilet_current.id">
+                <div class="card">
                     <div class="card-image">
                         <img src="../img/toilet.jpg" alt="">
                         <a href="" class="halfway-fab btn-floating red pulse" v-if="toilet_current.using">
@@ -55,7 +62,7 @@
      <div class="col s12 l12">
         <nav class="nav-extended">
             <div class="nav-wrapper"> 
-            <a href="#!" class="brand-logo">3명 예약중</a>      
+            <a href="#!" class="brand-logo center text-center">3명 예약중</a>      
             </div>
             <div class="nav-content">            
             <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal left modal-trigger" href="#view_reservation" @click="showReserve()">

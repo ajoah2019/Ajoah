@@ -14,59 +14,63 @@ db = firestore.client()
 def getSysDt():
     return datetime.fromtimestamp(datetime.now().timestamp()).strftime('%Y-%m-%d %H:%M:%S')
 
+def getTimeLaps(pre, now):    
+    return str(datetime.strptime(now, '%Y-%m-%d %H:%M:%S') - datetime.strptime(pre, '%Y-%m-%d %H:%M:%S'))
 
 def useSpace(toiletID, toiletName):
+    # 공통 변수 
+    sysDt = getSysDt()
+    
     # 사용하는 데이터 전송
     doc_col = db.collection('current')
-    #doc_ref_current=doc_col.document(toiletID)
-    
-    doc_col.add({
+    doc_ref_current=doc_col.document(toiletID)
+
+    dataTmp={
         'id' : toiletID,
         'name' : toiletName,
         'using' : True,
-        'using_from':getSysDt(),
-        'last_update' : getSysDt()
-    })
+        'using_from': sysDt,
+        'free_from':  None,
+        'last_update' : sysDt
+    }
+    doc_ref_current.set(dataTmp,merge=True)
+    print(dataTmp)
 
-    '''
-    # 전송 후 결과값 저장
-    docs = doc_col.stream()
-    for doc in docs:
-        print('{} => {}'.format(doc.id, doc.to_dict()))
-
-    
-    # 결과값 히스토리 저장
-    
-    doc_col = db.collection('history')
-    doc_ref_history=doc_col.document(getSysDt()+'-'+toiletID)
-    
-    doc_ref_history.set({
-        'id' : toiletID,
-        'name' : toiletName,
-        'using_from':getSysDt(),
-        'last_update' : getSysDt()
-    })
-    '''
     
 def notUseSpace(toiletID, toiletName):
+    # 공통 변수 
+    sysDt = getSysDt()
+    
     # 사용하는 데이터 전송
     doc_col = db.collection('current')
-    #doc_ref_current=doc_col.document(toiletID)
+    doc_ref_current=doc_col.document(toiletID)
     
-    doc_col.add({
+    doc_ref_current_R = doc_ref_current.get().to_dict()
+    dataTmp={
         'id' : toiletID,
         'name' : toiletName,
         'using' : False,
-        'free_from':getSysDt(),
-        'last_update' : getSysDt()
-    })
-    '''
-    # 전송 후 결과값 저장
-    docs = doc_col.stream()
+        'free_from': sysDt,
+        'last_update' : sysDt
+    }
+    doc_ref_current.set(dataTmp,merge=True)
+    print(dataTmp)
+    
+    # 사용중이면 히스토리 저장 
+    state = doc_ref_current_R['using']
+    if state == True:
+        usingFrom = doc_ref_current_R['using_from']
+        
+        doc_ref_history = db.collection('history').document(getSysDt()+'-'+toiletID)
+        dataTmp = {
+            'id' : toiletID,
+            'name' : toiletName,
+            'using_from': usingFrom,
+            'using_to': sysDt, 
+            'using_elapsed' : getTimeLaps(usingFrom, sysDt)
+        }
+        doc_ref_history.set(dataTmp)
+        print(dataTmp)
 
-    # 결과값 히스토리 저장 
-    ref = db.reference('history/'+toiletID)
-    ref.update({
-            getSysDt()+'-'+toiletID :toilet_status
-    })
-    '''
+
+    

@@ -37,7 +37,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
-MAINMENU, RESERVATION, LOCATION, PASSWD, NOTICE, CANCEL, REGISTERATION = range(7)
+MAINMENU, RESERVATION, LOCATION, PASSWD, NOTICE, CANCEL, REGISTRATION = range(7)
 
 def start(update, context):
     reply_keyboard = [['비었니', '예약해줘'], ['누구인가', '할말이있어']]
@@ -127,10 +127,7 @@ def reservation(update, context):
         y8_m_02_open_yn = db.collection('current').document('Y8.M.02').get().to_dict['using']
 
         if y8_m_01_open_yn or y8_m_open_yn:
-            reply_txt = update.message.text + '에 빈 화장실이 있어요. 빨리 달려가세요!\n' +
-                        '빈칸: ' + '1번칸' if y8_m_01_open_yn else ''
-                                 + '/'     if y8_m_01_open_yn and y8_m_02_open_yn else ''
-                                 + '2번칸' if y8_m_02_open_yn else ''
+            reply_txt = update.message.text + '에 빈 화장실이 있어요. 빨리 달려가세요!\n' + '빈칸: ' + '1번칸' if y8_m_01_open_yn else '' + ('/' if y8_m_01_open_yn and y8_m_02_open_yn else '') + ('2번칸' if y8_m_02_open_yn else '')
             update.message.reply_text(reply_txt, reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
             return MAINMENU
 
@@ -139,10 +136,7 @@ def reservation(update, context):
         y7_m_02_open_yn = db.collection('current').document('Y7.M.02').get().to_dict['using']
 
         if y7_m_01_open_yn or y7_m_open_yn:
-            reply_txt = update.message.text + '에 빈 화장실이 있어요. 빨리 달려가세요!\n' +
-                        '빈칸: ' + '1번칸' if y7_m_01_open_yn else ''
-                                 + '/'     if y7_m_01_open_yn and y7_m_02_open_yn else ''
-                                 + '2번칸' if y7_m_02_open_yn else ''
+            reply_txt = update.message.text + '에 빈 화장실이 있어요. 빨리 달려가세요!\n' + '빈칸: ' + '1번칸' if y7_m_01_open_yn else '' + '/'     if y7_m_01_open_yn and y7_m_02_open_yn else '' + '2번칸' if y7_m_02_open_yn else ''
             update.message.reply_text(reply_txt, reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
             return MAINMENU
     
@@ -332,7 +326,7 @@ def main():
 
             CANCEL: [MessageHandler(Filters.regex('^(YES|NO)'), cancel)],
 
-            REGISTRATION: [MessageHandler(Filters.text, registeration)]
+            REGISTRATION: [MessageHandler(Filters.text, registration)]
         },
 
         fallbacks=[CommandHandler('cancel', cancel)]

@@ -20,12 +20,14 @@ def getTimeLaps(pre, now):
 def useSpace(toiletID, toiletName):
     # 공통 변수 
     sysDt = getSysDt()
+    toiletGrp = '.'.join(toiletID.split('.')[:2])
     
     # 사용하는 데이터 전송
     doc_col = db.collection('current')
     doc_ref_current=doc_col.document(toiletID)
 
     dataTmp={
+        'group' : toiletGrp,
         'id' : toiletID,
         'name' : toiletName,
         'using' : True,
@@ -40,6 +42,7 @@ def useSpace(toiletID, toiletName):
 def notUseSpace(toiletID, toiletName):
     # 공통 변수 
     sysDt = getSysDt()
+    toiletGrp = '.'.join(toiletID.split('.')[:2])
     
     # 사용하는 데이터 전송
     doc_col = db.collection('current')
@@ -47,6 +50,7 @@ def notUseSpace(toiletID, toiletName):
     
     doc_ref_current_R = doc_ref_current.get().to_dict()
     dataTmp={
+        'group' : toiletGrp,
         'id' : toiletID,
         'name' : toiletName,
         'using' : False,

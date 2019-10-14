@@ -6,9 +6,14 @@
         
         main {
             flex: 1 0 auto;
-        }</style><link href=/static/css/app.8e7dca5af80088ed09f565d8678901be.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.2ae2e69a05c33dfc65f8.js></script><script type=text/javascript src=/static/js/vendor.1952a65e338b20fd6087.js></script><script type=text/javascript src=/static/js/app.1e2e9c717426e3c562ad.js></script></body><script src=/__/firebase/7.1.0/firebase-app.js></script><script src=/__/firebase/init.js></script><script src=https://code.jquery.com/jquery-3.3.1.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js></script><script>$(document).ready(function() {
-        $('.sidenav').sidenav();
+        }</style><link href=/static/css/app.65a8a046aced91869837e32676838ab6.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.2ae2e69a05c33dfc65f8.js></script><script type=text/javascript src=/static/js/vendor.2213930859ed1c41389d.js></script><script type=text/javascript src=/static/js/app.bb836dcb27ad12c092cc.js></script></body><script src=https://code.jquery.com/jquery-3.3.1.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js></script><script>document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems, {
+            edge: 'left',
+            draggable: true
+        });
     });
+
 
     $(document).ready(function() {
         $('select').formSelect();

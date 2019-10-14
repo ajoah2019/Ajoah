@@ -28,5 +28,5 @@ while True:
         print('notUseSpace')
         notUseSpace(toiletID, toiletName)
     idxCnt+=1
-    time.sleep(5)
+    time.sleep(0.5)
     

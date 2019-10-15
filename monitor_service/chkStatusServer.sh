@@ -11,7 +11,7 @@ for pid in $RUN_PID
 do
     echo "kill -8 $pid"
     kill -8 $pid
-    sleep 3
+    sleep 1
 done
 
 # 0.1 Run base program
@@ -46,7 +46,7 @@ do
 	do
 	    echo "kill -8 $pid"
             kill -8 $pid
-            sleep 3
+            sleep 1
 	done
 
         python3 $RUNFILE 1 &

@@ -1,15 +1,17 @@
 <template>
   <div id="app">
-      <Navbar />      
-      <router-view/>
+      <Navbar :user="user"></Navbar>      
+      <router-view :user="user"></router-view>
   </div>
 </template>
 
 <script>
-import Navbar from '@/components/Navbar'
-
+import Navbar from '@/components/layout/Navbar'
+import firebase from 'firebase'
+ 
 export default {
   name: 'App',
+  props:['user'],
   components: {
     Navbar
   }

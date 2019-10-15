@@ -36,7 +36,7 @@ detectCnt=0
 
 # 함수 정의
 def logprint(outStr):
-    with open("ajoah_toilet_monitor."+getSysDt()+".log","a") as f:
+    with open("ajoah_toilet_monitor."+getSysDt()[:10]+".log","a") as f:
         strTMP = '['+getSysDt()+']['+str(SENSOR_NUMBER)+']'+outStr+'\n'
         f.write(strTMP)
         if isTest:
@@ -50,7 +50,7 @@ toiletName=''
 testIDX=0  #Test var
 with open("toiletInfo"+str(SENSOR_NUMBER), "r") as f:
     data = f.read().split('\n')
-    print
+    
     for idx in range(len(data)):
         if idx==0:
             logprint('id'+data[idx].split('\"')[1])

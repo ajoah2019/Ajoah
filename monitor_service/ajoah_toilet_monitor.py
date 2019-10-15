@@ -27,7 +27,7 @@ elif SENSOR_NUMBER == 2 :
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(pirPin, GPIO.IN, GPIO.PUD_UP)
 
-timelaps=0.2
+timelaps=1
 timeidx=0
 timeInterval=20 #base second is 4 sec. 
 threshold=4  #total count 4s/timelaps
@@ -41,42 +41,6 @@ def logprint(outStr):
         f.write(strTMP)
         if isTest:
             print(strTMP,end='')
-
-def useSpace(toiletID):
-    # 사용하는 데이터 전송
-    ref = db.reference('current/'+toiletID)
-    ref.update({
-        'name' : toiletName,
-        'using' : True,
-        'using_from':getSysDt(),
-        'last_update' : getSysDt()
-    })
-    # 전송 후 결과값 저장 
-    toilet_status=ref.get()
-
-    # 결과값 히스토리 저장 
-    ref = db.reference('history/'+toiletID)
-    ref.update({
-            getSysDt()+'-'+toiletID :toilet_status
-    })
-def notUseSpace(toiletID):
-    # 사용하는 데이터 전송
-    ref = db.reference('current/'+toiletID)
-    ref.update({
-        'name' : toiletName,
-        'using' : False,
-        'free_from':getSysDt(),
-        'last_update' : getSysDt()
-    })
-    # 전송 후 결과값 저장 
-    toilet_status=ref.get()
-
-    # 결과값 히스토리 저장 
-    ref = db.reference('history/'+toiletID)
-    ref.update({
-            getSysDt()+'-'+toiletID :toilet_status
-    })
-
 
 # Main
 

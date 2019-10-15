@@ -82,9 +82,9 @@ while True:
     if detectCnt > threshold :
         logprint('this is Human')
         logprint('UseSpace')
-        useSpace(toiletID)
+        useSpace(toiletID, toiletName)
     else :
         logprint('notUseSpace')
-        notUseSpace(toiletID)
+        notUseSpace(toiletID, toiletName)
 
 

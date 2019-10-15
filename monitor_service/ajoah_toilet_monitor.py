@@ -79,7 +79,7 @@ while True:
     logprint('threshold ['+str(threshold)+']')
 
 
-    if detectCnt > threshold :
+    if detectCnt >= threshold :
         logprint('this is Human')
         logprint('UseSpace')
         useSpace(toiletID, toiletName)

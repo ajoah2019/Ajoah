@@ -30,7 +30,7 @@ GPIO.setup(pirPin, GPIO.IN, GPIO.PUD_UP)
 timelaps=1
 timeidx=0
 timeInterval=20 #base second is 4 sec. 
-threshold=int(timeInterval*0.1)  #total count 4s/timelaps
+threshold=int((timeInterval/timelaps)*0.1)  #total count 4s/timelaps
 detectCnt=0
 
 
@@ -75,8 +75,8 @@ while True:
         sleep(timelaps)
         timeidx+=1
         
-    #logprint('detectCnt ['+str(detectCnt)+']')
-    #logprint('threshold ['+str(threshold)+']')
+    logprint('detectCnt ['+str(detectCnt)+']')
+    logprint('threshold ['+str(threshold)+']')
 
 
     if detectCnt > threshold :

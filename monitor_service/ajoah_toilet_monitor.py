@@ -1,5 +1,5 @@
 from __future__ import print_function
-from dbRealtimeAjoah import *
+from dbFirestoreAjoah import *
 import RPi.GPIO as GPIO
 import argparse
 from time import sleep
@@ -84,7 +84,7 @@ def notUseSpace(toiletID):
 toiletID=''
 toiletName=''
 testIDX=0  #Test var
-with open("toiletInfo.txt", "r") as f:
+with open("toiletInfo"+str(SENSOR_NUMBER), "r") as f:
     data = f.read().split('\n')
     print
     for idx in range(len(data)):

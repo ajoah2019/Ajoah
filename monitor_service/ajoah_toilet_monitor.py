@@ -30,13 +30,13 @@ GPIO.setup(pirPin, GPIO.IN, GPIO.PUD_UP)
 timelaps=1
 timeidx=0
 timeInterval=20 #base second is 4 sec. 
-threshold=4  #total count 4s/timelaps
+threshold=int(timeInterval*0.1)  #total count 4s/timelaps
 detectCnt=0
 
 
 # 함수 정의
 def logprint(outStr):
-    with open("ajoah_toilet_monitor.log","a") as f:
+    with open("ajoah_toilet_monitor."+getSysDt()+".log","a") as f:
         strTMP = '['+getSysDt()+']['+str(SENSOR_NUMBER)+']'+outStr+'\n'
         f.write(strTMP)
         if isTest:

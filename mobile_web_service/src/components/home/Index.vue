@@ -1,6 +1,5 @@
 <template>
  <div class="index container">    
-     
     <!-- [2] 화장실 현황 리스트-->
      <div class="container">
          <div class="row" style="">            
@@ -56,9 +55,11 @@
         <div class="row" v-for="toilet_current in toilet_currents" :key="toilet_current.id">             
             <div class="col s12 l6">
                 <div class="card">
-                    <div class="card-image">
-                        <img src="../../img/toilet_ing_6_low.jpg" alt="" v-if="toilet_current.using">
-                        <img src="../../img/toilet_low.jpg" alt="" v-else>
+                    <div class="card-image"> 
+                        <!-- <img src="../../img/toilet_ing_6_low.jpg" alt="" v-if="toilet_current.using">
+                        <img src="../../img/toilet_low.jpg" alt="" v-else> -->
+                        <img v-bind:src="toilet_ing" alt="" v-if="toilet_current.using">
+                        <img v-bind:src="toilet_empty" alt="" v-else>
                         <a href="" class="halfway-fab btn-floating red pulse" v-if="toilet_current.using">
                             <i class="material-icons">clear</i>                            
                         </a>
@@ -202,11 +203,25 @@ export default {
       showPreloader : false,
       toilet_reserve_nickname : '',
       toilet_reserve_phone_no : '',   
-      toilet_reserve_seq : 0   
+      toilet_reserve_seq : 0,   
+      publicPath: process.env.BASE_URL,
+      toilet_ing : process.env.BASE_URL + "static/img/toilet_ing_6_low.jpg",    
+      toilet_empty : process.env.BASE_URL + "static/img/toilet_low.jpg"      
+    //   toilet_ing : "/static/img/toilet_ing_6_low.abe5cb8.jpg",    
+    //   toilet_empty : "/static/img/toilet_low.cae8353.jpg"
     }
   },
   created(){    
-       
+   
+    let baseUrl = ''
+    if (process.env.NODE_ENV === 'production') {
+        this.toilet_ing = process.env.BASE_URL + "static/img/toilet_ing_6_low.jpg"
+        this.toilet_empty = process.env.BASE_URL + "static/img/toilet_low.jpg"
+    }else {
+        this.toilet_ing = "/static/img/toilet_ing_6_low.jpg"
+        this.toilet_empty = "/static/img/toilet_low.jpg"
+    }
+
    let ref = db.collection("current")
     
     // subscribe to changes to the 'messages' collection

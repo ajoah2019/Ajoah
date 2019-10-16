@@ -1,8 +1,11 @@
 <template>
- <div class="index container">    
+ <div class="container">    
     <!-- [2] 화장실 현황 리스트-->
      <div class="container">
-         <div class="row" style="">            
+
+       <div class="row">
+        <div class="col s12">  
+         <div class="row">            
             <div class="col s12">
                 <select id="toilet_select" @change="onChange($event)">
                     <optgroup label="연호빌딩 8층">
@@ -16,11 +19,11 @@
                 </select>
             </div>            
         </div>
-        <div class="row" >             
+        <!-- <div class="row" >             
             <div class="col s12 l12"> 
-                    <span class="card-title right">[변경사항은 실시간 업데이트 됩니다. - 테스트]</span>
+                    <span class="card-title right">[변경사항은 실시간 업데이트 됩니다.]</span>
             </div> 
-        </div> 
+        </div>  -->
          <div class="row">             
             <div class="col s12">
                 <div class="card">
@@ -75,6 +78,8 @@
                 </div>
             </div>            
         </div>
+       </div>  
+     </div> 
      </div> 
     <!-- 화장실 현황 리스트-->
 
@@ -207,12 +212,11 @@ export default {
       publicPath: process.env.BASE_URL,
       toilet_ing : process.env.BASE_URL + "static/img/toilet_ing_6_low.jpg",    
       toilet_empty : process.env.BASE_URL + "static/img/toilet_low.jpg"      
-    //   toilet_ing : "/static/img/toilet_ing_6_low.abe5cb8.jpg",    
-    //   toilet_empty : "/static/img/toilet_low.cae8353.jpg"
     }
   },
   created(){    
-   
+    
+    
     let baseUrl = ''
     if (process.env.NODE_ENV === 'production') {
         this.toilet_ing = process.env.BASE_URL + "static/img/toilet_ing_6_low.jpg"
@@ -220,32 +224,43 @@ export default {
     }else {
         this.toilet_ing = "/static/img/toilet_ing_6_low.jpg"
         this.toilet_empty = "/static/img/toilet_low.jpg"
-    }
-
-   let ref = db.collection("current")
-    
-    // subscribe to changes to the 'messages' collection
-    ref.onSnapshot(snapshot => {
-      snapshot.docChanges().forEach(change => {
-        if(change.type == 'modified'){
-           console.table("Modified Toilet Detected: ");
-           this.doJohoi();
-        }
-      })
-    })    
+    }   
   },
   mounted(){
-    
-    this.toilet_currents.splice(0);                     
+
     var target = document.getElementById("toilet_select");
     var target_value = target.options[target.selectedIndex].value;
     var target_name = target.options[target.selectedIndex].text;
 
     this.toilet_selected_val = target_value; 
-    this.toilet_selected_nm = target_name; 
+    this.toilet_selected_nm = target_name;    
 
-    this.doJohoi();    
-  }, 
+    let ref = db.collection("current").where("group","==",target_value)
+    
+    // subscribe to changes to the 'messages' collection
+    ref.onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(change => {
+
+        if (change.type === "added") {
+                console.log("New city: ", change.doc.data());
+                let toilet_current = change.doc.data()        
+                //console.table(doc.data())                
+                this.toilet_currents.push(toilet_current)
+        }
+
+        if (change.type === "modified") {
+                // console.log("Modified city: ", change.doc.data());
+                // console.log("Modified city: ", change.doc.data().id);
+
+                // var found = toilet_currents.find(function(change.doc.data().id) {
+                //   return change.doc.data().id;
+                // });
+             this.doJohoi();    
+        }
+      })
+    }) 
+
+  },
   methods: {
 
         onChange(event) {

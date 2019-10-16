@@ -1,7 +1,7 @@
 <template>
   <div class="signup container">    
     <form class="card-panel" @submit.prevent="setPassword">        
-      <h2 class="center deep-purple-text">Set Password</h2>
+      <h2 class="center deep-purple-text">Ajoah~! Set Password</h2>
       <div class="row">        
         <div class="field col s12">         
           <label for="password">Enter Password</label>

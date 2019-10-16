@@ -17,7 +17,7 @@
                     <!-- <li v-if="user"><a href="#view_nav_reservation" class="modal-trigger" @click="showReserve()">예약자보기</a></li> -->
                     <!-- <li v-if="user"><a href="#reserve" class="modal-trigger">예약하기</a></li> -->
                     <li v-if="!user"><a class="sidenav-close" @click="showAbout()">About</a></li>        
-                    <li v-if="user"><a href="https://t.me/ajoah_bot" target="_blank">텔레그램봇 바로가기</a></li>
+                    <li><a href="https://t.me/ajoah_bot" target="_blank">텔레그램봇 바로가기</a></li>
                 </ul>
             </div>
         </nav> 
@@ -34,7 +34,7 @@
         <!-- <li v-if="user"><a href="#view_nav_reservation" class="modal-trigger sidenav-close" @click="showReserve()">예약자보기</a></li> -->
         <!-- <li v-if="user"><a href="#reserve" class="modal-trigger sidenav-close">예약하기</a></li> -->
         <li v-if="!user"><a class="sidenav-close" @click="showAbout()">About</a></li>        
-        <li v-if="user"><a href="https://t.me/ajoah_bot" target="_blank">텔레그램봇 바로가기</a></li>
+        <li ><a href="https://t.me/ajoah_bot" target="_blank">텔레그램봇 바로가기</a></li>
     </ul>
 
   <!-- 예약자보기 하단 모달 -->
@@ -96,10 +96,10 @@ export default {
     firebase.auth().onAuthStateChanged((user) => {
       if(user){
         this.user = user
-        console.log("this.user.name =>" + this.user.name)
-        console.log("this.user.email =>" + this.user.email)
-        console.log("this.user.uid =>" + this.user.uid)
-        console.log("this.user.photoURL =>" + this.user.photoURL)
+        // console.log("this.user.name =>" + this.user.name)
+        // console.log("this.user.email =>" + this.user.email)
+        // console.log("this.user.uid =>" + this.user.uid)
+        // console.log("this.user.phoneNumber =>" + this.user.phoneNumber)
 
       } else {
         this.user = null
@@ -116,8 +116,8 @@ export default {
                     .then(snapshot => {
                 snapshot.forEach(doc => {
                 let toilet_nav_reserve = doc.data()
-                console.clear()        
-                console.table(doc.data())                
+                // console.clear()        
+                // console.table(doc.data())                
                 this.toilet_nav_reserves.push(toilet_nav_reserve)   
             })
             })                        

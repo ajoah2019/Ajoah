@@ -20,7 +20,7 @@ const router = new Router({
             component: Signup
         },
         {
-            path: '/main',
+            path: '/index',
             name: 'Index',
             component: Index
         },
@@ -28,11 +28,6 @@ const router = new Router({
             path: '/setPassword',
             name: 'SetPassword',
             component: setPassword
-        },
-        {
-            path: '/login',
-            name: 'Login',
-            component: Login
         },
         {
             path: '/profile/:id',

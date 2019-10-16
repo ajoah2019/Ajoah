@@ -1,7 +1,7 @@
 <template>
 <div class="signup container">    
     <form class="card-panel" @submit.prevent="login">        
-      <h3 class="center deep-purple-text">AJOAH~ Login</h3>
+      <h3 class="center deep-purple-text">Ajoah~! Login</h3>
       <div class="row">        
         <div class="field col s12">         
           <label for="phNo">Enter Your HandPhone Number</label>
@@ -29,21 +29,22 @@ import "firebase/firestore";
   export default {
     data(){
       return{
-        phNo: '6505551234',
+        phNo: '01092270753',
         password: '123456'
       }
     },
-    methods:{
+    methods:{ 
       login(){
         let vm = this
-        // let countryCode = '+82' //대한민국
-        let countryCode = '+1' //미국
-        let email = countryCode + this.phNo + '@ajoah2019.com'
+        let countryCode = '+82' //대한민국
+        // let countryCode = '+1' //미국
+        let email = countryCode + this.phNo.substring(1) + '@ajoah2019.com'
         let password = this.password
         //
         firebase.auth().signInWithEmailAndPassword(email, password).then(function(){
-          //route to home on success !
-          vm.$router.push({path:'/main'})
+          //route to home on success !          
+          vm.$router.push({path:'/index'})
+          window.location.reload();
         }).catch(function(error) { 
           // Handle Errors here.
           var errorCode = error.code;

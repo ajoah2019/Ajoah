@@ -18,8 +18,8 @@
             </div>            
         </div>
         <div class="row" >             
-            <div class="col s12 l12">
-                    <span class="card-title right">[변경사항은 실시간 업데이트 됩니다.]</span>
+            <div class="col s12 l12"> 
+                    <span class="card-title right">[변경사항은 실시간 업데이트 됩니다. - 테스트]</span>
             </div> 
         </div> 
          <div class="row">             

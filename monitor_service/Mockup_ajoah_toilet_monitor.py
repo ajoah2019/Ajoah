@@ -5,7 +5,7 @@ import time
 toiletID=''
 toiletName=''
 testIDX=0  #Test var
-with open("toiletInfo.txt", "r",encoding="UTF8") as f:
+with open("toiletInfo1", "r",encoding="UTF8") as f:
     data = f.read().split('\n')
     print
     for idx in range(len(data)):
@@ -24,8 +24,12 @@ while True:
         print('UseSpace')
         useSpace(toiletID, toiletName)
         time.sleep(5)
+        useSpace(toiletID, toiletName)
+        time.sleep(5)
     else :
         print('notUseSpace')
+        notUseSpace(toiletID, toiletName)
+        time.sleep(5)
         notUseSpace(toiletID, toiletName)
     idxCnt+=1
     time.sleep(0.5)

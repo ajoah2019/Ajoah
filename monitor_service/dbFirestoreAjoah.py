@@ -11,6 +11,9 @@ db = firestore.client()
 
 
 
+def getTimeStamp():
+    return datetime.fromtimestamp(datetime.now().timestamp())
+
 def getSysDt():
     return datetime.fromtimestamp(datetime.now().timestamp()).strftime('%Y-%m-%d %H:%M:%S')
 
@@ -20,6 +23,7 @@ def getTimeLaps(pre, now):
 def useSpace(toiletID, toiletName):
     # 공통 변수 
     sysDt = getSysDt()
+    sysTstmp = getTimeStamp()
     toiletGrp = '.'.join(toiletID.split('.')[:2])
     
     # 사용하는 데이터 전송
@@ -27,6 +31,7 @@ def useSpace(toiletID, toiletName):
     doc_ref_current=doc_col.document(toiletID)
 
     dataTmp={
+        'timestamp' : str(sysTstmp),
         'group' : toiletGrp,
         'id' : toiletID,
         'name' : toiletName,
@@ -42,6 +47,7 @@ def useSpace(toiletID, toiletName):
 def notUseSpace(toiletID, toiletName):
     # 공통 변수 
     sysDt = getSysDt()
+    sysTstmp = getTimeStamp()
     toiletGrp = '.'.join(toiletID.split('.')[:2])
     
     # 사용하는 데이터 전송
@@ -67,6 +73,7 @@ def notUseSpace(toiletID, toiletName):
         
         doc_ref_history = db.collection('history').document(getSysDt()+'-'+toiletID)
         dataTmp = {
+            'timestamp' : str(sysTstmp),
             'id' : toiletID,
             'name' : toiletName,
             'using_from': usingFrom,

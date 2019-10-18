@@ -27,7 +27,7 @@
         <li v-if="!user" class="sidenav-close" @click="closeAbout()"><router-link :to="{ name: 'Signup' }">Signup</router-link></li>
         <li v-if="!user" class="sidenav-close" @click="closeAbout()"><router-link :to="{ name: 'Login' }">Login</router-link></li>
         <li v-if="user" class="sidenav-close"><a>{{ user.email }}</a></li>
-        <li v-if="user" class="sidenav-close"  @click="closeAbout()"><router-link :to="{ name: 'Index' }">메인화면</router-link></li>
+        <li v-if="user" class="sidenav-close"  @click="closeAbout()"><a @click="goMain">메인화면</a></li>
         <li v-if="user" class="sidenav-close"  @click="closeAbout()"><router-link :to="{ name: 'SetPassword' }">Set Password</router-link></li>
         <li v-if="user" class="sidenav-close"><a @click="logout">Logout</a></li>
         <li v-if="user"><a class="sidenav-close" @click="showAbout()">About</a></li>        
@@ -125,7 +125,8 @@ export default {
         SetPassword(){
             let vm = this
             // 패스워드 설정 화면 이동
-            vm.$router.push({path:'/setPassword'})     
+            vm.$router.push({path:'/setPassword'}) 
+            window.location.reload();    
         },
         logout(){
             firebase.auth().signOut().then(() => {
@@ -137,6 +138,12 @@ export default {
         },
         closeAbout(){
             this.about_view = false;            
+        },
+        goMain(){
+            let vm = this
+            // 패스워드 설정 화면 이동
+            vm.$router.push({path:'/index'})
+            window.location.reload();
         }
         
     }

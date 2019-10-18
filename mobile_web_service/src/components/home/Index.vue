@@ -1,8 +1,7 @@
 <template>
- <div class="container">    
+ <div>    
     <!-- [2] 화장실 현황 리스트-->
-     <div class="container">
-
+    <div class="container">
        <div class="row">
         <div class="col s12">  
          <div class="row">            
@@ -55,32 +54,32 @@
             </div>              
         </div>              
         </div>              
-        <div class="row" v-for="toilet_current in toilet_currents" :key="toilet_current.id">             
-            <div class="col s12 l6">
+        <div class="row">             
+            <div class="col s12 m6 l6" v-for="toilet_current in toilet_currents" :key="toilet_current.id">
                 <div class="card">
                     <div class="card-image"> 
-                        <!-- <img src="../../img/toilet_ing_6_low.jpg" alt="" v-if="toilet_current.using">
-                        <img src="../../img/toilet_low.jpg" alt="" v-else> -->
-                        <img v-bind:src="toilet_ing" alt="" v-if="toilet_current.using">
-                        <img v-bind:src="toilet_empty" alt="" v-else>
+                        <img src="../../img/toilet_ing_6_low.jpg" alt="" v-if="toilet_current.using">
+                        <img src="../../img/toilet_low.jpg" alt="" v-else>
+                        <!-- <img v-bind:src="toilet_ing" alt="" v-if="toilet_current.using">
+                        <img v-bind:src="toilet_empty" alt="" v-else> -->
                         <a href="" class="halfway-fab btn-floating red pulse" v-if="toilet_current.using">
                             <i class="material-icons">clear</i>                            
                         </a>
-                        <a href="" class="halfway-fab btn-floating yellow pulse" v-else>
+                        <a href="" class="halfway-fab btn-floating green pulse" v-else>
                             <i class="material-icons">sentiment_satisfied_alt</i>
                         </a>                        
                     </div>
                     <div class="card-content">
                         <span class="card-title">{{toilet_current.name}}</span>                        
                          <span class="badge white-text pink" v-if="toilet_current.using">사용중</span>
-                         <span class="badge black-text yellow pulse" v-else>비었음</span>                         
+                         <span class="badge black-text green pulse" v-else>비었음</span>                         
                     </div>                    
-                </div>
+                </div> 
             </div>            
         </div>
        </div>  
-     </div> 
-     </div> 
+     </div>      
+    </div>           
     <!-- 화장실 현황 리스트-->
 
     <!-- [3] Index Vue Footer-->
@@ -110,29 +109,6 @@
           </div>
      </footer>
 
-    <!-- <div class="container" v-if="show">
-    <div class="row" >
-     <div class="col s12 l12">
-        <nav class="nav-extended">
-            <div class="nav-wrapper"> 
-            <a href="#!" class="brand-logo center text-center">3명 예약중</a>      
-            </div>
-            <div class="nav-content">            
-            <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal left modal-trigger" href="#view_reservation" @click="showReserve()">
-                <i class="material-icons">add</i>
-            </a>
-            </div>
-            <div class="footer-copyright">
-                <div class="container center text-align">
-                    © 2019 Copyright Ajoah            
-                </div>
-            </div>
-        </nav>
-        </div>
-    </div>
-    </div> -->
-    <!-- Index Vue Footer-->
-
     <!-- 예약하기 전 Confirm 확인창 Modal-->
     <div id="reserveconfirm" class="modal">
         <div class="modal-content">
@@ -141,6 +117,7 @@
         <div class="modal-footer">
             <a href="#!" class="modal-close btn orange">취소</a>
             <a class="modal-close btn orange" @click="DoReserve()">확인</a>
+            <a class="modal-close btn orange" @click="ChkTest()">확인2</a>
         </div>
     </div>
     <!-- 예약하기 전 Confirm 확인창 Modal-->
@@ -164,24 +141,6 @@
         </ul>
     </div> 
     <!-- 예약자보기 하단 모달 -->
-
-    <!-- Floating Button Menu 버튼 -->   
-    <!-- <div class="fixed-action-btn">
-        <a class="btn-floating btn-large red">
-            <i class="large material-icons">mode_edit</i>
-        </a> 
-        <ul>
-            <li><a class="btn-floating red modal-trigger" href="#verify"><i class="material-icons">insert_chart</i></a></li>
-            <li><a class="btn-floating yellow darken-1 modal-trigger" href="#reserve"><i class="material-icons">format_quote</i></a></li>
-            <li><a class="btn-floating green modal-trigger" href="#view_reservation" @click="showReserve()"><i class="material-icons">publish</i></a></li>
-            <li><a class="btn-floating blue modal-trigger" href="#about"><i class="material-icons">attach_file</i></a></li>
-            <li><a class="btn-floating blue modal-trigger" href="https://t.me/ajoah_bot" target="_blank"><i class="material-icons">all_inclusive</i></a></li>
-     </ul>
-    </div>  -->
-    <!-- Floating Button Menu 버튼 -->
-
-    
-
   </div>
 </template>
 
@@ -191,6 +150,10 @@ import moment from 'moment'
 import * as firebase from "firebase/app"
 import "firebase/auth";
 import "firebase/firestore";
+
+// 참조 오브젝트 초기화
+var tmpObj = {};
+var tmpGroupObj = {};
 
 export default {
   name: 'Index',
@@ -214,8 +177,7 @@ export default {
       toilet_empty : process.env.BASE_URL + "static/img/toilet_low.jpg"      
     }
   },
-  created(){    
-    
+  created(){        
     
     let baseUrl = ''
     if (process.env.NODE_ENV === 'production') {
@@ -232,33 +194,58 @@ export default {
     var target_value = target.options[target.selectedIndex].value;
     var target_name = target.options[target.selectedIndex].text;
 
+
     this.toilet_selected_val = target_value; 
     this.toilet_selected_nm = target_name;    
 
-    let ref = db.collection("current").where("group","==",target_value)
+    let ref = db.collection("current")  
     
+    console.log("mounted");
+
     // subscribe to changes to the 'messages' collection
     ref.onSnapshot(snapshot => {
       snapshot.docChanges().forEach(change => {
 
         if (change.type === "added") {
                 console.log("New city: ", change.doc.data());
-                let toilet_current = change.doc.data()        
+                console.log(this.toilet_currents);
+
+                let toilet_current = change.doc.data()    
+                
+                // 참조 오브젝트에 화장실 정보 맵핑                
+                tmpObj[toilet_current.id] = toilet_current;
+
+                if(tmpGroupObj[toilet_current.group] == null){
+
+                    tmpGroupObj[toilet_current.group] = [];                    
+                }
+
+                tmpGroupObj[toilet_current.group] = toilet_current;
+
+                console.log(tmpObj + "tmpObj");
+                console.log(tmpGroupObj + "tmpGroupObj");
                 //console.table(doc.data())                
-                this.toilet_currents.push(toilet_current)
+                // this.toilet_currents.push(toilet_current)
         }
 
         if (change.type === "modified") {
-                // console.log("Modified city: ", change.doc.data());
+                console.log("Modified city: ", change.doc.data());
                 // console.log("Modified city: ", change.doc.data().id);
+
+                // 변경된 오브젝트만 새로 맵핑
+                tmpObj[change.doc.data().id] = change.doc.data();
 
                 // var found = toilet_currents.find(function(change.doc.data().id) {
                 //   return change.doc.data().id;
                 // });
-             this.doJohoi();    
+             //this.toilet_currents.splice(0);      
+             //this.doJohoi();    
         }
       })
     }) 
+ 
+
+     this.toilet_currents = tmpGroupObj[this.toilet_selected_val]
 
   },
   methods: {
@@ -267,7 +254,7 @@ export default {
             
             this.showPreloader = true;
              // toilet_currents 초기화
-            this.toilet_currents.splice(0);                     
+            // this.toilet_currents.splice(0);                     
             // console.log(event.target.value)
             var target = document.getElementById("toilet_select");
             var target_value = target.options[target.selectedIndex].value;
@@ -275,12 +262,12 @@ export default {
 
             this.toilet_selected_val = target_value; 
             this.toilet_selected_nm = target_name;            
-            this.doJohoi();            
+            this.doJohoi();             
                                                                             
         }, 
         doJohoi(){
-            
-            this.toilet_currents.splice(0);                                 
+             
+            // this.toilet_currents.splice(0);                                 
 
             var target = document.getElementById("toilet_select");
             var target_value = target.options[target.selectedIndex].value;
@@ -289,15 +276,21 @@ export default {
             this.toilet_selected_val = target_value; 
             this.toilet_selected_nm = target_name;    
             
-            db.collection("current").where("group","==",target_value).get()    
-                    .then(snapshot => {
-                snapshot.forEach(doc => {
-                let toilet_current = doc.data()        
-                //console.table(doc.data())                
-                this.toilet_currents.push(toilet_current)   
-            })
-            })
+            // db.collection("current").where("group","==",target_value).get()    
+            //         .then(snapshot => {
+            //     tmpObj = {};
+            //     snapshot.forEach(doc => {
+            //         let toilet_current = doc.data();       
+            //         //console.table(doc.data())                
+            //         this.toilet_currents.push(toilet_current);
+            //         console.log("---");
+            //         console.log(this.toilet_currents);
+            //         tmpObj[doc.data().id] = doc.data();
+            //     })
+            // })
             
+            this.toilet_currents = tmpGroupObj[this.toilet_selected_val]
+
             this.showPreloader = false ;          
             this.show = true;
         },
@@ -315,6 +308,16 @@ export default {
                 this.toilet_reserves.push(toilet_reserve)   
             })
             })                         
+        },
+        ChkTest()
+        {
+            console.log("------------");
+            console.log(tmpObj);
+            if(tmpObj["Y7.M.01"].using) 
+                tmpObj["Y7.M.01"].using = false;
+            else
+                tmpObj["Y7.M.01"].using = true;
+            // console.log(tmpObj["Y7.M.01"].using = true);
         },
         DoReserve(){
             

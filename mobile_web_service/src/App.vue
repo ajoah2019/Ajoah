@@ -14,12 +14,7 @@ export default {
   props:['user'],
   components: {
     Navbar
-  },
-  data () {
-     return {
-         publicPath: process.env.BASE_URL
-     }
-  }
+  }  
 }
 </script>
 

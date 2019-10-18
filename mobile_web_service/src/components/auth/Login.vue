@@ -29,8 +29,8 @@ import "firebase/firestore";
   export default {
     data(){
       return{
-        phNo: '01092270753',
-        password: '123456'
+        phNo: '',
+        password: ''
       }
     },
     methods:{ 

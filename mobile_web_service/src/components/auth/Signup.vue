@@ -2,7 +2,8 @@
   <div class="container">
     <div id="recaptcha-container"></div>       
     <form class="card-panel" @submit.prevent="verifyOtp">        
-      <h3 class="center deep-purple-text">Ajoah~! Signup</h3>
+      <h3 class="center deep-purple-text">Ajoah 회원가입</h3>
+      <div style="height:30px"></div>      
       <div class="row">
           <div class="field col s12">              
               <label for="icon_prefix">이름(별명)</label>
@@ -37,7 +38,7 @@
         </div>
       </div>
        <div class="field center">
-        <button class="btn deep-purple">Signup</button>
+        <button class="btn deep-purple">회원가입 하기</button>
       </div>      
     </form>        
   </div>  
@@ -67,6 +68,10 @@ export default {
       nickname : '',
       vefication_code : false
     }
+  },
+  created(){
+    this.$store.commit('select_view_false')       
+    // console.log("SetPassword this.$store.state.select_view" + this.$store.state.select_view)
   },
   methods: { 
     signup(){

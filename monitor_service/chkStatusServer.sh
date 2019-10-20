@@ -7,6 +7,7 @@ RUNFILE=ajoah_toilet_monitor.py
 
 # 0. delete all python cmd 
 RUN_PID=`ps -a | grep python3 | awk '{print $1 }'`
+echo "[$RUN_PID]"
 for pid in $RUN_PID
 do
     echo "kill -8 $pid"
@@ -17,8 +18,6 @@ done
 # 0.1 Run base program
 python3 $RUNFILE 1 &
 python3 $RUNFILE 2 &
-RUN_PID=`ps -a | grep python3 | awk '{print $1 }'`
-echo "[$RUN_PID]"
 
 # chk src
 while [ 0 = 0 ]
@@ -42,19 +41,18 @@ do
         echo "  myHEAD [$myHEAD] \n serHEAD [$serHEAD]"
         # 5. rebuild 
         git pull
-	for pid in $RUN_PID
-	do
-	    echo "kill -8 $pid"
-            kill -8 $pid
-            sleep 1
-	done
-
-        python3 $RUNFILE 1 &
-	python3 $RUNFILE 2 &
 
         RUN_PID=`ps -a | grep python3 | awk '{print $1 }'`
-        echo "[$RUN_PID"]
-        
+        echo "[$RUN_PID]"
+        for pid in $RUN_PID
+        do
+	echo "kill -8 $pid"
+            kill -8 $pid
+            sleep 1
+        done
+
+        python3 $RUNFILE 1 &
+        python3 $RUNFILE 2 &
     fi
     
     sleep 5

@@ -5,6 +5,9 @@ import time
 toiletID=''
 toiletName=''
 testIDX=0  #Test var
+
+
+
 with open("toiletInfo1", "r",encoding="UTF8") as f:
     data = f.read().split('\n')
     print
@@ -20,17 +23,18 @@ with open("toiletInfo1", "r",encoding="UTF8") as f:
 idxCnt=0
 while True:
     #1. init
-    if idxCnt % 2 == 0 :
+    if idxCnt % 2 != 0 :
         print('UseSpace')
         useSpace(toiletID, toiletName)
-        time.sleep(5)
+        time.sleep(3)
         useSpace(toiletID, toiletName)
-        time.sleep(5)
+        time.sleep(3)
     else :
         print('notUseSpace')
         notUseSpace(toiletID, toiletName)
-        time.sleep(5)
+        time.sleep(3)
         notUseSpace(toiletID, toiletName)
+        time.sleep(3)
     idxCnt+=1
     time.sleep(0.5)
     

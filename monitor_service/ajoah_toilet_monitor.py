@@ -18,19 +18,24 @@ print('SensorNumber['+str(SENSOR_NUMBER)+']')
 # data Init 
 isTest=True
 
-pirPin=0
-
+pirPin=0   # motion Sensor
+schPin=0   # Magnetic Switch
 if SENSOR_NUMBER == 1 :
     pirPin =7
+    schPin= 18 
 elif SENSOR_NUMBER == 2 :
     pirPin = 8
+    schPin= 22
+    
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(pirPin, GPIO.IN, GPIO.PUD_UP)
+GPIO.setup(schPin,GPIO.IN)
 
 timelaps=1
 timeidx=0
 timeInterval=20 #base second is 4 sec. 
-threshold=int((timeInterval/timelaps)*0.1)  #total count 4s/timelaps
+threshold=0.1  #total count 4s/timelaps
+schthreshold=0.8
 detectCnt=0
 
 
@@ -60,9 +65,12 @@ with open("toiletInfo"+str(SENSOR_NUMBER), "r") as f:
             toiletName=data[idx].split('\"')[1]
 
 # 2. 실행
+
+isUse=False
 while True:
     #1. init
     detectCnt=0
+    touchCnt=0
     for i in range(int(timeInterval/timelaps)):
         if isTest:
             print('['+str(timeidx*timelaps), end=']')
@@ -70,20 +78,29 @@ while True:
         if GPIO.input(pirPin) == True:
             logprint("Motion detected!")
             detectCnt+=1
-        #else:
-            #logprint(" ")
+        if GPIO.input(schPin) == True:
+            logprint("Door Closed!")
+            touchCnt+=1
+            
         sleep(timelaps)
         timeidx+=1
         
     logprint('detectCnt ['+str(detectCnt)+']')
+    logprint('touchCnt  ['+str(touchCnt )+']')
     logprint('threshold ['+str(threshold)+']')
 
-
-    if detectCnt >= threshold :
+    
+    if detectCnt/timeInterval >= threshold and touchCnt/timeInterval >= schthreshold :
         logprint('this is Human')
         logprint('UseSpace')
         useSpace(toiletID, toiletName)
+        isUse=True
+    elif isUse and touchCnt/timeInterval >= schthreshold :
+        logprint('Doorclosed with person')
+        isUse=True
+        
     else :
+        isUse=False
         logprint('notUseSpace')
         notUseSpace(toiletID, toiletName)
 

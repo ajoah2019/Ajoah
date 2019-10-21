@@ -26,15 +26,15 @@ while True:
     if idxCnt % 2 != 0 :
         print('UseSpace')
         useSpace(toiletID, toiletName)
-        time.sleep(3)
+        time.sleep(2)
         useSpace(toiletID, toiletName)
-        time.sleep(3)
+        time.sleep(2)
     else :
         print('notUseSpace')
         notUseSpace(toiletID, toiletName)
-        time.sleep(3)
+        time.sleep(2)
         notUseSpace(toiletID, toiletName)
-        time.sleep(3)
+        time.sleep(2)
     idxCnt+=1
     time.sleep(0.5)
     

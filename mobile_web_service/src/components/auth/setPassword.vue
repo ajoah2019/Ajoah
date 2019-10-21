@@ -1,21 +1,22 @@
 <template>
   <div class="signup container">    
     <form class="card-panel" @submit.prevent="setPassword">        
-      <h2 class="center deep-purple-text">Ajoah~! Set Password</h2>
+      <h3 class="center deep-purple-text">패스워드 설정</h3>
+      <div style="height:30px"></div>      
       <div class="row">        
         <div class="field col s12">         
-          <label for="password">Enter Password</label>
+          <label for="password">패스워드를 입력하세요</label>
           <input id="password" type='password' v-model="password">                                     
         </div>                   
       </div>      
       <div class="row">        
         <div class="field col s12">         
-          <label for="password_2">Re-enter Password</label>
+          <label for="password_2">패스워드를 다시한번 입력하세요</label>
           <input id="password_2" type='password' v-model="password_2">           
         </div>      
       </div>     
        <div class="field center">
-        <button class="btn deep-purple">Set Password</button>
+        <button class="btn deep-purple">패스워드 설정하기</button>
       </div>      
     </form> 
   </div>
@@ -33,6 +34,25 @@ import "firebase/firestore";
         password_2 : ''
       }
     },
+    created(){        
+      
+      this.$store.commit('select_view_false')       
+      // console.log("SetPassword this.$store.state.select_view" + this.$store.state.select_view)
+
+      let user = firebase.auth().currentUser
+      firebase.auth().onAuthStateChanged((user) => {
+        if(user){
+          this.user = user        
+        } else {
+          this.user = null
+          
+          let vm = this
+    
+          vm.$router.push({path:'/login'})
+          window.location.reload();
+        }  
+      })
+   },
     methods:{
       setPassword(){
         if(this.password != this.password_2){

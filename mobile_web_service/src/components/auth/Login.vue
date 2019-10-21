@@ -1,21 +1,21 @@
 <template>
 <div class="signup container">    
     <form class="card-panel" @submit.prevent="login">        
-      <h3 class="center deep-purple-text">Ajoah~! Login</h3>
+      <h3 class="center deep-purple-text">Ajoah 로그인</h3>
       <div class="row">        
         <div class="field col s12">         
-          <label for="phNo">Enter Your HandPhone Number</label>
+          <label for="phNo">핸드폰번호를 입력해 주세요.</label>
           <input id="phNo" type='number' v-model="phNo">                                     
         </div>                   
       </div>      
       <div class="row">        
         <div class="field col s12">         
-          <label for="password">Enter Password</label>
+          <label for="password">패스워드를 입력해 주세요.</label>
           <input id="password" type='password' v-model="password">           
         </div>      
       </div>     
        <div class="field center">
-        <button class="btn deep-purple">Login</button>
+        <button class="btn deep-purple">로그인 하기</button>
       </div>      
     </form> 
   </div>
@@ -33,6 +33,15 @@ import "firebase/firestore";
         password: ''
       }
     },
+    created(){
+
+      //  console.log("Login this.$store.state.select_view = " + this.$store.state.select_view)
+      
+    },
+    mounted(){
+        
+        // console.log("Login this.select_view = " + this.select_view)        
+    },
     methods:{ 
       login(){
         let vm = this
@@ -42,11 +51,12 @@ import "firebase/firestore";
         let password = this.password
         //
         firebase.auth().signInWithEmailAndPassword(email, password).then(function(){
-          //route to home on success !          
-          vm.$router.push({path:'/index'})
-          window.location.reload();
+          //route to home on success !
+          vm.$store.commit('select_view_true')         
+          vm.$router.push({name:'Index'})
+          window.location.reload();          
         }).catch(function(error) { 
-          // Handle Errors here.
+          // Handle Errors here. 
           var errorCode = error.code;
           var errorMessage = error.message;
           // ...

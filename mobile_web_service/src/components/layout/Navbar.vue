@@ -2,64 +2,89 @@
 <div> 
   <div class="navbar-fixed">
         <nav class="nav-wrapper indigo">
-            <div class="container">
-                <a href="#" class="brand-logo">AJOAH~!</a>
+            <div class="container"> 
+                <a href="#" class="brand-logo"  @click="goMain()">AJOAH~!</a>
                 <a href="#" class="sidenav-trigger" data-target="mobile-links">
-                    <i class="material-icons">menu</i>
+                    <i class="material-icons">menu</i> 
                 </a>
                 <ul class="right hide-on-med-and-down">                                        
-                    <li v-if="!user"><router-link :to="{ name: 'Signup' }">Signup</router-link></li>
-                    <li v-if="!user"><router-link :to="{ name: 'Login' }">Login</router-link></li>                    
-                    <li v-if="user"><a>{{ user.email }}</a></li>
-                    <li v-if="user"><a @click="SetPassword">Set Password</a></li>
-                    <li v-if="user"><a @click="logout">Logout</a></li>
-                    <li v-if="user"><a class="sidenav-close" @click="showAbout()">About</a></li>        
+                    <li v-if="!user"><router-link :to="{ name: 'Signup' }">회원가입</router-link></li>
+                    <li v-if="!user"><router-link :to="{ name: 'Login' }">로그인</router-link></li>                    
+                    <li v-if="user"><a @click="SetPassword">{{ this.toilet_nickname }}</a></li>
+                    <!-- <li v-if="user" class="sidenav-close"  @click="closeAbout()"><a @click="goMain">메인화면</a></li>                     -->
+                    <li v-if="user"><a @click="logout">로그아웃</a></li>
+                    <!-- <li v-if="user"><a class="sidenav-close" @click="showAbout()">About</a></li>         -->
+                    <li><a class="sidenav-close modal-trigger" href="#about">About</a></li>
                     <!-- <li v-if="user"><a href="#view_nav_reservation" class="modal-trigger" @click="showReserve()">예약자보기</a></li> -->
-                    <!-- <li v-if="user"><a href="#reserve" class="modal-trigger">예약하기</a></li> -->
-                    <li v-if="!user"><a class="sidenav-close" @click="showAbout()">About</a></li>        
-                    <li><a href="https://t.me/ajoah_bot" target="_blank">텔레그램봇 바로가기</a></li>
+                    <!-- <li v-if="user"><a href="#reserve" class="modal-trigger">예약하기</a></li> -->                    
+                    <!-- <li><a href="https://t.me/ajoah_bot" target="_blank">텔레그램봇 바로가기</a></li> -->
                 </ul>
             </div>
         </nav> 
     </div>
  
     <ul class="sidenav" id="mobile-links">
-        <li v-if="!user" class="sidenav-close" @click="closeAbout()"><router-link :to="{ name: 'Signup' }">Signup</router-link></li>
-        <li v-if="!user" class="sidenav-close" @click="closeAbout()"><router-link :to="{ name: 'Login' }">Login</router-link></li>
-        <li v-if="user" class="sidenav-close"><a>{{ user.email }}</a></li>
-        <li v-if="user" class="sidenav-close"  @click="closeAbout()"><a @click="goMain">메인화면</a></li>
-        <li v-if="user" class="sidenav-close"  @click="closeAbout()"><router-link :to="{ name: 'SetPassword' }">Set Password</router-link></li>
-        <li v-if="user" class="sidenav-close"><a @click="logout">Logout</a></li>
-        <li v-if="user"><a class="sidenav-close" @click="showAbout()">About</a></li>        
+        <li v-if="!user" class="sidenav-close" @click="closeAbout()"><router-link :to="{ name: 'Signup' }">회원가입</router-link></li>
+        <li v-if="!user" class="sidenav-close" @click="closeAbout()"><router-link :to="{ name: 'Login' }">로그인</router-link></li>
+        <li v-if="user" class="sidenav-close"><a @click="SetPassword" class="">{{ this.toilet_nickname }}</a></li>
+        <!-- <li v-if="user" class="sidenav-close"  @click="closeAbout()"><a @click="goMain">메인화면</a></li>         -->
+        <li v-if="user" class="sidenav-close"><a @click="logout">로그아웃</a></li>
+        <li ><a class="sidenav-close modal-trigger" href="#about">About</a></li>        
         <!-- <li v-if="user"><a href="#view_nav_reservation" class="modal-trigger sidenav-close" @click="showReserve()">예약자보기</a></li> -->
-        <!-- <li v-if="user"><a href="#reserve" class="modal-trigger sidenav-close">예약하기</a></li> -->
-        <li v-if="!user"><a class="sidenav-close" @click="showAbout()">About</a></li>        
-        <li ><a href="https://t.me/ajoah_bot" target="_blank">텔레그램봇 바로가기</a></li>
+        <!-- <li v-if="user"><a href="#reserve" class="modal-trigger sidenav-close">예약하기</a></li> -->        
+        <!-- <li ><a href="https://t.me/ajoah_bot" target="_blank">텔레그램봇 바로가기</a></li> -->
     </ul>
 
-  <!-- 예약자보기 하단 모달 -->
-    <div id="view_nav_reservation" class="modal bottom-sheet">        
-        <ul class="collection with-header">
-            <li class="collection-header">
-                <h4>Subscribers</h4>
-            </li>
-            <li class="collection-item avatar" v-for="toilet_nav_reserve in toilet_nav_reserves" :key="toilet_nav_reserve.id">
-                <i class="material-icons circle blue" v-if="toilet_nav_reserve.gender='M'">person</i>
-                <i class="material-icons circle pink" v-else>person</i>
-                <span class="title">{{toilet_nav_reserve.nickname}}</span>
-                <p class="grey-text">{{toilet_nav_reserve.resv_channel}}</p>
-                <p class="grey-text">{{toilet_nav_reserve.resv_dttm}}</p>
-                <!-- <a href="" class="secondary-content">
-                    <i class="material-icons light-blue-text">email</i>
-                </a>  -->
-            </li>            
-        </ul>
-    </div> 
-    <!-- 예약자보기 하단 모달 -->
+    <!-- <div class="row" v-if="this.$store.state.select_view">            
+            <div class="col s12">
+                <select id="toilet_select" @change="onChange($event)">
+                    <optgroup label="연호빌딩 8층">
+                    <option value="Y8.M" selected>연호8층 남자</option>
+                    <option value="Y8.F">연호8층 여자</option>
+                    </optgroup>
+                    <optgroup label="연호빌딩 7층">
+                    <option value="Y7.M">연호7층 남자</option>
+                    <option value="Y7.F">연호7층 여자</option>
+                    </optgroup>
+                </select>
+            </div>            
+    </div> -->
+    <!-- About Modal Structure -->
+    <div id="about" class="modal ">
+        <div class="modal-content ">
+            <footer class="page-footer">
+            <div class="container">
+                <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Ajoah는 여러분의 쾌적한 화장실 이용을 응원합니다!</h5>
+                    <p class="grey-text text-lighten-4"></p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text"></h5>
+                    <h5 class="white-text"></h5>
+                    <ul>
+                    <li><a class="grey-text text-lighten-3" >* 만든이: 송준수, 윤경민, 정종현</a></li>
+                    <li><a class="grey-text text-lighten-3" >* 만든날짜: 2019년 10월</a></li>                                        
+                    </ul>
+                </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                Copyright 2019. 송-윤-정.<br/>All Right Reserved.
+                <!-- <a class="grey-text text-lighten-4 right" href="#!">More Links</a> -->
+                </div>
+            </div>
+            </footer>
+        </div>
+        <div class="modal-footer ">              
+            <a href="#" class="modal-close waves-effect waves-green btn-flat ">확인</a>
+        </div>
+    </div>
+    <!-- About Modal Structure -->
 
-    <!-- About Modal -->
-    
-   <div id="about" class="card" v-if="about_view">
+    <!-- About Div Image-->    
+   <!-- <div id="about" class="card" v-if="about_view">
         <div class="card-image waves-effect waves-block waves-light">
             <img class="activator" src="../../img/about_low.jpg">
         </div>
@@ -71,8 +96,8 @@
             <span class="card-title grey-text text-darken-4">기관개발부 ETAX Unit<i class="material-icons right">close</i></span>
             <p>기관개발부 송준수, 윤경민, 정종현이 만들었어요.</p>
         </div>
-    </div>            
-    <!-- About Modal -->
+    </div>             -->
+    <!-- About Div Image-->    
  
 </div>
 </template>
@@ -82,16 +107,19 @@ import db from '@/firebase/init'
 import firebase from 'firebase'
 
 export default {
-  name: 'Navbar',
+  name: 'Navbar',  
   data(){
-    return {
-        about_view : false,
+    return {        
         user: null,
-        toilet_nav_reserves : []       
+        toilet_nav_reserves : [],
+        toilet_nickname : ''        
     }
   },
   created(){
     
+    //  this.select_view = true
+    // console.log("Navbar this.$store.state.select_view = " + this.$store.state.select_view)
+
     // let user = firebase.auth().currentUser
     firebase.auth().onAuthStateChanged((user) => {
       if(user){
@@ -101,10 +129,35 @@ export default {
         // console.log("this.user.uid =>" + this.user.uid)
         // console.log("this.user.phoneNumber =>" + this.user.phoneNumber)
 
+            var user = firebase.auth().currentUser;          
+            let phoneNumber = firebase.auth().currentUser.phoneNumber;
+
+            console.log("phoneNumber = " + phoneNumber);
+
+            let ref = db.collection('users').doc(phoneNumber)
+             
+         
+            ref.get().then(doc => {
+
+            if(doc.exists){                
+                
+                this.toilet_nickname = doc.data().nickname;                
+                console.log("toilet_nickname = " + this.toilet_nickname);                
+
+            }else{            
+               
+                alert('회원가입이 되어 있지 않습니다.');                
+            }
+            })
+
+
       } else {
         this.user = null
       }
     })    
+  },
+  mounted(){
+    //   console.log("Navbar this.select_view = " + this.select_view) 
   },
   methods: {        
         showReserve(){
@@ -141,8 +194,12 @@ export default {
         },
         goMain(){
             let vm = this
-            // 패스워드 설정 화면 이동
+            // 메인화면 이동
             vm.$router.push({path:'/index'})
+            window.location.reload();
+        },
+        refresh(){            
+            // 화면새로고침           
             window.location.reload();
         }
         

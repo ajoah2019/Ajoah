@@ -11,9 +11,14 @@
       <div class="row">        
         <div class="field col s12">         
           <label for="password">패스워드를 입력해 주세요.</label>
-          <input id="password" type='password' v-model="password">           
-        </div>      
-      </div>     
+          <input id="password" type='password' v-model="password">             
+        </div>       
+      </div>  
+       <div class="row">        
+        <div class="field col s12">         
+          <a @click="goSignUp" style="cursor: hand">회원으로 가입하시려면 여기를 눌러주세요</a>         
+        </div>       
+      </div>        
        <div class="field center">
         <button class="btn deep-purple">로그인 하기</button>
       </div>      
@@ -67,7 +72,13 @@ import "firebase/firestore";
           //
           alert('Error: ' + errMsg)
         });
-      }
+      }, 
+      goSignUp(){
+            
+            let vm = this
+            // 메인화면 이동
+            vm.$router.push({path:'/signup'})                      
+        }
     }
   }
 </script>

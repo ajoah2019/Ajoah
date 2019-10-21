@@ -14,7 +14,8 @@
       <div class="row">        
         <div class="field col s12">         
           <label for="icon_prefix">핸드폰번호</label>
-          <input id="icon_prefix" type="number" class="validate" data-length="12" v-model="phNo">
+          <!-- <input id="icon_prefix" type="number" class="validate" data-length="12" v-model="phNo" @keyup="getPhoneMask(phNo)"> -->
+          <input id="icon_prefix" type="number" class="validate" data-length="12" v-model="phNo">           
           <span class="helper-text" data-error="wrong" data-success="right"></span>                                     
         </div>             
         <div class="field right">
@@ -61,7 +62,7 @@ export default {
       alias: null,
       feedback: null,
       slug: null,
-      phNo: '',
+      phNo: null,
       appVerifier : '',
       otp : '',
       answer : '',
@@ -73,7 +74,75 @@ export default {
     this.$store.commit('select_view_false')       
     // console.log("SetPassword this.$store.state.select_view" + this.$store.state.select_view)
   },
-  methods: { 
+  methods: {
+     getPhoneMask(val) {
+        let res = this.getMask(val)
+        this.phNo = res
+        //서버 전송 값에는 '-' 를 제외하고 숫자만 저장
+        this.model.phNo = this.phNo.replace(/[^0-9]/g, '')
+    },
+    getMask( phoneNumber ) {
+      if(!phoneNumber) return phoneNumber
+      phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
+  
+      let res = ''
+      if(phoneNumber.length < 3) {
+          res = phoneNumber
+      }
+      else {
+          if(phoneNumber.substr(0, 2) =='02') {
+      
+              if(phoneNumber.length <= 5) {//02-123-5678
+                  res = phoneNumber.substr(0, 2) + '-' + phoneNumber.substr(2, 3)
+              }
+              else if(phoneNumber.length > 5 && phoneNumber.length <= 9) {//02-123-5678
+                  res = phoneNumber.substr(0, 2) + '-' + phoneNumber.substr(2, 3) + '-' + phoneNumber.substr(5)
+              }
+              else if(phoneNumber.length > 9) {//02-1234-5678
+                  res = phoneNumber.substr(0, 2) + '-' + phoneNumber.substr(2, 4) + '-' + phoneNumber.substr(6)
+              }
+      
+          } else {
+              if(phoneNumber.length < 8) {
+                  res = phoneNumber
+              }
+              else if(phoneNumber.length == 8)
+              {
+                  res = phoneNumber.substr(0, 4) + '-' + phoneNumber.substr(4)
+              }
+              else if(phoneNumber.length == 9)
+              {
+                  res = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3, 3) + '-' + phoneNumber.substr(6)
+              }
+              else if(phoneNumber.length == 10)
+              {
+                  res = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3, 3) + '-' + phoneNumber.substr(6)
+              }
+              else if(phoneNumber.length > 10) { //010-1234-5678
+                  res = phoneNumber.substr(0, 3) + '-' + phoneNumber.substr(3, 4) + '-' + phoneNumber.substr(7)
+              }
+          }
+      }
+      return res
+      },
+    chksignup(){
+         
+         let vm = this
+         let countryCode = '+82' //대한민국
+        //  let countryCode = '+1'
+         let phoneNumber = countryCode + this.phNo.substring(1)
+         let ref = db.collection('users').doc(phoneNumber)
+         
+         ref.get().then(doc => {
+
+           if(doc.exists){
+              alert(this.phNo + ' 핸드폰번호로 이미 가입 되었습니다.');
+              return;
+           }else{                          
+              alert(this.phNo + ' 핸드폰번호로 가입이 가능합니다.');              
+           }
+         })                                            
+    },
     signup(){
          
          let vm = this
@@ -113,29 +182,46 @@ export default {
     },    
     sendOtp(){
 
-        if(this.phNo.length == 0){
-          alert('핸드폰번호를 입력해 주세요!');
-        }else if(this.phNo.length < 10){
-          alert('올바른 핸드폰번호인지 확인해 주세요. ['+this.phNo.length+']');
-        }else{
-          
-          //let countryCode = '+1'
-          let countryCode = '+82' //대한민국          
-          let phoneNumber = countryCode + this.phNo
-          //
-          let appVerifier = this.appVerifier                    
-          
-          firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-            .then(function (confirmationResult) {
-              // SMS sent. Prompt user to type the code from the message, then sign the
-              // user in with confirmationResult.confirm(code).
-              window.confirmationResult = confirmationResult;               
-              this.vefication_code = true;
-            }).catch(function (error) {
-            // Error; SMS not sent
-            // ...                        
-          });
-        }
+        let vm = this
+         let countryCode = '+82' //대한민국
+        //  let countryCode = '+1'
+         let phoneNumber = countryCode + this.phNo.substring(1)
+         let ref = db.collection('users').doc(phoneNumber)
+         
+         ref.get().then(doc => {
+
+           if(doc.exists){              
+              M.toast({html: '핸드폰번호로 이미 가입 되었습니다.<br/>로그인화면으로 이동합니다.', classes: 'rounded'})                 
+              let vm = this
+              // 메인화면 이동
+              vm.$router.push({path:'/login'}) 
+              
+           }else{                          
+              if(this.phNo.length == 0){
+                alert('핸드폰번호를 입력해 주세요!');
+              }else if(this.phNo.length < 10){
+                alert('올바른 핸드폰번호인지 확인해 주세요. ['+this.phNo.length+']');
+              }else{
+                
+                //let countryCode = '+1'
+                let countryCode = '+82' //대한민국          
+                let phoneNumber = countryCode + this.phNo
+                //
+                let appVerifier = this.appVerifier                    
+                
+                firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+                  .then(function (confirmationResult) {
+                    // SMS sent. Prompt user to type the code from the message, then sign the
+                    // user in with confirmationResult.confirm(code).
+                    window.confirmationResult = confirmationResult;               
+                    this.vefication_code = true;
+                  }).catch(function (error) {
+                  // Error; SMS not sent
+                  // ...                        
+                });
+              }
+           }
+         })                        
       },
       //
       verifyOtp(){

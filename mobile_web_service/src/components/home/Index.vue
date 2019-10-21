@@ -23,11 +23,17 @@
                     <span class="card-title right">[변경사항은 실시간 업데이트 됩니다.]</span>
             </div> 
         </div>  -->
+<<<<<<< HEAD
     <!-- <div class="row" style="border: 1px solid; margin: 1px 1px"> -->
     <div class="row">
        <div class="col s12">  
          <!-- <div class="row" style="border: 1px solid">              -->
           <div class="row">
+=======
+    <div class="row" style="border: 1px solid; margin: 1px 1px">
+       <div class="col s12">  
+         <div class="row" style="border: 1px solid">             
+>>>>>>> 177a4180498bec077b5337047d8c0b7ec0b9d362
             <div class="col s12">
                 <div class="card">
                     <div class="card-card-image">                       
@@ -38,17 +44,29 @@
                             <i class="material-icons">remove</i>
                          </a>
                     </div>                    
+<<<<<<< HEAD
                     <div class="card-content"> 
                          <!-- <span class="card-title">{{toilet_selected_nm}} <a href="#view_reservation" class="sidenav-close modal-trigger" @click="showReserve()">예약자 : 3명</a></span>                         -->
                          <span class="card-title">{{toilet_selected_nm}} <a href="#view_reservation" class="sidenav-close modal-trigger">예약자 : {{this.toilet_reserves_cnt}} 명</a></span>                                                                           
                          <span class="badge white-text yellow pulse left" v-if="!chkResolve">예약중</span>
                          
+=======
+                    <div class="card-content">
+                         <!-- <span class="card-title">{{toilet_selected_nm}} <a href="#view_reservation" class="sidenav-close modal-trigger" @click="showReserve()">예약자 : 3명</a></span>                         -->
+                         <span class="card-title">{{toilet_selected_nm}} <a href="#view_reservation" class="sidenav-close modal-trigger">예약자 : {{this.toilet_reserves_cnt}} 명</a></span>                         
+                         <span class="badge white-text yellow pulse left" v-if="true">예약중</span>
+                         <span class="badge black-text yellow pulse" v-else>비었음</span>                                                                           
+>>>>>>> 177a4180498bec077b5337047d8c0b7ec0b9d362
                     </div>                     
                 </div>
             </div>            
         </div>        
+<<<<<<< HEAD
         <!-- <div class="row" style="border: 1px solid">              -->
         <div class="row" >
+=======
+        <div class="row" style="border: 1px solid">             
+>>>>>>> 177a4180498bec077b5337047d8c0b7ec0b9d362
             <div class="col s12 m6 l6" v-for="toilet_current in toilet_currents_state" :key="toilet_current.id">
                 <div class="card">
                     <div class="card-image"> 
@@ -70,8 +88,13 @@
                          <span class="badge black-text green pulse" v-else>비었음</span>                         
                     </div>
                     <div class="card-action">
+<<<<<<< HEAD
                         <a href="#">지속시간 : {{toilet_current.elapsedTime}}</a>
                         <a href="#">금일 {{toilet_current.usage}}명 이용</a>
+=======
+                        <a href="#">지속시간 : 3분</a>
+                        <a href="#">금일 3명 이용</a>
+>>>>>>> 177a4180498bec077b5337047d8c0b7ec0b9d362
                     </div>             
                 </div> 
             </div>            
@@ -88,7 +111,11 @@
                     sms_phone_number : toilet_noti.sms_phone_number,
                     users_fid : toilet.users_fid    -->
 
+<<<<<<< HEAD
     <!-- <div class="row"> 
+=======
+    <div class="row"> 
+>>>>>>> 177a4180498bec077b5337047d8c0b7ec0b9d362
     <div class="col s12 m6">
       <div class="card red lighten-5">
         <div class="card-content  brown-text darken-1">
@@ -100,6 +127,7 @@
                 </li>        
             </ul>
         </div>
+<<<<<<< HEAD
       </div>
     </div>
   </div> -->
@@ -115,6 +143,18 @@
         </div>
    </div>
  
+=======
+        <!-- <div class="card-action">
+          <a href="#">This is a link</a>
+          <a href="#">This is a link</a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+   
+
+>>>>>>> 177a4180498bec077b5337047d8c0b7ec0b9d362
     <!-- [3] Index Vue Footer-->
      <footer class="page-footer">``
           <div class="container">
@@ -197,7 +237,10 @@ import moment from 'moment'
 import * as firebase from "firebase/app"
 import "firebase/auth";
 import "firebase/firestore";
+<<<<<<< HEAD
 import { setInterval } from 'timers';
+=======
+>>>>>>> 177a4180498bec077b5337047d8c0b7ec0b9d362
 // 참조 오브젝트 초기화
 var tmpObj = {};
 var tmpGroupObj = {};
@@ -275,6 +318,7 @@ export default {
 
         console.log(change.type);
         if (change.type === "added") {
+<<<<<<< HEAD
                 // console.log("added : ", change.doc.data());                
                 let toilet_current = change.doc.data()                    
 
@@ -282,14 +326,22 @@ export default {
                 toilet_current.usage = 0;
                 toilet_current.elapsedTime = "100분";
 
+=======
+                
+                // console.log("added : ", change.doc.data());                
+                let toilet_current = change.doc.data()                    
+
+>>>>>>> 177a4180498bec077b5337047d8c0b7ec0b9d362
                 // 참조 오브젝트에 화장실 정보 맵핑                
                 tmpObj[toilet_current.id] = toilet_current;
+                this.toilet_currents_state.push(toilet_current);
 
                 if(tmpGroupObj[toilet_current.group] == null){
 
                     tmpGroupObj[toilet_current.group] = [];                    
                 }
 
+<<<<<<< HEAD
                 tmpGroupObj[toilet_current.group].push(toilet_current);
 
                 // console.log("change.doc.data() =" + change.doc.data());
@@ -297,6 +349,15 @@ export default {
                 // console.log("tmpObj = " + tmpObj[toilet_current.id].id);
                 // console.log("toilet_current.group = " + toilet_current.group);
                 // console.log("tmpGroupObj = " + tmpGroupObj[toilet_current.group].id);               
+=======
+                tmpGroupObj[toilet_current.group] = toilet_current;
+                
+                // console.log("change.doc.data() =" + change.doc.data());
+                // console.log("toilet_current = " + toilet_current.id);
+                // console.log("tmpObj = " + tmpObj[toilet_current.id].id);
+                //console.log("toilet_current.group = " + toilet_current.group);
+                //console.log("tmpGroupObj = " + tmpGroupObj[toilet_current.group].id);               
+>>>>>>> 177a4180498bec077b5337047d8c0b7ec0b9d362
         }
 
         if (change.type === "modified") {
@@ -414,7 +475,41 @@ export default {
 
             this.toilet_selected_val = target_value; 
             this.toilet_selected_nm = target_name;    
+<<<<<<< HEAD
 
+=======
+            
+            db.collection("current").where("group","==",target_value).get()    
+                    .then(snapshot => {
+                tmpObj = {};
+                snapshot.forEach(doc => {
+                    let toilet_current = doc.data();       
+                    //console.table(doc.data())                
+                    this.toilet_currents_state.push(toilet_current);                    
+                    console.log("---");
+                    console.log(this.toilet_currents);
+                    tmpObj[doc.data().id] = doc.data();
+                })
+            })
+            
+            this.toilet_currents = tmpGroupObj[this.toilet_selected_val]
+
+            this.showPreloader = false ;          
+            this.show = true;
+        },
+        showReserve(){
+            
+            // toilet_reserves 초기화
+            this.toilet_reserves.splice(0);
+
+            var target = document.getElementById("toilet_select");
+            var target_value = target.options[target.selectedIndex].value;
+            var target_name = target.options[target.selectedIndex].text;
+
+            this.toilet_selected_val = target_value; 
+            this.toilet_selected_nm = target_name;    
+
+>>>>>>> 177a4180498bec077b5337047d8c0b7ec0b9d362
             db.collection("reservation").where("location","==",this.toilet_selected_val).get()
                     .then(snapshot => {
                 this.toilet_reserves_cnt = snapshot.size
@@ -482,8 +577,24 @@ export default {
                 tmpObj["Y7.M.01"].using = true;
             // console.log(tmpObj["Y7.M.01"].using = true);
         },
+<<<<<<< HEAD
         chkReserve(){
             
+=======
+        DoReserve(){
+                        
+            db.collection("current").where("group","==",this.toilet_selected_val).where("using","==",false).get()
+                    .then(snapshot => {                
+                this.toilet_current_using_state = snapshot.size
+
+                if(this.toilet_current_using_state > 0){
+                    M.toast({html: '지금 화장실이 비어있어요. 바로 달려가세요~', classes: 'rounded'})
+                }
+            })
+
+            return;
+
+>>>>>>> 177a4180498bec077b5337047d8c0b7ec0b9d362
             var user = firebase.auth().currentUser;          
             let phoneNumber = firebase.auth().currentUser.phoneNumber;
 

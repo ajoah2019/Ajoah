@@ -99,13 +99,30 @@ def notice(update, context):
     reply_keyboard = [['비었니', '예약해줘'], ['누구인가', '할말이있어']]
     
     bot = telegram.Bot(token='855826758:AAGhShCtFGHPelo4tgNGM3id3M81Ijy-luQ')
-    user_obj = db.collection('users').stream
+    nickname = ''
+    nick_obj = db.collection('users').where('telegram_id', '==', str(update.message.chat.id)).stream()
+    for nick in nick_obj:
+        nickname = nick.to_dict()['nickname']
     
-    send_msg = update.message.from_user.first_name + '님이 모두에게 외칩니다: \n' + update.message.text
+    user_obj = db.collection('users').stream()
+    
+    send_msg = nickname + '님이 모두에게 외칩니다: \n' + update.message.text
 
     for user in user_obj:
-        if user.to_dict['telegram_id'] != str(update.message.chat.id):
-            bot.sendMessage(chat_id=user.to_dict['telegram_id'], text=send_msg)
+        if user.to_dict()['noti_req_channel'] == 'Telegram':
+            bot.sendMessage(chat_id=user.to_dict()['telegram_id'], text=send_msg)
+            doc_noti = db.collection('noties')
+            doc_noti.add({
+                'users_fid': user.to_dict()['telegram_id'],
+                'send_type': '전체알림',
+                'nickname': user.to_dict()['nickname'],
+                'channel': 'Telegram',
+                'telegram_chatid': user.to_dict()['telegram_id'],
+                'send_datetime': getSysDt(),
+                'send_message': send_msg
+            })
+        #if user.to_dict['telegram_id'] != str(update.message.chat.id):
+        #    bot.sendMessage(chat_id=user.to_dict['telegram_id'], text=send_msg)
 
     update.message.reply_text('모두에게 알려줬어요!', reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
     return MAINMENU
@@ -120,35 +137,45 @@ def reservation(update, context):
     count = 0
 
     global temp_resv_location
+    global location
 
     # 비어있는 화장실이 있다면 예약 없이 달려가라고 안내해줍니다.
     if update.message.text == '연호8층':
-        y8_m_01_open_yn = db.collection('current').document('Y8.M.01').get().to_dict['using']
-        y8_m_02_open_yn = db.collection('current').document('Y8.M.02').get().to_dict['using']
+        location = 'Y8.M'
 
-        if y8_m_01_open_yn or y8_m_open_yn:
-            reply_txt = update.message.text + '에 빈 화장실이 있어요. 빨리 달려가세요!\n' + '빈칸: ' + '1번칸' if y8_m_01_open_yn else '' + ('/' if y8_m_01_open_yn and y8_m_02_open_yn else '') + ('2번칸' if y8_m_02_open_yn else '')
+        y8_m_01_open_yn = not db.collection('current').document('Y8.M.01').get().to_dict()['using']
+        y8_m_02_open_yn = not db.collection('current').document('Y8.M.02').get().to_dict()['using']
+
+        if y8_m_01_open_yn or y8_m_02_open_yn:
+            reply_txt = update.message.text + '에 빈 화장실이 있어요. 빨리 달려가세요!\n' + '빈칸: ' + ('1번칸' if y8_m_01_open_yn else '') + ('/' if y8_m_01_open_yn and y8_m_02_open_yn else '') + ('2번칸' if y8_m_02_open_yn else '')
             update.message.reply_text(reply_txt, reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
             return MAINMENU
 
     elif update.message.text == '연호7층':
-        y7_m_01_open_yn = db.collection('current').document('Y7.M.01').get().to_dict['using']
-        y7_m_02_open_yn = db.collection('current').document('Y7.M.02').get().to_dict['using']
+        location = 'Y7.M'
 
-        if y7_m_01_open_yn or y7_m_open_yn:
-            reply_txt = update.message.text + '에 빈 화장실이 있어요. 빨리 달려가세요!\n' + '빈칸: ' + '1번칸' if y7_m_01_open_yn else '' + '/'     if y7_m_01_open_yn and y7_m_02_open_yn else '' + '2번칸' if y7_m_02_open_yn else ''
+        y7_m_01_open_yn = not db.collection('current').document('Y7.M.01').get().to_dict()['using']
+        y7_m_02_open_yn = not db.collection('current').document('Y7.M.02').get().to_dict()['using']
+
+        if y7_m_01_open_yn or y7_m_02_open_yn:
+            reply_txt = update.message.text + '에 빈 화장실이 있어요. 빨리 달려가세요!\n' + '빈칸: ' + ('1번칸' if y7_m_01_open_yn else '') + ('/'  if y7_m_01_open_yn and y7_m_02_open_yn else '') + ('2번칸' if y7_m_02_open_yn else '')
             update.message.reply_text(reply_txt, reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
             return MAINMENU
     
-    select_resv_obj = db.collection('reservation').where('location', '==', update.message.text).where('telegram_id', '==', str(update.message.chat.id)).stream()
+    select_resv_obj = db.collection('reservation').where('location', '==', location).where('telegram_id', '==', str(update.message.chat.id)).stream()
 
     resv_cnt = 0
     for x in select_resv_obj:
         resv_cnt = resv_cnt + 1
 
+    nickname = ''
+    nick_obj = db.collection('users').where('telegram_id', '==', str(update.message.chat.id)).stream()
+    for nick in nick_obj:
+        nickname = nick.to_dict()['nickname']
+
     if resv_cnt == 0:
-        count_resv_obj = db.reference('reservation/' + update.message.text)
-        count_resv_obj = db.collection('reservation').where('location', '==', update.message.text).stream()
+        logger.info('탄다1')
+        count_resv_obj = db.collection('reservation').where('location', '==', location).stream()
 
         for x in count_resv_obj:
             count = count + 1
@@ -157,8 +184,8 @@ def reservation(update, context):
         
         doc_resv = db.collection('reservation')
         doc_resv.add({
-            'location': update.message.text,
-            'nickname': update.message.from_user.first_name, #이건 실제 users의 닉네임으로 변경되어야 함
+            'location': location,
+            'nickname': nickname, #update.message.from_user.first_name, #이건 실제 users의 닉네임으로 변경되어야 함
             'phone_num': '',
             'resv_channel': 'Telegram',
             'resv_dttm': getSysDt(),
@@ -172,7 +199,7 @@ def reservation(update, context):
     
     # Telegram으로 예약했다면, 취소할 것인지 물어봅니다
     else:
-        temp_resv_location = update.message.text
+        temp_resv_location = location
 
         reply_txt = '이미 ' + update.message.text + ' 화장실에 예약이 되어있어요. 예약을 취소할까요?'
         update.message.reply_text(reply_txt, reply_markup=ReplyKeyboardMarkup(cancel_yn_keyboard, one_time_keyboard=True))
@@ -234,7 +261,7 @@ def location(update, context):
         ref_y8_m_01 = db.collection('current').document('Y8.M.01').get()
         ref_y8_m_02 = db.collection('current').document('Y8.M.02').get()
     
-        reply_txt = '연호8층 남자화장실 상태입니다.\n' + '1번칸: ' + ('사용가능' if ref_y8_m_01.to_dict()['using'] else '사용중') + '\n' + '2번칸: ' + ('사용가능' if ref_y8_m_02.to_dict()['using'] else '사용중')
+        reply_txt = '연호8층 남자화장실 상태입니다.\n' + '1번칸: ' + ('사용가능' if not ref_y8_m_01.to_dict()['using'] else '사용중') + '\n' + '2번칸: ' + ('사용가능' if not ref_y8_m_02.to_dict()['using'] else '사용중')
 
         update.message.reply_text(reply_txt,
                                   reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
@@ -243,7 +270,7 @@ def location(update, context):
         # 7층 화장실의 개폐정보를 보여줍니다
         ref_y7_m_01 = db.collection('current').document('Y7.M.01').get()
         ref_y7_m_02 = db.collection('current').document('Y7.M.02').get()
-        reply_txt = '연호7층 남자화장실 상태입니다.\n' + '1번칸: ' + ('사용가능' if ref_y7_m_01.to_dict()['using'] else '사용중') + '\n' + '2번칸: ' + ('사용가능' if ref_y7_m_02.to_dict()['using'] else '사용중')
+        reply_txt = '연호7층 남자화장실 상태입니다.\n' + '1번칸: ' + ('사용가능' if not ref_y7_m_01.to_dict()['using'] else '사용중') + '\n' + '2번칸: ' + ('사용가능' if not ref_y7_m_02.to_dict()['using'] else '사용중')
 
         update.message.reply_text(reply_txt,
                                   reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
@@ -262,7 +289,7 @@ def skip_location(update, context):
 
 
 def getSysDt():
-    return datetime.fromtimestamp(datetime.now().timestamp()).strftime('%Y-%m-%d %H:%M:%S')
+    return datetime.fromtimestamp(datetime.now().timestamp()).strftime('%Y%m%d%H%M%S')
 
 
 def passwd(update, context):
@@ -270,7 +297,6 @@ def passwd(update, context):
         update.message.reply_text('서비스 이용을 위한 닉네임을 입력해주세요.')
         return REGISTRATION
 
-        start(update, context)
     else:
         update.message.reply_text('우리의 이름을 모르면 이용할 수 없어요. 다시 시작하려면 /start 를 입력하세요')
     return ConversationHandler.END
@@ -283,8 +309,8 @@ def registration(update, context):
         'nickname': update.message.text,
         'reg_datetime': getSysDt(),
         'telegram_username': update.message.from_user.first_name,
-        'telegram_id': update.message.chat.id,
-        'telegram_chatid': update.message.id,
+        'telegram_id': str(update.message.chat.id),
+        'telegram_chatid': str(update.message.chat.id),
         'noti_req_yn': 'Y',
         'noti_req_channel': 'Telegram',
         'noti_req_datetime': getSysDt(),

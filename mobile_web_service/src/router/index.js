@@ -4,6 +4,7 @@ import Index from '@/components/home/Index'
 import serviceIntro from '@/components/home/serviceIntro'
 import Signup from '@/components/auth/Signup'
 import setPassword from '@/components/auth/setPassword'
+import setProfile from '@/components/auth/setProfile'
 import Login from '@/components/auth/Login'
 import ViewProfile from '@/components/profile/ViewProfile'
 
@@ -34,6 +35,11 @@ const router = new Router({
             path: '/setPassword',
             name: 'SetPassword',
             component: setPassword
+        },
+        {
+            path: '/setProfile', 
+            name: 'SetProfile',
+            component: setProfile
         },
         {
             path: '/profile/:id',

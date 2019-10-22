@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div id="recaptcha-container"></div>       
-    <form class="card-panel" @submit.prevent="verifyOtp">        
-      <h3 class="center deep-purple-text">Ajoah 회원가입</h3>
+    <form class="card-panel" @submit.prevent="changeProfile">        
+      <h3 class="center deep-purple-text">이름(별명) 변경</h3>
       <div style="height:30px"></div>      
       <div class="row">
           <div class="field col s12">              
@@ -10,37 +10,9 @@
               <input id="icon_prefix" type="text" class="validate" data-length="20" v-model="nickname">              
               <span class="helper-text" data-error="wrong" data-success="right"></span>
           </div>
-      </div> 
-      <div class="row">        
-        <div class="field col s12">         
-          <label for="icon_prefix">핸드폰번호</label>
-          <input id="icon_prefix" type="number" class="validate" data-length="12" v-model="phNo" @keyup="getPhoneChk(phNo)">
-          <!-- <input id="icon_prefix" type="number" class="validate" data-length="12" v-model="phNo">            -->
-          <!-- <span class="helper-text" data-error="wrong" data-success="right"></span>-->
-          <span id='#help'>{{this.gaipPos}}</span>                                         
-        </div>             
-        <div class="field right">
-            <a class="waves-effect waves-teal btn-flat" @click="sendOtp">인증코드받기</a>
-        </div>          
-      </div>      
-      <div class="row">        
-        <div class="field col s12">         
-          <label for="otp">인증코드</label>
-          <input id="otp" type="number" v-model="otp" value="">           
-        </div>      
-        <!-- <div class="field right col s12">            
-            <a class="waves-effect waves-teal btn-flat" @click="sendOtp">인증코드다시받기</a>                         
-            <a class="waves-effect waves-teal btn-flat" @click="verifyOtp">인증하기</a>               
-        </div>         --> 
-      </div>
-      <div class="row">
-        <div class="field col s12">                  
-          <label for="answer">가입질문 : AJOAH 만든이 3명의 중간글자를 입력하세요.<br/>(힌트 : 송*수, 윤*민, 정*현)</label>
-          <input id="answer" type="text" v-model="answer" value="">                
-        </div>
-      </div>
+      </div>       
        <div class="field center">
-        <button class="btn deep-purple">회원가입 하기</button>
+        <button class="btn deep-purple">변경하기</button>
       </div>      
     </form>        
   </div>  
@@ -55,7 +27,7 @@ import "firebase/auth";
 import "firebase/firestore";
 
 export default {
-  name: 'Signup',
+  name: 'setProfile',
   data(){
     return{
       email: null,
@@ -70,11 +42,25 @@ export default {
       nickname : '',
       vefication_code : false,
       gaipPos :  ''
+      
     }
   },
   created(){
     this.$store.commit('select_view_false')       
     // console.log("SetPassword this.$store.state.select_view" + this.$store.state.select_view)
+    let user = firebase.auth().currentUser
+      firebase.auth().onAuthStateChanged((user) => {
+        if(user){
+          this.user = user        
+        } else {
+          this.user = null
+          
+          let vm = this
+    
+          vm.$router.push({path:'/login'})
+          window.location.reload();
+        }  
+      })
   },
   methods: {
      getPhoneChk(val) {
@@ -133,42 +119,24 @@ export default {
            }
          })                                            
     },
-    signup(){
+    changeProfile(){
          
          let vm = this
-         let countryCode = '+82' //대한민국
-        //  let countryCode = '+1'
-         let phoneNumber = countryCode + this.phNo.substring(1)
-         let ref = db.collection('users').doc(phoneNumber)
-         
-         ref.get().then(doc => {
+         var user = firebase.auth().currentUser;          
+         let phoneNumber = firebase.auth().currentUser.phoneNumber;
 
-           if(doc.exists){
-              alert(this.phNo + ' 핸드폰번호로 이미 가입 되었습니다.');
-           }else{            
-              // Add a new document in collection "cities"
-              ref.set({
-                nickname: this.nickname,
-                reg_datetime : Date.now(),
-                sms_phone_number : this.phNo,
-                sms_auth_number : this.otp,
-                sms_auth_yn : 'Y',
-                noti_req_channel : 'MobileWeb',
-                sms_auth_datetime : Date.now() 
-              }) 
-              .then(function() {
-                  console.log("Document successfully written!");
-                  M.toast({html: '회원 가입 되었습니다. 패스워드를 설정해 주세요.', classes: 'rounded'})
-                  
-                  // 패스워드 설정 화면 이동
-                  vm.$router.push({path:'/setPassword'})
-              })
-              .catch(function(error) {
-                  console.error("Error writing document: ", error);
-              });  
-
-           }
-         })                                            
+         console.log("phoneNumber = " + phoneNumber);
+         let ref = db.collection('users').doc(phoneNumber).update({
+            "nickname": this.nickname,            
+          })
+        .then(function() {
+            console.log("Document successfully updated!");
+            // M.toast({html: '이름(변경) 되었습니다.', classes: 'rounded'})                 
+            alert('이름(변경)이 성공했습니다. 재로그인 해주세요.')
+            firebase.auth().signOut().then(() => {
+                this.$router.push({ name: 'Login' })
+            })
+        });                                         
     },    
     sendOtp(){
 

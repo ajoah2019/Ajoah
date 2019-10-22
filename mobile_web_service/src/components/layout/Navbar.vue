@@ -4,35 +4,43 @@
         <nav class="nav-wrapper indigo">
             <div class="container"> 
                 <a href="#" class="brand-logo"  @click="goMain()">AJOAH~!</a>
-                <a href="#" class="sidenav-trigger" data-target="mobile-links">
+                <a href="#" class="sidenav-trigger" data-target="mobile-links_login" v-if="user">
+                    <i class="material-icons">menu</i>  
+                </a>
+                <a href="#" class="sidenav-trigger" data-target="mobile-links_init" v-else>
                     <i class="material-icons">menu</i> 
                 </a>
                 <ul class="right hide-on-med-and-down">                                        
-                    <li v-if="!user"><router-link :to="{ name: 'Signup' }">회원가입</router-link></li>
-                    <li v-if="!user"><router-link :to="{ name: 'Login' }">로그인</router-link></li>                    
-                    <li v-if="user"><a @click="SetPassword">{{ this.toilet_nickname }}</a></li>
-                    <!-- <li v-if="user" class="sidenav-close"  @click="closeAbout()"><a @click="goMain">메인화면</a></li>                     -->
-                    <li v-if="user"><a @click="logout">로그아웃</a></li>
-                    <!-- <li v-if="user"><a class="sidenav-close" @click="showAbout()">About</a></li>         -->
-                    <li><a class="sidenav-close modal-trigger" href="#about">About</a></li>
-                    <!-- <li v-if="user"><a href="#view_nav_reservation" class="modal-trigger" @click="showReserve()">예약자보기</a></li> -->
-                    <!-- <li v-if="user"><a href="#reserve" class="modal-trigger">예약하기</a></li> -->                    
-                    <!-- <li><a href="https://t.me/ajoah_bot" target="_blank">텔레그램봇 바로가기</a></li> -->
+                    <li v-if="!user" class="sidenav-close"><router-link :to="{ name: 'Signup' }">회원가입</router-link></li>
+                    <li v-if="!user" class="sidenav-close"><router-link :to="{ name: 'Login' }">로그인</router-link></li>                    
+                    <li v-if="user" class="sidenav-close"><a @click="SetPassword">{{ this.toilet_nickname }}</a></li>                    
+                    <li v-if="user" class="sidenav-close"><a @click="logout">로그아웃</a></li>                    
+                    <li><a class="sidenav-close modal-trigger" href="#about">About</a></li>                    
                 </ul>
             </div>
         </nav> 
-    </div>
+    </div> 
  
-    <ul class="sidenav" id="mobile-links">
-        <li v-if="!user" class="sidenav-close" @click="closeAbout()"><router-link :to="{ name: 'Signup' }">회원가입</router-link></li>
-        <li v-if="!user" class="sidenav-close" @click="closeAbout()"><router-link :to="{ name: 'Login' }">로그인</router-link></li>
-        <li v-if="user" class="sidenav-close"><a @click="SetPassword" class="">{{ this.toilet_nickname }}</a></li>
-        <!-- <li v-if="user" class="sidenav-close"  @click="closeAbout()"><a @click="goMain">메인화면</a></li>         -->
-        <li v-if="user" class="sidenav-close"><a @click="logout">로그아웃</a></li>
+    <ul class="sidenav" id="mobile-links_init">
+        <li  class="sidenav-close" @click="closeAbout()"><router-link :to="{ name: 'Signup' }">회원가입</router-link></li>
+        <li  class="sidenav-close" @click="closeAbout()"><router-link :to="{ name: 'Login' }">로그인</router-link></li>
         <li ><a class="sidenav-close modal-trigger" href="#about">About</a></li>        
-        <!-- <li v-if="user"><a href="#view_nav_reservation" class="modal-trigger sidenav-close" @click="showReserve()">예약자보기</a></li> -->
-        <!-- <li v-if="user"><a href="#reserve" class="modal-trigger sidenav-close">예약하기</a></li> -->        
-        <!-- <li ><a href="https://t.me/ajoah_bot" target="_blank">텔레그램봇 바로가기</a></li> -->
+
+    </ul>
+
+    <ul class="sidenav" id="mobile-links_login">         
+        <li ><a class="dropdown-trigger" href="#" data-target='dropdown1'>{{ this.toilet_nickname }}</a></li>                     
+        <li class="sidenav-close"><a @click="logout">로그아웃</a></li>
+        <li class="sidenav-close"><a class="sidenav-close modal-trigger" href="#about">About</a></li>                
+    </ul>
+
+    <ul id='dropdown1' class='dropdown-content'>
+        <!-- <li><a href="#!">one</a></li>
+        <li><a href="#!">two</a></li>
+        <li class="divider" tabindex="-1"></li>
+        <li><a href="#!">three</a></li> -->
+        <li><a href="#" class="sidenav-close" @click="SetProfile"><i class="material-icons">view_module</i>이름(닉네임)변경</a></li>
+        <li><a href="#" class="sidenav-close" @click=""><i class="material-icons">cloud</i>패스워드변경</a></li>
     </ul>
 
     <!-- <div class="row" v-if="this.$store.state.select_view">            
@@ -51,31 +59,27 @@
     </div> -->
     <!-- About Modal Structure -->
     <div id="about" class="modal ">
-        <div class="modal-content ">
-            <footer class="page-footer">
+        <div class="modal-content" styple="padding : 0 0 0 0">            
             <div class="container">
                 <div class="row">
                 <div class="col l6 s12">
-                    <h5 class="white-text">Ajoah는 여러분의 쾌적한 화장실 이용을 응원합니다!</h5>
-                    <p class="grey-text text-lighten-4"></p>
+                    <h5 class="black-text">Ajoah는 여러분의 쾌적한 화장실 이용을 응원합니다!</h5>
+                    <p class="black-text text-lighten-4"></p>
                 </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5 class="white-text"></h5>
-                    <h5 class="white-text"></h5>
+                <div class="col l4 offset-l2 s12">                    
                     <ul>
-                    <li><a class="grey-text text-lighten-3" >* 만든이: 송준수, 윤경민, 정종현</a></li>
-                    <li><a class="grey-text text-lighten-3" >* 만든날짜: 2019년 10월</a></li>                                        
+                    <li><a class="black-text text-lighten-3" >* 만든이: 송준수, 윤경민, 정종현</a></li>
+                    <li><a class="black-text text-lighten-3" >* 만든날짜: 2019년 10월</a></li>                                        
                     </ul>
                 </div>
                 </div>
             </div>
             <div class="footer-copyright">
-                <div class="container">
+                <div class="container" style="padding : 0 0 0 15px">
                 Copyright 2019. 송-윤-정.<br/>All Right Reserved.
                 <!-- <a class="grey-text text-lighten-4 right" href="#!">More Links</a> -->
                 </div>
-            </div>
-            </footer>
+            </div>            
         </div>
         <div class="modal-footer ">              
             <a href="#" class="modal-close waves-effect waves-green btn-flat ">확인</a>
@@ -159,7 +163,14 @@ export default {
   mounted(){
     //   console.log("Navbar this.select_view = " + this.select_view) 
   },
-  methods: {        
+  methods: {
+        dropdown(){ 
+                var elems = document.querySelectorAll('.dropdown-trigger');
+                var instances = M.Dropdown.init(elems, {
+                    alignment: 'left',
+                    autoTrigger: true
+                });
+        },       
         showReserve(){
             
             // toilet_nav_reserves 초기화
@@ -174,12 +185,16 @@ export default {
                 this.toilet_nav_reserves.push(toilet_nav_reserve)   
             })
             })                        
+        }, 
+        SetProfile(){
+            let vm = this
+            // 패스워드 설정 화면 이동
+            vm.$router.push({path:'/setProfile'})                   
         },
         SetPassword(){
             let vm = this
             // 패스워드 설정 화면 이동
-            vm.$router.push({path:'/setPassword'}) 
-            window.location.reload();    
+            vm.$router.push({path:'/setPassword'})             
         },
         logout(){
             firebase.auth().signOut().then(() => {
@@ -206,6 +221,13 @@ export default {
     }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.dropdown-trigger');
+        var instances = M.Dropdown.init(elems, {
+            alignment: 'left',
+            autoTrigger: true
+        });
+    });
 </script>
 
 <style>

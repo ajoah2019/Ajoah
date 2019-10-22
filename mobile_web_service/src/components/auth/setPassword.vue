@@ -48,8 +48,7 @@ import "firebase/firestore";
           
           let vm = this
     
-          vm.$router.push({path:'/login'})
-          window.location.reload();
+          vm.$router.push({path:'/login'})          
         }  
       })
    },
@@ -69,7 +68,7 @@ import "firebase/firestore";
           user.updateEmail(newEmail).then(function() {
             user.updatePassword(newPassword).then(function() {
               alert('패스워드 설정이 성공했습니다. 앞으로는 핸드폰번호와 설정하신 비밀번호로 로그인이 가능합니다.')
-              vm.$router.push('/')  //route to app home !
+              vm.$router.push({path:'/login'})
             }).catch(function(error) {
               alert('Error :' + error.message)
             });

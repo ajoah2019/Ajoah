@@ -113,25 +113,29 @@ def notUseSpace(toiletID, toiletName):
         
         # 화장실 사용 횟수 추가
         dateKey=sysDt[:10]
-        db_ref= db.collection('statics').document(dateKey)
+        db_ref= db.collection('statics').document('usage')
         db_data = db_ref.get().to_dict()
 
         print(db_data)
         if db_data == None:
             print('새로운 document key 생성') 
             dataTmp = {
+                dateKey: {
                     toiletID : 1
+                }
             }
             print(dataTmp)
             db_ref.set(dataTmp,merge=True)
             return 
 
         try :
-            cnt = db_data[toiletID]
+            cnt = db_data[str(dateKey)][toiletID]
         except Exception as ex:
             print('키 에러가 발생 했습니다', ex)
             dataTmp = {
-                toiletID : 1
+                dateKey :{
+                    toiletID : 1
+                }
             }
             print(dataTmp)
             db_ref.set(dataTmp,merge=True)
@@ -139,7 +143,9 @@ def notUseSpace(toiletID, toiletName):
         else:
             print('+1 수행') 
             dataTmp = {
-                toiletID : cnt+1
+                dateKey :{
+                    toiletID : cnt+1
+                }
             }
             print(dataTmp)
             db_ref.set(dataTmp,merge=True)

@@ -43,7 +43,7 @@ detectCnt=0
 def logprint(outStr):
     with open("ajoah_toilet_monitor."+getSysDt()[:10]+".log","a") as f:
         strTMP = '['+getSysDt()+']['+str(SENSOR_NUMBER)+']'+outStr+'\n'
-        #f.write(strTMP)
+        f.write(strTMP)
         print(strTMP)
         if isTest:
             print(strTMP,end='')
@@ -90,23 +90,23 @@ while True:
     logprint('touchCnt  ['+str(touchCnt )+']')
     logprint('threshold ['+str(threshold)+']')
 
-    
+    '''
     if detectCnt/timeInterval >= threshold and touchCnt/timeInterval >= schthreshold :
         logprint('this is Human')
         logprint('UseSpace')
         useSpace(toiletID, toiletName)
         isUse=True
-    elif touchCnt/timeInterval >= schthreshold :        
-        logprint('Door closed')
-        isUse=True
-        
-    elif isUse and touchCnt/timeInterval >= schthreshold :
-        logprint('Door closed with person')
+    '''
+    
+    if touchCnt/timeInterval >= schthreshold :        
+        logprint('this is Human')
+        logprint('UseSpace')
+        useSpace(toiletID, toiletName)
         isUse=True
         
     else :
-        isUse=False
         logprint('notUseSpace')
         notUseSpace(toiletID, toiletName)
+        isUse=False
 
 

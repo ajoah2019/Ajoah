@@ -41,7 +41,7 @@ detectCnt=0
 
 # 함수 정의
 def logprint(outStr):
-    with open("ajoah_toilet_monitor."+getSysDt()[:10]+".log","a") as f:
+    with open("ajoah_toilet_monitor."+getSysDt()[:10]+"["+str(SENSOR_NUMBER)+"].log","a") as f:
         strTMP = '['+getSysDt()+']['+str(SENSOR_NUMBER)+']'+outStr+'\n'
         f.write(strTMP)
         if isTest:

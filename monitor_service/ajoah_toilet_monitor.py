@@ -76,9 +76,9 @@ while True:
         if isTest:
             print('['+str(timeidx*timelaps), end=']')
             logprint('['+str(timeidx*timelaps)+']')
-        if GPIO.input(pirPin) == True:
-            logprint("Motion detected!")
-            detectCnt+=1
+        #if GPIO.input(pirPin) == True:
+        #    logprint("Motion detected!")
+        #    detectCnt+=1
         if GPIO.input(schPin) == True:
             logprint("Door Closed!")
             touchCnt+=1
@@ -86,7 +86,7 @@ while True:
         sleep(timelaps)
         timeidx+=1
         
-    logprint('detectCnt ['+str(detectCnt)+']')
+    #logprint('detectCnt ['+str(detectCnt)+']')
     logprint('touchCnt  ['+str(touchCnt )+']')
     logprint('threshold ['+str(threshold)+']')
 

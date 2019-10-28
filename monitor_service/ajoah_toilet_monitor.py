@@ -44,7 +44,6 @@ def logprint(outStr):
     with open("ajoah_toilet_monitor."+getSysDt()[:10]+".log","a") as f:
         strTMP = '['+getSysDt()+']['+str(SENSOR_NUMBER)+']'+outStr+'\n'
         f.write(strTMP)
-        print(strTMP)
         if isTest:
             print(strTMP,end='')
 

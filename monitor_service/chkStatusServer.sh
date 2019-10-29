@@ -6,7 +6,7 @@ RUNFILE=ajoah_toilet_monitor.py
 #RUNFILE=Mockup_ajoah_toilet_monitor.py
 
 # 0. delete all python cmd 
-RUN_PID=`ps -a | grep python3 | awk '{print $1 }'`
+RUN_PID=`ps -ef | grep "python3 ajoah" | grep -v "grep" | awk '{print $2 }'`
 echo "[$RUN_PID]"
 for pid in $RUN_PID
 do
@@ -42,7 +42,7 @@ do
         # 5. rebuild 
         git pull
 
-        RUN_PID=`ps -a | grep python3 | awk '{print $1 }'`
+        RUN_PID=`ps -ef | grep "python3 ajoah" | grep -v "grep" | awk '{print $2 }'`
         echo "[$RUN_PID]"
         for pid in $RUN_PID
         do

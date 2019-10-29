@@ -33,9 +33,9 @@ GPIO.setup(schPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 timelaps=1
 timeidx=0
-timeInterval=5 #base second is 4 sec. 
+timeInterval=4 #base second is 4 sec. 
 threshold=0.1  #total count 4s/timelaps
-schthreshold=0.7
+schthreshold=0.51
 detectCnt=0
 
 

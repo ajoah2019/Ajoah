@@ -84,11 +84,12 @@ while True:
         sleep(timelaps)
         timeidx+=1
         
-    logprint('timeInterval ['+str(timeInterval)+']')
     #logprint('detectCnt ['+str(detectCnt)+']')
-    logprint('threshold ['+str(threshold)+']')
-    logprint('touchCnt  ['+str(touchCnt )+']')
-    logprint('threshold ['+str(schthreshold)+']')
+    #logprint('threshold ['+str(threshold)+']')
+        
+    logprint('timeInterval ['+str(timeInterval)+']')
+    logprint('touchCnt     ['+str(touchCnt )+']')
+    logprint('schthreshold ['+str(schthreshold)+']')
 
     '''
     if detectCnt/timeInterval >= threshold and touchCnt/timeInterval >= schthreshold :

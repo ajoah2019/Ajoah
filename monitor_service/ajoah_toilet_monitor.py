@@ -29,7 +29,7 @@ elif SENSOR_NUMBER == 2 :
     
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(pirPin, GPIO.IN, GPIO.PUD_UP)
-GPIO.setup(schPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(schPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 timelaps=1
 timeidx=0

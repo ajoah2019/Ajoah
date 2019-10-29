@@ -29,13 +29,13 @@ elif SENSOR_NUMBER == 2 :
     
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(pirPin, GPIO.IN, GPIO.PUD_UP)
-GPIO.setup(schPin,GPIO.IN)
+GPIO.setup(schPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 timelaps=1
 timeidx=0
-timeInterval=10 #base second is 4 sec. 
+timeInterval=5 #base second is 4 sec. 
 threshold=0.1  #total count 4s/timelaps
-schthreshold=0.8
+schthreshold=0.7
 detectCnt=0
 
 
@@ -47,6 +47,7 @@ def logprint(outStr):
         if isTest:
             print(strTMP,end='')
 
+    
 # Main
 
 # 1. 화장실 ID / Name 가져오기 
@@ -65,6 +66,7 @@ with open("toiletInfo"+str(SENSOR_NUMBER), "r") as f:
             toiletName=data[idx].split('\"')[1]
 
 # 2. 실행
+#GPIO.add_event_detect(schPin, GPIO.BOTH, callback=isDetectTrue, bouncetime=300)
 
 isUse=False
 while True:
@@ -75,9 +77,6 @@ while True:
         if isTest:
             print('['+str(timeidx*timelaps), end=']')
             logprint('['+str(timeidx*timelaps)+']')
-        #if GPIO.input(pirPin) == True:
-        #    logprint("Motion detected!")
-        #    detectCnt+=1
         if GPIO.input(schPin) == True:
             logprint("Door Closed!")
             touchCnt+=1

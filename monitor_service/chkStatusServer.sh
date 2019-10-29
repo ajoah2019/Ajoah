@@ -55,6 +55,6 @@ do
         python3 $RUNFILE 2 &
     fi
     
-    sleep 5
+    sleep 60
 done
 

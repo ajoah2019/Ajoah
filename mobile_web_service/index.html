@@ -15,10 +15,12 @@
             display: flex;
             min-height: 100vh;
             flex-direction: column;
-        }
-        
+        }        
         main {
             flex: 1 0 auto;
+        }
+        #dropdown1 {
+            top:-50px;    
         }
     </style>
 </head>
@@ -48,7 +50,7 @@
     });
 
     $(document).ready(function() {
-        $('input#icon_prefix, input#icon_telephone, input#icon_verification_no, input#solution').characterCounter();
+        $('input#icon_prefix, input#icon_telephone, input#icon_verification_no, input#nickname, input#phNo, input#answer').characterCounter();
     });
 
     $(document).ready(function() {

@@ -2,22 +2,22 @@
   <div class="container">
     <div id="recaptcha-container"></div>       
     <form class="card-panel" @submit.prevent="verifyOtp">        
-      <h3 class="center deep-purple-text">Ajoah 회원가입</h3>
+      <h4 class="center deep-purple-text">Ajoah 회원가입 2단계</h4>
       <div style="height:30px"></div>      
       <div class="row">
           <div class="field col s12">              
-              <label for="icon_prefix">이름(별명)</label>
-              <input id="icon_prefix" type="text" class="validate" data-length="20" v-model="nickname">              
-              <span class="helper-text" data-error="wrong" data-success="right"></span>
+              <label for="nickname">이름(별명)</label>
+              <input id="nickname" type="text" class="validate" data-length="30" v-model="nickname">              
+              <!-- <span class="helper-text" data-error="wrong" data-success="right"></span> --> 
           </div>
       </div> 
       <div class="row">        
         <div class="field col s12">         
-          <label for="icon_prefix">핸드폰번호</label>
-          <input id="icon_prefix" type="number" class="validate" data-length="12" v-model="phNo" @keyup="getPhoneChk(phNo)">
+          <label for="phNo">핸드폰번호</label>
+          <input id="phNo" type="number" class="validate" data-length="12" v-model="phNo" @keyup="getPhoneChk(phNo)">
           <!-- <input id="icon_prefix" type="number" class="validate" data-length="12" v-model="phNo">            -->
           <!-- <span class="helper-text" data-error="wrong" data-success="right"></span>-->
-          <span id='#help'>{{this.gaipPos}}</span>                                         
+          <span id='#help' class="red-text text-accent-4">{{this.gaipPos}}</span>                                       
         </div>             
         <div class="field right">
             <a class="waves-effect waves-teal btn-flat" @click="sendOtp">인증코드받기</a>
@@ -32,13 +32,7 @@
             <a class="waves-effect waves-teal btn-flat" @click="sendOtp">인증코드다시받기</a>                         
             <a class="waves-effect waves-teal btn-flat" @click="verifyOtp">인증하기</a>               
         </div>         --> 
-      </div>
-      <div class="row">
-        <div class="field col s12">                  
-          <label for="answer">가입질문 : AJOAH 만든이 3명의 중간글자를 입력하세요.<br/>(힌트 : 송*수, 윤*민, 정*현)</label>
-          <input id="answer" type="text" v-model="answer" value="">                
-        </div>
-      </div>
+      </div>      
        <div class="field center">
         <button class="btn deep-purple">회원가입 하기</button>
       </div>      
@@ -196,14 +190,19 @@ export default {
                 //let countryCode = '+1'
                 let countryCode = '+82' //대한민국          
                 let phoneNumber = countryCode + this.phNo
-                //
+                
+                // let countryCode = '+1' //대한민국          
+                // let phoneNumber = countryCode + '6505551234'
+
                 let appVerifier = this.appVerifier                    
                 
                 firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
                   .then(function (confirmationResult) {
                     // SMS sent. Prompt user to type the code from the message, then sign the
                     // user in with confirmationResult.confirm(code).
-                    window.confirmationResult = confirmationResult;               
+                    window.confirmationResult = confirmationResult;
+                    console.log("window.confirmationResult" + window.confirmationResult)      
+                    console.log("confirmationResult" + confirmationResult)       
                     this.vefication_code = true;
                   }).catch(function (error) {
                   // Error; SMS not sent
@@ -222,27 +221,27 @@ export default {
           alert('핸드폰번호를 올바르게 입력해 주세요.');
         }else if(this.otp.length != 6){
           alert('인증코드 6자리를 입력해 주세요.');
-        }else if(this.answer != '준경종'){          
-          alert('가입질문 힌트를 확인하시어 3자리 가입질문 답을 입력해 주세요.\n(힌트 : 송*수, 윤*민, 정*현)');
         }else{
                     
           let vm = this
           let code = this.otp
-          
-          this.signup(); //가입 함수 호출
 
-          //잠시주석 
+          // 코드 값 확인이 안되어 아래 가입함수 임의 호출 ... 해결해야할 문제.. 
+          this.signup(); //가입 함수 호출
+          console.log("code :" + code)                             
           window.confirmationResult.confirm(code).then(function (result) {
             // User signed in successfully.
             var user = result.user;            
-            //route to set password !
-            
+            //route to set password !            
             this.signup(); //가입 함수 호출
+             
             console.log("Success");
+                          
           }).catch(function (error) {
             // User couldn't sign in (bad verification code?)
             // ...
             console.log("Fail");
+  
           });
         }
         //잠시주석

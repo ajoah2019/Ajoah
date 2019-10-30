@@ -1,9 +1,10 @@
-<template>
+f<template>
 <div> 
   <div class="navbar-fixed">
         <nav class="nav-wrapper indigo">
             <div class="container"> 
-                <a href="#" class="brand-logo"  @click="goMain()">AJOAH~!</a>
+                <!-- <a href="#" class="brand-logo"  @click="goMain()">AJOAH~!</a> -->
+                <a href="#" class="brand-logo">AJOAH~!</a>
                 <a href="#" class="sidenav-trigger" data-target="mobile-links_login" v-if="user">
                     <i class="material-icons">menu</i>  
                 </a>
@@ -11,10 +12,10 @@
                     <i class="material-icons">menu</i> 
                 </a>
                 <ul class="right hide-on-med-and-down">                                        
-                    <li v-if="!user" class="sidenav-close"><router-link :to="{ name: 'Signup' }">회원가입</router-link></li>
+                    <li v-if="!user" class="sidenav-close"><router-link :to="{ name: 'Signup_1' }">회원가입</router-link></li>
                     <li v-if="!user" class="sidenav-close"><router-link :to="{ name: 'Login' }">로그인</router-link></li>                    
-                    <li v-if="user" class="sidenav-close"><a @click="SetPassword">{{ this.toilet_nickname }}</a></li>                    
-                    <li v-if="user" class="sidenav-close"><a @click="logout">로그아웃</a></li>                    
+                    <li v-if="user" class="sidenav-close"><a class="dropdown-trigger" href="#" data-target='dropdown1'>{{ this.toilet_nickname }}</a></li>                    
+                    <li v-if="user" class="sidenav-close"><a @click="logout()">로그아웃</a></li>                    
                     <li><a class="sidenav-close modal-trigger" href="#about">About</a></li>                    
                 </ul>
             </div>
@@ -22,7 +23,7 @@
     </div> 
  
     <ul class="sidenav" id="mobile-links_init">
-        <li  class="sidenav-close" @click="closeAbout()"><router-link :to="{ name: 'Signup' }">회원가입</router-link></li>
+        <li  class="sidenav-close" @click="closeAbout()"><router-link :to="{ name: 'Signup_1' }">회원가입</router-link></li>
         <li  class="sidenav-close" @click="closeAbout()"><router-link :to="{ name: 'Login' }">로그인</router-link></li>
         <li ><a class="sidenav-close modal-trigger" href="#about">About</a></li>        
 
@@ -30,17 +31,17 @@
 
     <ul class="sidenav" id="mobile-links_login">         
         <li ><a class="dropdown-trigger" href="#" data-target='dropdown1'>{{ this.toilet_nickname }}</a></li>                     
-        <li class="sidenav-close"><a @click="logout">로그아웃</a></li>
+        <li class="sidenav-close"><a @click="logout()">로그아웃</a></li>
         <li class="sidenav-close"><a class="sidenav-close modal-trigger" href="#about">About</a></li>                
-    </ul>
+    </ul> 
 
-    <ul id='dropdown1' class='dropdown-content'>
+    <ul id='dropdown1' class='dropdown-content' style="top:50px">  
         <!-- <li><a href="#!">one</a></li>
         <li><a href="#!">two</a></li>
         <li class="divider" tabindex="-1"></li>
         <li><a href="#!">three</a></li> -->
-        <li><a href="#" class="sidenav-close" @click="SetProfile"><i class="material-icons">view_module</i>이름(닉네임)변경</a></li>
-        <li><a href="#" class="sidenav-close" @click=""><i class="material-icons">cloud</i>패스워드변경</a></li>
+        <li><a href="#" class="sidenav-close" @click="SetProfile"><i class="material-icons">face</i>이름(닉네임)변경</a></li>
+        <li><a href="#" class="sidenav-close" @click="SetPassword"><i class="material-icons">https</i>패스워드변경</a></li>
     </ul>
 
     <!-- <div class="row" v-if="this.$store.state.select_view">            
@@ -58,7 +59,8 @@
             </div>            
     </div> -->
     <!-- About Modal Structure -->
-    <div id="about" class="modal ">
+    <!-- 잠시 주석 -->
+    <!-- <div id="about" class="modal ">
         <div class="modal-content" styple="padding : 0 0 0 0">            
             <div class="container">
                 <div class="row">
@@ -76,13 +78,40 @@
             </div>
             <div class="footer-copyright">
                 <div class="container" style="padding : 0 0 0 15px">
-                Copyright 2019. 송-윤-정.<br/>All Right Reserved.
-                <!-- <a class="grey-text text-lighten-4 right" href="#!">More Links</a> -->
+                Copyright 2019. 송-윤-정.<br/>All Right Reserved.                
                 </div>
             </div>            
         </div>
         <div class="modal-footer ">              
             <a href="#" class="modal-close waves-effect waves-green btn-flat ">확인</a>
+        </div>
+    </div> -->
+    <!-- 잠시 주석 -->
+
+    <div id="about" class="modal" style="padding : 0 0 0 0">
+        <div class="modal-content" style="margin: 0; padding : 0 0 0 0">                        
+                <div class="row">
+                    <div class="col s12 m7">
+                    <div class="card">
+                        <div class="card-image">
+                        <img src="../../img/toilet_service.jpg">          
+                        </div>
+                        <div class="card-content center-align" style="padding:20px 5px 5px 5px">
+                        <span class="" style="font-size:19px;">Ajoah에 오신 것을 환영합니다.</span>          
+                        </div>
+                        <div class="card-content center-left" style="margin: 5px 5px 5px 5px;padding:5px 5px 5px 5px">          
+                        <p style="font-size:13px">* 만든이: 송준수, 윤경민, 정종현<br/>
+                        * 만든날짜: 2019년 10월</p>
+                        </div>
+                        <div class="card-action center-left" style="margin: 5px 5px 5px 5px;padding:5px 5px 5px 5px">          
+                        <a href="#" style="font-size:12px">Copyright 2019. 송-윤-정. All Right Reserved. </a>                        
+                        </div>
+                    </div>
+                    </div>
+                </div>
+             </div>                    
+        <div class="modal-footer" style="margin: 0; padding : 0 0 0 0">              
+            <a href="#" class="modal-close waves-effect waves-green btn-flat">확인</a>
         </div>
     </div>
     <!-- About Modal Structure -->
@@ -116,7 +145,8 @@ export default {
     return {        
         user: null,
         toilet_nav_reserves : [],
-        toilet_nickname : ''        
+        toilet_nickname : '',    
+        login_yubu : false
     }
   },
   created(){
@@ -145,12 +175,13 @@ export default {
 
             if(doc.exists){                
                 
+                this.login_yubu = true;
                 this.toilet_nickname = doc.data().nickname;                
                 console.log("toilet_nickname = " + this.toilet_nickname);                
 
             }else{            
                
-                alert('회원가입이 되어 있지 않습니다.');                
+               this.login_yubu = false;               
             }
             })
 
@@ -198,7 +229,10 @@ export default {
         },
         logout(){
             firebase.auth().signOut().then(() => {
-                this.$router.push({ name: 'Login' })
+                let vm = this
+                // 패스워드 설정 화면 이동
+                vm.$router.push({path:'/login'})
+                window.location.reload();    
             })
         },
         showAbout(){
@@ -210,14 +244,28 @@ export default {
         goMain(){
             let vm = this
             // 메인화면 이동
-            vm.$router.push({path:'/index'})
-            window.location.reload();
+            //vm.$router.push({path:'/index'})
+            // window.location.reload();                
+            vm.$router.push({path:'/index'})    
         },
         refresh(){            
-            // 화면새로고침           
-            window.location.reload();
-        }
-        
+            
+            let vm = this
+            let user = firebase.auth().currentUser
+            firebase.auth().onAuthStateChanged((user) => {
+            if(user){
+                // alert(1)                
+                // window.location.reload();  
+                //vm.$router.push({name:'Index'})
+                window.location.reload();
+            } else {                
+                // alert(2)                               
+                let vm = this         
+                vm.$router.push({path:'/'}).catch(e => {})                
+            }  
+            })
+            
+        }        
     }
 }
 

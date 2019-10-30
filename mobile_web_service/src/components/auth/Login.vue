@@ -36,6 +36,11 @@
 </template>
 
 <script>
+
+
+var localStorage = window.localStorage;
+const STR_KEY_PHONE_NO = "phoneNo";
+
 import * as firebase from "firebase/app"
 import "firebase/auth";
 import "firebase/firestore";
@@ -55,6 +60,11 @@ import "firebase/firestore";
     mounted(){
         
         // console.log("Login this.select_view = " + this.select_view)        
+      let phoneNo = localStorage.getItem(STR_KEY_PHONE_NO);
+      if(phoneNo != null)
+      {
+        this.phNo = phoneNo;
+      }
     },
     methods:{ 
       login(){
@@ -63,12 +73,17 @@ import "firebase/firestore";
         // let countryCode = '+1' //미국
         let email = countryCode + this.phNo.substring(1) + '@ajoah2019.com'
         let password = this.password
+        let phNo = this.phNo;
         //
         firebase.auth().signInWithEmailAndPassword(email, password).then(function(){
           //route to home on success !
-          vm.$store.commit('select_view_true')         
-          vm.$router.push({name:'Index'})
-          window.location.reload();          
+          localStorage.setItem(STR_KEY_PHONE_NO, phNo);
+ 
+          vm.$store.commit('select_view_true')                   
+          vm.$router.push({path:'/index'})
+          //window.location.reload();
+          //window.location.reload(); // <--- 느림의 원인 
+                    
         }).catch(function(error) { 
           // Handle Errors here. 
           var errorCode = error.code;
@@ -83,7 +98,6 @@ import "firebase/firestore";
         });
       }, 
       goSignUp(){
-            
             let vm = this
             // 메인화면 이동
             vm.$router.push({path:'/signup'})                      
@@ -91,11 +105,5 @@ import "firebase/firestore";
     }
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.dropdown-trigger');
-        var instances = M.Dropdown.init(elems, {
-            alignment: 'left',
-            autoTrigger: true
-        });
-    });
+  
 </script>

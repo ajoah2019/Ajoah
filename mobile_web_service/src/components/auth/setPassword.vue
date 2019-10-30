@@ -39,18 +39,18 @@ import "firebase/firestore";
       this.$store.commit('select_view_false')       
       // console.log("SetPassword this.$store.state.select_view" + this.$store.state.select_view)
 
-      let user = firebase.auth().currentUser
-      firebase.auth().onAuthStateChanged((user) => {
-        if(user){
-          this.user = user        
-        } else {
-          this.user = null
+      // let user = firebase.auth().currentUser
+      // firebase.auth().onAuthStateChanged((user) => {
+      //   if(user){
+      //     this.user = user        
+      //   } else {
+      //     this.user = null
           
-          let vm = this
+      //     let vm = this
     
-          vm.$router.push({path:'/login'})          
-        }  
-      })
+      //     vm.$router.push({path:'/login'})          
+      //   }  
+      // })
    },
     methods:{
       setPassword(){
@@ -66,9 +66,11 @@ import "firebase/firestore";
           let newPassword = this.password
           // 
           user.updateEmail(newEmail).then(function() {
-            user.updatePassword(newPassword).then(function() {
+            user.updatePassword(newPassword).then(function() {  
               alert('패스워드 설정이 성공했습니다. 앞으로는 핸드폰번호와 설정하신 비밀번호로 로그인이 가능합니다.')
+              //M.toast({html: '패스워드 설정이 성공했습니다.<br/>앞으로는 핸드폰번호와 설정하신 비밀번호로 로그인이 가능합니다.', classes: 'rounded'}) 
               vm.$router.push({path:'/login'})
+              window.location.reload(); 
             }).catch(function(error) {
               alert('Error :' + error.message)
             });

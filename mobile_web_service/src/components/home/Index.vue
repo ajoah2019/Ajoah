@@ -4,9 +4,10 @@
     <div class="container">
   
          
-    <div class="row">            
-        <div class="input-field col s12">
-            <select id="toilet_select" @change="onChange($event)">
+    <div class="row" style="padding:0; margin:0">            
+        <div class="input-field col s12" style="padding:5px 0 0 0; margin:0">
+            <!-- <select id="toilet_select" class="browser-default" @change="onChange($event)"> -->
+                <select id="toilet_select" @change="onChange($event)">
                 <optgroup label="연호빌딩 8층">
                 <option value="Y8.M" selected>연호8층 남자</option>
                 <option value="Y8.F">연호8층 여자</option>
@@ -14,9 +15,9 @@
                 <optgroup label="연호빌딩 7층">
                 <option value="Y7.M">연호7층 남자</option>
                 <option value="Y7.F">연호7층 여자</option>
-                </optgroup>
+                </optgroup> 
             </select>
-        </div>             
+        </div>              
     </div>
         <!-- <div class="row" >             
             <div class="col s12 l12"> 
@@ -24,8 +25,8 @@
             </div> 
         </div>  -->
     <!-- <div class="row" style="border: 1px solid; margin: 1px 1px"> -->
-    <div class="row">
-       <div class="col s12">  
+    <div class="row" style="padding:0; margin:0">
+       <div class="col s12" style="padding:0; margin:0">  
          <!-- <div class="row" style="border: 1px solid">              -->
           <!-- <div class="row">
             <div class="col s12">
@@ -59,12 +60,7 @@
             </div>            
         </div>         -->
 
-        <ul id='dropdown_reserve' class='dropdown-content'>
-            <li v-if="chkResolve"><a href="#reserveconfirm" class="modal-trigger">예약하기</a></li> 
-            <li v-if="!chkResolve"><a  href="#cancelreserveconfirm" class="modal-trigger">예약취소</a></li>             
-            <!-- <li ><a href="#view_reservation" class="modal-trigger">예약자보기</a></li>         -->
-            <li ><a href="#"  @click="showReserve()">예약자보기</a></li>        
-        </ul>
+
 
         <!-- <ul id='dropdown_cancel' class='dropdown-content'>            
             <li><a  href="#cancelreserveconfirm" class="modal-trigger">예약취소</a></li>        
@@ -117,10 +113,33 @@
         <!-- 1번째 기획화면 -->
 
         <!-- 2번째 화면 -->
-        <div class="row">
+        <!-- <div class="row" v-if="!toilet_possible_yubu">
+            <div class="col s12 m12 l12" >
+                <div class="card">           
+                    <span class="card-panel align-left" style="font-size:16px">해당 화장실은 아직 지원하지 않습니다.</span>   
+                </div>
+            </div>
+         </div> -->
+        <div class="row" v-if="!toilet_possible_yubu">
         <div class="col s12 m12 l12" >
         <div class="card blue-grey darken-1">           
-            <div class="grey lighten-5 z-depth-1" style="padding:10px 10px">
+            <div class="grey lighten-5" style="padding:10px 10px">
+                <div class="row valign-wrapper" style="margin:0;padding:0">
+                    <div class="col s12 left" style="margin:0px;padding:0">
+                        <span class="card-title" style="font-size:18px">서비스 미지원 화장실 입니다.</span> 
+                    </div> 
+                    <div class="col s4" style="padding: 0 0 0 20px">  
+                    </div>
+                </div>   
+            </div>
+         </div>
+         </div>
+         </div>
+
+        <div class="row" v-if="toilet_possible_yubu">
+        <div class="col s12 m12 l12" >
+        <div class="card blue-grey darken-1">           
+            <div class="grey lighten-5" style="padding:10px 10px">
                 <div class="row valign-wrapper" style="margin:0px">
                     <div class="col s6 left" style="margin:0px">
                         <span class="card-title">{{toilet_selected_nm}}</span> 
@@ -130,12 +149,12 @@
                         <span v-if="!chkResolve"><a class='dropdown-trigger btn' href='#' data-target='dropdown_reserve'>알림수신</a></span>
                     </div>
                 </div>   
-            </div> 
-            <div class="card-panel grey lighten-5 z-depth-1" style="padding: 3px 5px 0 7px; margin: 2px 0 0px 0">
-                 <div class="row" >
-                    <div class="col s6 m6 l6" v-for="toilet_current in toilet_currents_state" :key="toilet_current.id">
+            </div>  
+            <div class="card-panel z-depth-0" style="padding: 3px 5px 0 7px; margin: 2px 0 0px 0">
+                 <div class="row"> 
+                    <div class="col s6 m6 l6 z-depth-0" v-for="toilet_current in toilet_currents_state" :key="toilet_current.id">
                         <div class="card">
-                            <div class="card-image"> 
+                            <div class="card-image z-depth-0"> 
                                 <!-- <img src="../../img/toilet_ing_6_low.jpg" alt="" v-if="toilet_current.using"> -->
                                 <img src="../../img/toilet_on_low.jpg" alt="" v-if="toilet_current.using">
                                 <img src="../../img/toilet_off_low.jpg" alt="" v-else>
@@ -151,20 +170,22 @@
                                 <span class="card-title">{{toilet_current.name}}</span>                        
                                 <span class="badge white-text pink" v-if="toilet_current.using">사용중</span>
                                 <span class="badge black-text green pulse" v-else>비었음</span>                         
-                            </div> -->
-                            <div class="card-panel" style="padding:24px 0">
-                                <div class="row valign-wrapper" style="margin:0px">
-                                    <div class="col s2 left" style="margin:0px">
-                                        <span class="" v-if="toilet_current.id=='Y8.M.01'" style="font-size: 25px">#1</span>
-                                        <span class="" v-if="toilet_current.id=='Y8.M.02'" style="font-size: 25px">#2</span>
-                                        <span class="" v-if="toilet_current.id=='Y7.M.01'" style="font-size: 25px">#1</span>
-                                        <span class="" v-if="toilet_current.id=='Y7.M.02'" style="font-size: 25px">#2</span>
+                            </div> --> 
+                            <div class="card z-depth-0" style="padding:24px 0">
+                                <div class="row valign-wrapper z-depth-0" style="margin:0px;height:30px">
+                                    <div class="col s2 left z-depth-0" style="margin:0px" v-if="toilet_current.using">
+                                        <span class="orange-text text-darken-3" style="font-size: 25px">{{toilet_current.name}}</span>                                        
                                     </div> 
-                                    <div class="col s10" style="padding: 0 0 0 20px">  
-                                        <span class="black-text">
+                                    <div class="col s2 left z-depth-0" style="margin:0px" v-else>
+                                        <span class="green-text text-darken-2" style="font-size: 25px">{{toilet_current.name}}</span>
+                                    </div> 
+                                    <div class="col s10 z-depth-0" style="padding: 0 0 0 20px">  
+                                        <span class="black-text" v-if="toilet_current.using">
                                             <a href="#" class="orange-text text-darken-3">· 금일 {{toilet_current.usage}}명 이용</a><br/>
-                                            <a href="#" class="orange-text text-darken-3" v-if="toilet_current.using">· {{toilet_current.elapsedTime}}</a>                                    
-                                            <a href="#" class="orange-text text-darken-3" v-else></a>                         
+                                            <a href="#" class="orange-text text-darken-3">· {{toilet_current.elapsedTime}}</a>                                                                                
+                                        </span>
+                                        <span class="black-text" v-else>
+                                            <a href="#" class="green-text text-darken-2">· 금일 {{toilet_current.usage}}명 이용</a><br/>                                                                                                                       
                                         </span>
                                     </div>
                                 </div>                                                 
@@ -181,7 +202,15 @@
 
        </div>  
      </div>      
-    </div>           
+    </div>      
+
+    <ul id='dropdown_reserve' class='dropdown-content'>
+            <li v-if="chkResolve"><a href="#reserveconfirm" class="modal-trigger" style="font-size: 13px;">알림요청</a></li> 
+            <li v-if="!chkResolve"><a  href="#cancelreserveconfirm" class="modal-trigger" style="font-size: 13px;">알림취소</a></li>             
+            <!-- <li ><a href="#view_reservation" class="modal-trigger">예약자보기</a></li>         -->
+            <li ><a href="#"  @click="showReserve()" style="font-size: 13px;">요청자보기</a></li>        
+    </ul>
+
     <!-- 화장실 현황 리스트-->
 <!-- channel : toilet_noti.channel,
                     nickname : toilet_noti.nickname,
@@ -207,7 +236,7 @@
     </div>
   </div> -->
 
-  <div class="container">
+  <div class="container" v-if="toilet_possible_yubu">
         <h6>✽ 공개 메세지</h6>
         <div class="container" v-for="toilet_noti in toilet_noties" :key="toilet_noti.id">
             <blockquote>{{toilet_noti.send_message}}</blockquote>
@@ -231,20 +260,19 @@
             <div class="grey lighten-5 z-depth-1" style="padding:10px 10px">
                 <span class="card-title">Ajoah 챗봇을 이용해 보세요.</span>
             </div>
-            <div class="card-panel grey lighten-5 z-depth-1" style="padding: 3px 5px 0 7px; margin: 2px 0 0px 0">    
-                    <p>텔레그램에 챗봇을 준비했습니다.</p>
+            <div class="card-panel grey lighten-5 z-depth-1" style="padding: 3px 5px 0 7px; margin: 2px 0 0px 0">                        
                     <ul style="list-style:disc">
                         <li>· 챗봇으로 더 편리하게 이용</li>
                         <li>· 빠른 예약및 실시간 알림</li>
                         <li>· 공개메시지 발송 가능</li>
                     </ul>           
-                    <div class="row valign-wrapper" style="margin:0px">
+                    <div class="row valign-wrapper" style="margin:0px;padding:0 0 10px 0">
                         <div class="col s2">
                         <img src="../../img/chatbot_2.png" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
                         </div>
                         <div class="col s10"> 
                         <span class="black-text">
-                            <a class="waves-effect waves-light btn-small" href="https://t.me/ajoah_bot" target="_blank"><i class="material-icons right">arrow_forward</i>챗봇 바로가기</a> 
+                            <a class="waves-effect waves-purple btn-small" href="https://t.me/ajoah_bot" target="_blank"><i class="material-icons right">send</i>챗봇 바로가기</a> 
                         </span>
                         </div>
                     </div> 
@@ -252,15 +280,15 @@
         </div>
         </div>
     </div>
-   </div>
+   </div> 
 
     <!-- [3] Index Vue Footer-->
      <footer class="page-footer">
           <div class="container">
             <div class="row">
               <div class="col l6 s12">
-                <h5 class="white-text">Ajoah는 여러분의 쾌적한 화장실</h5>
-                <h5 class="white-text">이용을 응원합니다!</h5>
+                <h6 class="white-text">Ajoah는 여러분의 쾌적한 화장실</h6>
+                <h6 class="white-text">이용을 응원합니다!</h6>
                  
                 <!-- <p class="white-text text-lighten-4">화장실을 스마트하게 사용해 보세요.</p> -->
                 <!-- <a href="https://t.me/ajoah_bot" class="white-text text-lighten-4" target="_blank">텔레그램봇 바로가기</a> -->
@@ -274,7 +302,7 @@
           </div>
           <div class="footer-copyright">
             <div class="container">
-           Copyright 2019. 송-윤-정.<br/>All Right Reserved.
+           Copyright 2019. 송-윤-정. All Right Reserved.
             <!-- <a class="grey-text text-lighten-4 right" href="#!">More Links</a> -->
             </div>
           </div>
@@ -283,11 +311,11 @@
     <!-- 예약하기 전 Confirm 확인창 Modal-->
     <div id="reserveconfirm" class="modal">
         <div class="modal-content">
-            <h6>화장실 예약하시겠습니까?</h6>
+            <p  style="font-size:15px">{{toilet_selected_nm}} 빈칸알림 신청하시겠습니까?</p>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-close btn orange">취소</a>
-            <a class="modal-close btn orange" @click="DoReserve()">확인</a>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">취소</a>
+            <a class="modal-close waves-effect waves-green btn-flat" @click="DoReserve()">확인</a>
             <!-- <a class="modal-close btn orange" @click="ChkTest()">확인2</a> -->
         </div>
     </div>
@@ -295,11 +323,11 @@
 
     <div id="cancelreserveconfirm" class="modal">
         <div class="modal-content">
-            <h6>화장실 예약 취소하시겠습니까?</h6>
+             <p  style="font-size:15px">{{toilet_selected_nm}} 빈칸알림 취소하시겠습니까?</p>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-close btn orange">취소</a>
-            <a class="modal-close btn orange" @click="cancelReserve()">확인</a>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">취소</a>
+            <a class="modal-close waves-effect waves-green btn-flat" @click="cancelReserve()">확인</a>
             <!-- <a class="modal-close btn orange" @click="ChkTest()">확인2</a> -->
         </div>
     </div>
@@ -359,6 +387,7 @@ export default {
       feedback: null,      
       showPreloader : false,
       chkResolve : true,
+      toilet_possible_yubu : true,
       toilet_reserve_nickname : '',
       toilet_reserve_phone_no : '',   
       toilet_reserve_seq : 0,   
@@ -387,18 +416,41 @@ export default {
     firebase.auth().onAuthStateChanged((user) => {
       if(user){
         this.user = user        
-      } else {
-        this.user = null
-        
-        let vm = this
-   
-        vm.$router.push({path:'/login'})
-        window.location.reload();
+      } else {                 
+        let vm = this        
+        vm.$router.push({name:'Login'})
+        // window.location.reload();
       }  
-    })
+    }) 
   },
   mounted(){
+    
+    $(document).ready(function() {
+        $('select').formSelect();
+    });
 
+    $(document).ready(function() {
+        $('.modal').modal();
+    });
+
+    $(document).ready(function() {
+        $('input#icon_prefix, input#icon_telephone, input#icon_verification_no, input#solution').characterCounter();
+    });
+
+    $(document).ready(function() {
+        $('.collapsible').collapsible();
+    });
+   
+
+    $('.dropdown-trigger').dropdown();
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.dropdown-trigger');
+        var instances = M.Dropdown.init(elems, {
+            alignment: 'left',
+            autoTrigger: true
+        });
+    });
     
     var target = document.getElementById("toilet_select");
     
@@ -431,18 +483,22 @@ export default {
     
     console.log("mounted");
 
+    tmpGroupObj = {};
+    tmpObj = {};
+
     // subscribe to changes to the 'messages' collection
     ref.onSnapshot(snapshot => {
       snapshot.docChanges().forEach(change => {
-
+        console.log("###################################");
         console.log(change.type);
+        console.log("###################################");
         if (change.type === "added") {
-                // console.log("added : ", change.doc.data());                
+                
                 let toilet_current = change.doc.data()                    
-                console.log("# 3 #");
+
                 // usage컬럼 추가
                 toilet_current.usage = 0;
-                toilet_current.elapsedTime = "100분";
+                toilet_current.elapsedTime = "";
 
                 // 참조 오브젝트에 화장실 정보 맵핑                
                 tmpObj[toilet_current.id] = toilet_current;
@@ -486,6 +542,7 @@ export default {
     this.chkReserve();
     this.doJohoi();
     this.doDrawToilet();
+
     }) 
         
 
@@ -530,10 +587,19 @@ export default {
 
             this.toilet_currents_state.splice(0);
 
-            tmpGroupObj[this.toilet_selected_val].forEach(childObject => {
-                this.toilet_currents_state.push(childObject);
-            });
+            console.log("# DO DRAW TOILET #");
+            console.log(tmpGroupObj);
 
+            if(tmpGroupObj[this.toilet_selected_val] == null){ 
+                this.toilet_possible_yubu = false
+                //M.toast({html: '해당 화장실은 아직 지원하지 않습니다.', classes: 'rounded'})
+            }else
+            {
+                this.toilet_possible_yubu = true
+                tmpGroupObj[this.toilet_selected_val].forEach(childObject => {
+                    this.toilet_currents_state.push(childObject);
+                });
+            }
         }, 
         doJohoi(){
              
@@ -542,21 +608,23 @@ export default {
 
             console.log("today ==> " + today)
 
-            let ref = db.collection('statics').doc(today)
+            let ref = db.collection('statics').doc("usage");
                       
             ref.get().then(doc => {
-
             if(doc.exists){                                 
                 let toilet_current_static = doc.data()
 
                 console.log(toilet_current_static);
                 // this.toilet_current_statics.push(toilet_current_static);
-                                // 변경된 오브젝트만 새로 맵핑
-                var keySet = Object.keys(toilet_current_static);
+                // 변경된 오브젝트만 새로 맵핑
+                var keySet = Object.keys(toilet_current_static[today]);
                 
+                console.log("# START #");
                 keySet.forEach(key => {
-                    tmpObj[key].usage = toilet_current_static[key];
+                    if(tmpObj[key] != null) 
+                        tmpObj[key].usage = toilet_current_static[today][key];
                 });
+                console.log("# END #");
 
 
             }else{                                            
@@ -573,10 +641,11 @@ export default {
 
             var target = document.getElementById("toilet_select");
             var target_value = target.options[target.selectedIndex].value;
-            var target_name = target.options[target.selectedIndex].text;
-
+            var target_name = target.options[target.selectedIndex].text;           
+            
             this.toilet_selected_val = target_value; 
             this.toilet_selected_nm = target_name;    
+            // db.collection("reservation").where("location","==",this.toilet_selected_val).orderBy("resv_dttm", "desc").get()
             db.collection("reservation").where("location","==",this.toilet_selected_val).get()
                     .then(snapshot => {
                 // this.toilet_reserves_cnt = snapshot.size   
@@ -590,7 +659,7 @@ export default {
                     nickname : toilet_reserve.nickname,
                     phone_num : toilet_reserve.phone_num, 
                     resv_channel : toilet_reserve.resv_channel,
-                    resv_dttm : moment(toilet_reserve.resv_dttm).format('lll') ,
+                    resv_dttm : moment(toilet_reserve.resv_dttm).format("MM/DD HH:mm") ,
                     seq : toilet_reserve.seq   
                     }) 
                 })
@@ -622,12 +691,16 @@ export default {
                 snapshot.forEach(doc => {
                 
                 let toilet_noti = doc.data()                
-                                              
+
+                let mt = moment(toilet_noti.send_datetime, "YYYY-MM-DD hh:mm:ss");
+
+
+
                 if(cnt < 5){
                     this.toilet_noties.push({
                         channel : toilet_noti.channel,
                         nickname : toilet_noti.nickname,
-                        send_datetime : toilet_noti.send_datetime, 
+                        send_datetime : mt.format("MM/DD HH:mm"), 
                         send_message : toilet_noti.send_message,
                         send_type :toilet_noti.send_type ,
                         sms_phone_number : toilet_noti.sms_phone_number,
@@ -767,8 +840,10 @@ function calcElapsedTime()
 {
     for(var key in tmpObj)
     {   
-        if(tmpObj[key].using == true){
-            tmpObj[key].elapsedTime = elapsedTimeStr(tmpObj[key].timestamp);
+        let mt = moment(tmpObj[key].using_from, "YYYY-MM-DD hh:mm:ss");
+
+        if(tmpObj[key].using == true && tmpObj[key].using_from != null){
+            tmpObj[key].elapsedTime = elapsedTimeStr(mt.unix());
         }else{
             tmpObj[key].elapsedTime = '' 
         }    
@@ -778,7 +853,7 @@ function calcElapsedTime()
 function elapsedTimeStr(timestamp)
 {
     if(timestamp == null) return "X";
-    let timestamp_milli = timestamp.length == 10 ? timestamp * 1000 : timestamp;
+    let timestamp_milli = timestamp.toString().length == 10 ? timestamp * 1000 : timestamp;
     let elapsed_sec = parseInt((new Date().getTime() - timestamp_milli) / 1000);
     let timeStr = "";
 
@@ -794,7 +869,7 @@ function elapsedTimeStr(timestamp)
     else {
         timeStr = '하루 이상 경과';
     }
-    
+
     return timeStr;
 }
 
@@ -816,13 +891,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.dropdown-trigger');
-        var instances = M.Dropdown.init(elems, {
-            alignment: 'left',
-            autoTrigger: true
-        });
-});
+
 
 </script>
 

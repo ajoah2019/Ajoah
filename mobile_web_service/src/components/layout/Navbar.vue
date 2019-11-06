@@ -3,8 +3,9 @@ f<template>
   <div class="navbar-fixed">
         <nav class="nav-wrapper indigo">
             <div class="container"> 
-                <!-- <a href="#" class="brand-logo"  @click="goMain()">AJOAH~!</a> -->
                 <a href="#" class="brand-logo">AJOAH~!</a>
+                <!-- <a href="#" class="brand-logo"  @click="goMain()">AJOAH~!</a> 
+                <router-link :to="{ name: 'Signup_1' }">회원가입</router-link> -->
                 <a href="#" class="sidenav-trigger" data-target="mobile-links_login" v-if="user">
                     <i class="material-icons">menu</i>  
                 </a>
@@ -136,6 +137,10 @@ f<template>
 </template>
 
 <script>
+
+const STR_KEY_PHONE_PW = "ajoah_pw";
+const STR_KEY_AUTOLOGIN = "ajoah_auto_login";
+
 import db from '@/firebase/init'
 import firebase from 'firebase'
 
@@ -231,7 +236,9 @@ export default {
             firebase.auth().signOut().then(() => {
                 let vm = this
                 // 패스워드 설정 화면 이동
-                vm.$router.push({path:'/login'})
+                vm.$router.push({path:'/login'})                
+                localStorage.removeItem(STR_KEY_PHONE_PW);
+                localStorage.removeItem(STR_KEY_AUTOLOGIN);
                 window.location.reload();    
             })
         },
@@ -241,23 +248,24 @@ export default {
         closeAbout(){
             this.about_view = false;            
         },
-        goMain(){
+        goMain(){ 
             let vm = this
             // 메인화면 이동
-            //vm.$router.push({path:'/index'})
+            // vm.$router.push({path:'/index'})
             // window.location.reload();                
-            vm.$router.push({path:'/index'})    
+            vm.$router.push({path:'/index'})             
+            // window.location.reload();
         },
         refresh(){            
             
             let vm = this
             let user = firebase.auth().currentUser
             firebase.auth().onAuthStateChanged((user) => {
-            if(user){
+            if(user){ 
                 // alert(1)                
                 // window.location.reload();  
-                //vm.$router.push({name:'Index'})
-                window.location.reload();
+                vm.$router.push({name:'Index'})
+                //window.location.reload();
             } else {                
                 // alert(2)                               
                 let vm = this         

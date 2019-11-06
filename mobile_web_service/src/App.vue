@@ -36,6 +36,16 @@ export default {
         select_view : false,         
     }
   },
+  mounted(){
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     var elems = document.querySelectorAll('select');
+    //     var instances = M.FormSelect.init(elems,  {
+    //             classes: '',
+    //             dropdownOptions: {}
+    //         });
+    // });    
+  },
   props:['user'],
   components: {
     Navbar    

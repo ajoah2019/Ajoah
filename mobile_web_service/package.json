@@ -12,8 +12,10 @@
         "deploy": "gh-pages -d build"
     },
     "dependencies": {
+        "ajv": "^6.10.2",
         "firebase": "^7.1.0",
         "gh-pages": "^2.1.1",
+        "jquery": "^3.4.1",
         "moment": "^2.24.0",
         "slugify": "^1.3.5",
         "vue": "^2.5.2",

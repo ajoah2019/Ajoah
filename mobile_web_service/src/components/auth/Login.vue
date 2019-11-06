@@ -11,7 +11,13 @@
       <div class="row">        
         <div class="field col s12">         
           <label for="password">패스워드를 입력해 주세요.</label>
-          <input id="password" type='password' v-model="password">             
+          <input id="password" type='password' v-model="password">
+          <p>
+          <label>
+          <input type="checkbox" name="autologin"/>
+          <span>자동로그인</span>
+          </label>
+        </p>             
         </div>       
       </div>  
        <div class="row">        
@@ -40,16 +46,20 @@
 
 var localStorage = window.localStorage;
 const STR_KEY_PHONE_NO = "phoneNo";
+const STR_KEY_PHONE_PW = "ajoah_pw";
+const STR_KEY_AUTOLOGIN = "ajoah_auto_login";
 
 import * as firebase from "firebase/app"
 import "firebase/auth";
 import "firebase/firestore";
+window.$ = window.jQuery = window.jquery = require('jquery')
 
-  export default {
+  export default { 
     data(){
       return{
         phNo: '',
-        password: ''
+        password: '',
+        auto_login : false
       }
     },
     created(){
@@ -58,13 +68,31 @@ import "firebase/firestore";
       
     },
     mounted(){
-        
-        // console.log("Login this.select_view = " + this.select_view)        
+      
+      // console.log("Login this.select_view = " + this.select_view)        
       let phoneNo = localStorage.getItem(STR_KEY_PHONE_NO);
       if(phoneNo != null)
       {
         this.phNo = phoneNo;
       }
+
+      let phoneNo_PW = localStorage.getItem(STR_KEY_PHONE_PW);
+      if(phoneNo_PW != null)
+      {
+        this.password = phoneNo_PW;
+      }
+
+      let ajoah_autologin = localStorage.getItem(STR_KEY_AUTOLOGIN);
+      
+      if(ajoah_autologin == "true")
+      {  
+          $('input:checkbox[name="autologin"]').attr("checked", ajoah_autologin);
+          this.login(); 
+      }else{        
+         $('input:checkbox[name="autologin"]').attr("checked", false);
+
+      }
+
     },
     methods:{ 
       login(){
@@ -73,18 +101,36 @@ import "firebase/firestore";
         // let countryCode = '+1' //미국
         let email = countryCode + this.phNo.substring(1) + '@ajoah2019.com'
         let password = this.password
+        let ajoah_password = this.password
         let phNo = this.phNo;
-        //
+        let auto_login = this.auto_login;
+
+        $("input:checkbox[name='autologin']").each(function(){
+                    
+          // //자동로그인 체크 
+          // if($(this).is(":checked") == true) {             
+          //     auto_login = true;
+          // //자동로그인 uncheck    
+          // }else{
+          //     auto_login = false;
+          // }
+
+          auto_login = $(this).is(":checked");
+
+        });
+                       
         firebase.auth().signInWithEmailAndPassword(email, password).then(function(){
-          //route to home on success !
-          localStorage.setItem(STR_KEY_PHONE_NO, phNo);
- 
+          //route to home on success !          
+          localStorage.setItem(STR_KEY_PHONE_NO, phNo); 
+          localStorage.setItem(STR_KEY_PHONE_PW, password);
+          localStorage.setItem(STR_KEY_AUTOLOGIN, auto_login);          
+
           vm.$store.commit('select_view_true')                   
           vm.$router.push({path:'/index'})
           //window.location.reload();
           //window.location.reload(); // <--- 느림의 원인 
                     
-        }).catch(function(error) { 
+        }).catch(function(error) {  
           // Handle Errors here. 
           var errorCode = error.code;
           var errorMessage = error.message;

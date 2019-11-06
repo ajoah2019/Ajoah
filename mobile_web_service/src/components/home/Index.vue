@@ -2,8 +2,7 @@
  <div>    
     <!-- [2] 화장실 현황 리스트-->
     <div class="container">
-  
-         
+            
     <div class="row" style="padding:0; margin:0">            
         <div class="input-field col s12" style="padding:5px 0 0 0; margin:0">
             <!-- <select id="toilet_select" class="browser-default" @change="onChange($event)"> -->
@@ -145,8 +144,8 @@
                         <span class="card-title">{{toilet_selected_nm}}</span> 
                     </div> 
                     <div class="col s4" style="padding: 0 0 0 20px">  
-                        <span v-if="chkResolve" ><a class='dropdown-trigger btn' href='#' data-target='dropdown_reserve'>빈칸알림</a></span>
-                        <span v-if="!chkResolve"><a class='dropdown-trigger btn' href='#' data-target='dropdown_reserve'>알림수신</a></span>
+                        <!-- <span v-if="chkResolve" ><a class='dropdown-trigger btn' href='#' data-target='dropdown_reserve'>빈칸알림</a></span>
+                        <span v-if="!chkResolve"><a class='dropdown-trigger btn' href='#' data-target='dropdown_reserve'>알림수신</a></span> -->
                     </div>
                 </div>   
             </div>  
@@ -363,6 +362,8 @@ import * as firebase from "firebase/app"
 import "firebase/auth";
 import "firebase/firestore";
 import { setInterval } from 'timers';
+window.$ = window.jQuery = window.jquery = require('jquery')
+//import $ from 'jquery'
 
 // 참조 오브젝트 초기화
 var tmpObj = {};
@@ -421,36 +422,47 @@ export default {
         vm.$router.push({name:'Login'})
         // window.location.reload();
       }  
-    }) 
+    })
+        
   },
   mounted(){
     
-    $(document).ready(function() {
+    $(document).ready(function(){
         $('select').formSelect();
     });
 
-    $(document).ready(function() {
-        $('.modal').modal();
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems,  {
+                classes: '',
+                dropdownOptions: {}
+            });
     });
 
-    $(document).ready(function() {
-        $('input#icon_prefix, input#icon_telephone, input#icon_verification_no, input#solution').characterCounter();
-    });
+    // var instance = M.FormSelect.getInstance(elems);
 
-    $(document).ready(function() {
-        $('.collapsible').collapsible();
-    });
+    // $(document).ready(function() {
+    //     $('.modal').modal();
+    // });
+
+    // $(document).ready(function() {
+    //     $('input#icon_prefix, input#icon_telephone, input#icon_verification_no, input#solution').characterCounter();
+    // });
+
+    // $(document).ready(function() {
+    //     $('.collapsible').collapsible();
+    // });
    
 
-    $('.dropdown-trigger').dropdown();
+    // $('.dropdown-trigger').dropdown();
     
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.dropdown-trigger');
-        var instances = M.Dropdown.init(elems, {
-            alignment: 'left',
-            autoTrigger: true
-        });
-    });
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     var elems = document.querySelectorAll('.dropdown-trigger');
+    //     var instances = M.Dropdown.init(elems, {
+    //         alignment: 'left',
+    //         autoTrigger: true
+    //     });
+    // });
     
     var target = document.getElementById("toilet_select");
     
@@ -604,7 +616,7 @@ export default {
         doJohoi(){
              
             var date = new Date();
-            var today = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+            var today = moment().format("YYYY-MM-DD");
 
             console.log("today ==> " + today)
 

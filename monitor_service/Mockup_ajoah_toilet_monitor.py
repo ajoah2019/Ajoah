@@ -8,7 +8,7 @@ testIDX=0  #Test var
 
 
 
-with open("toiletInfo1", "r",encoding="UTF8") as f:
+with open("toiletInfo2", "r",encoding="UTF8") as f:
     data = f.read().split('\n')
     print
     for idx in range(len(data)):

@@ -7,13 +7,17 @@
         <div class="input-field col s12" style="padding:5px 0 0 0; margin:0">
             <!-- <select id="toilet_select" class="browser-default" @change="onChange($event)"> -->
                 <select id="toilet_select" @change="onChange($event)">
-                <optgroup label="연호빌딩 8층">
-                <option value="Y8.M" selected>연호8층 남자</option>
-                <option value="Y8.F">연호8층 여자</option>
-                </optgroup>
                 <optgroup label="연호빌딩 7층">
-                <option value="Y7.M">연호7층 남자</option>
-                <option value="Y7.F">연호7층 여자</option>
+                <option value="Y7.M" selected>연호7층 남자</option>                
+                </optgroup>
+                <optgroup label="연호빌딩 8층">
+                <option value="Y8.M" selected>연호8층 남자</option>                
+                </optgroup>
+                <optgroup label="부영빌딩 17층">
+                <option value="B17.M">부영17층 남자</option>
+                </optgroup> 
+                <optgroup label="부영빌딩 18층">
+                <option value="B18.M">부영18층 남자</option>
                 </optgroup> 
             </select>
         </div>              

@@ -39,6 +39,12 @@
 </template>
 
 <script>
+
+var localStorage = window.localStorage;
+const STR_KEY_PHONE_NO = "phoneNo";
+const STR_KEY_PHONE_PW = "ajoah_pw";
+const STR_KEY_AUTOLOGIN = "ajoah_auto_login";
+
 import * as firebase from "firebase/app"
 import "firebase/auth";
 import "firebase/firestore";
@@ -54,6 +60,16 @@ import "firebase/firestore";
 
         this.$store.commit('select_view_false')       
         // console.log("servieIntro this.$store.state.select_view" + this.$store.state.select_view)
+
+      let ajoah_autologin = localStorage.getItem(STR_KEY_AUTOLOGIN);
+      
+      if(ajoah_autologin == "true")
+      {            
+          this.login(); 
+      }else{        
+         //
+      }
+
     },
     methods:{ 
       login(){

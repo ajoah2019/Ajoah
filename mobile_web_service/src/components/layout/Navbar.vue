@@ -143,6 +143,7 @@ const STR_KEY_AUTOLOGIN = "ajoah_auto_login";
 
 import db from '@/firebase/init'
 import firebase from 'firebase'
+window.$ = window.jQuery = window.jquery = require('jquery')
 
 export default {
   name: 'Navbar',  

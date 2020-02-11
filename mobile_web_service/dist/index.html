@@ -1,0 +1,34 @@
+<!DOCTYPE html><html><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css><title>ajoah</title><style>body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }        
+        main {
+            flex: 1 0 auto;
+        }
+        #dropdown1 {
+            top:-50px;    
+        }</style><link href=/static/css/app.412b0740ead2753a3ba189e8bf99114e.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.2ae2e69a05c33dfc65f8.js></script><script type=text/javascript src=/static/js/vendor.fcd87148f09c43de4251.js></script><script type=text/javascript src=/static/js/app.b2b0e69308d90c57897a.js></script></body><script src=https://code.jquery.com/jquery-3.3.1.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js></script><script>document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems, {
+            edge: 'left',
+            draggable: true
+        });
+    });
+
+
+    $(document).ready(function() {
+        $('select').formSelect();
+    });
+
+    $(document).ready(function() {
+        $('.modal').modal();
+    });
+
+    $(document).ready(function() {
+        $('input#icon_prefix, input#icon_telephone, input#icon_verification_no, input#nickname, input#phNo, input#answer').characterCounter();
+    });
+
+    $(document).ready(function() {
+        $('.collapsible').collapsible();
+    });</script></html>

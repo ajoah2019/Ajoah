@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <title>ajoah</title>
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }        
+        main {
+            flex: 1 0 auto;
+        }
+        #dropdown1 {
+            top:-50px;    
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems, {
+            edge: 'left',
+            draggable: true
+        });
+    });
+
+
+    $(document).ready(function() {
+        $('select').formSelect();
+    });
+
+    $(document).ready(function() {
+        $('.modal').modal();
+    });
+
+    $(document).ready(function() {
+        $('input#icon_prefix, input#icon_telephone, input#icon_verification_no, input#nickname, input#phNo, input#answer').characterCounter();
+    });
+
+    $(document).ready(function() {
+        $('.collapsible').collapsible();
+    });
+</script>
+
+</html>

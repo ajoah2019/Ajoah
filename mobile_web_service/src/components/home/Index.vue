@@ -7,18 +7,18 @@
         <div class="input-field col s12" style="padding:5px 0 0 0; margin:0">
             <select id="toilet_select" class="browser-default" @change="onChange($event)">
                 <!-- <select id="toilet_select" @change="onChange($event)"> -->
-                <!-- <optgroup label="연호빌딩 7층">
-                <option value="Y7.M" selected>연호7층 남자</option>                
-                </optgroup> -->
-                <optgroup label="연호빌딩">
-                <option value="Y8.M" selected>연호빌딩 남자</option>                
-                </optgroup>
-                <optgroup label="부영빌딩"> 
-                <option value="B17.M">부영빌딩 남자</option>
+                <optgroup label="연호빌딩 7층">  
+                <option value="Y7.M">연호7층 남자</option>                
                 </optgroup> 
-                <!-- <optgroup label="부영빌딩 18층">
+                <optgroup label="연호빌딩 8층">
+                <option value="Y8.M">연호8층 남자</option>                
+                </optgroup>
+                <optgroup label="부영빌딩 17층"> 
+                <option value="B17.M">부영17층 남자</option>
+                </optgroup> 
+                <optgroup label="부영빌딩 18층">
                 <option value="B18.M">부영18층 남자</option>
-                </optgroup>  -->
+                </optgroup> 
             </select> 
         </div>              
     </div>
@@ -30,18 +30,19 @@
     <!-- <div class="row" style="border: 1px solid; margin: 1px 1px"> -->
     <div class="row" style="margin:0px 0px 0px 00px;padding:0px 0px 0px 0px">
        <div class="col s12" style="margin:0px 0px 0px 0px;padding:0px 0px 0px 0px">  
+           
          <!-- <div class="row" style="border: 1px solid">              -->
           <!-- <div class="row">
             <div class="col s12">
                 <div class="card">
-                    <div class="card-card-image">                        -->
-                         <!-- <a class="btn-floating halfway-fab waves-effect waves-light teal modal-trigger" href="#reserveconfirm"  v-if="chkResolve">
+                    <div class="card-card-image">  
+                         <a class="btn-floating halfway-fab waves-effect waves-light teal modal-trigger" href="#reserveconfirm"  v-if="chkResolve">
                             <i class="material-icons">add</i>                            
                          </a>  
                          <a class="btn-floating halfway-fab waves-effect waves-light teal modal-trigger" href="#cancelreserveconfirm" v-else>                            
                             <i class="material-icons">remove</i>
-                         </a> -->
-                    <!-- </div>                    
+                         </a>
+                    </div>                    
                     <div class="card-content"> 
                          
                          <div class="row valign-wrapper" style="margin:0px">
@@ -52,16 +53,16 @@
                                 <span v-if="chkResolve" ><a class='dropdown-trigger btn' href='#' data-target='dropdown_reserve' >예약</a></span>
                                 <span v-if="!chkResolve"><a class='dropdown-trigger btn' href='#' data-target='dropdown_cancel'>예약중</a></span>
                             </div>
-                        </div>        -->
+                        </div>       
 
-                         <!-- <span class="card-title">{{toilet_selected_nm}} <a href="#view_reservation" class="sidenav-close modal-trigger">예약자 : {{this.toilet_reserves_cnt}} 명</a></span>                                                                            -->
+                         <span class="card-title">{{toilet_selected_nm}} <a href="#view_reservation" class="sidenav-close modal-trigger">예약자 : {{this.toilet_reserves_cnt}} 명</a></span>                                                                           
                                
-                         <!-- <span class="badge white-text yellow pulse left" v-if="!chkResolve">예약중</span> -->
+                         <span class="badge white-text yellow pulse left" v-if="!chkResolve">예약중</span>
                          
-                    <!-- </div>                     
+                    </div>                     
                 </div>
             </div>            
-        </div>         -->
+        </div>        -->
 
 
 
@@ -142,17 +143,17 @@
         <div class="row" v-if="toilet_possible_yubu" style="margin:0px 0px 0px 0px;padding:0px 0px 0px 0px">
         <div class="col s12 m12 l12" style="margin:0px 0px 0px 0px;padding:0px 0px 0px 0px">
         <!-- <div class="card blue-grey darken-1">            -->
-            <!-- <div class="grey lighten-5" style="padding:10px 10px">
+            <div class="lighten-5" style="padding:10px 10px">
                 <div class="row valign-wrapper" style="margin:0px">
                     <div class="col s6 left" style="margin:0px">
-                        <span class="card-title">{{toilet_selected_nm}}</span> 
+                        <!-- <span class="card-title">{{toilet_selected_nm}}</span>  -->
                     </div> 
                     <div class="col s4" style="padding: 0 0 0 20px">  
                         <span v-if="chkResolve" ><a class='dropdown-trigger btn' href='#' data-target='dropdown_reserve'>빈칸알림</a></span>
-                        <span v-if="!chkResolve"><a class='dropdown-trigger btn' href='#' data-target='dropdown_reserve'>알림수신</a></span>
+                        <span v-if="!chkResolve"><a class='dropdown-trigger btn' href='#' data-target='dropdown_reserve'>알림수신중</a></span>
                     </div>
                 </div>   
-            </div>   -->
+            </div>  
             <div class="card-panel z-depth-0" style="padding: 3px 5px 0 7px; margin: 2px 0 0px 0">
                  <div class="row" > 
                     <div class="col s6 m6 l6 z-depth-0" v-for="toilet_current in toilet_currents_state" :key="toilet_current.id">
@@ -282,7 +283,7 @@
             </div>
              <div class="divider" style="margin:5px"></div>
         </div>
-  </div>
+  </div> 
   -->
 
   <!-- <div class="container" style="margin:10px">        
@@ -500,9 +501,9 @@ export default {
 
     // var instance = M.FormSelect.getInstance(elems);
 
-    // $(document).ready(function() {
-    //     $('.modal').modal();
-    // });
+    $(document).ready(function() {
+        $('.modal').modal();
+    });
 
     // $(document).ready(function() {
     //     $('input#icon_prefix, input#icon_telephone, input#icon_verification_no, input#solution').characterCounter();
@@ -513,7 +514,7 @@ export default {
     // });
    
 
-    // $('.dropdown-trigger').dropdown();
+    $('.dropdown-trigger').dropdown();
     
     // document.addEventListener('DOMContentLoaded', function() {
     //     var elems = document.querySelectorAll('.dropdown-trigger');
@@ -669,33 +670,37 @@ export default {
                 this.toilet_possible_yubu = true
 
                 // 연호8층 선택시에 연호빌딩 남자화장실을 다 보여준다.(7층,8층) , 2019.12.19 정종현 선임 요청
-                if(this.toilet_selected_val == "Y8.M"){
+                // if(this.toilet_selected_val == "Y8.M"){
                     
+                //     tmpGroupObj[this.toilet_selected_val].forEach(childObject => {
+                //     this.toilet_currents_state.push(childObject);
+                //     });
+
+                //     tmpGroupObj["Y7.M"].forEach(childObject => {
+                //     this.toilet_currents_state.push(childObject);
+                //     });
+
+                // }else if(this.toilet_selected_val == "B17.M"){
+
+                //     tmpGroupObj[this.toilet_selected_val].forEach(childObject => {
+                //     this.toilet_currents_state.push(childObject);
+                //     });
+
+                //     tmpGroupObj["B18.M"].forEach(childObject => {
+                //     this.toilet_currents_state.push(childObject);
+                //     });
+
+                // }else{
+
+                //     tmpGroupObj[this.toilet_selected_val].forEach(childObject => {
+                //     this.toilet_currents_state.push(childObject);
+                //     });    
+
+                // }
+
                     tmpGroupObj[this.toilet_selected_val].forEach(childObject => {
                     this.toilet_currents_state.push(childObject);
-                    });
-
-                    tmpGroupObj["Y7.M"].forEach(childObject => {
-                    this.toilet_currents_state.push(childObject);
-                    });
-
-                }else if(this.toilet_selected_val == "B17.M"){
-
-                    tmpGroupObj[this.toilet_selected_val].forEach(childObject => {
-                    this.toilet_currents_state.push(childObject);
-                    });
-
-                    tmpGroupObj["B18.M"].forEach(childObject => {
-                    this.toilet_currents_state.push(childObject);
-                    });
-
-                }else{
-
-                    tmpGroupObj[this.toilet_selected_val].forEach(childObject => {
-                    this.toilet_currents_state.push(childObject);
-                    });    
-
-                }
+                    });  
                 
             }
         }, 
@@ -749,27 +754,43 @@ export default {
             this.toilet_selected_val = target_value; 
             this.toilet_selected_nm = target_name;    
             // db.collection("reservation").where("location","==",this.toilet_selected_val).orderBy("resv_dttm", "desc").get()
+
+            let cnt = 0
+            console.log("this.toilet_selected_val = " + this.toilet_selected_val)
             db.collection("reservation").where("location","==",this.toilet_selected_val).get()
                     .then(snapshot => {
-                // this.toilet_reserves_cnt = snapshot.size   
-                // alert(snapshot.size)                             
-                // if(this.toilet_reserves_cnt < 1) M.toast({html: '예약자가 없습니다.', classes: 'rounded'}); return;                 
+                this.toilet_reserves_cnt = snapshot.size   
+                //alert(snapshot.size)                             
+                //if(this.toilet_reserves_cnt < 1) M.toast({html: '예약자가 없습니다. 지금 가세요~!', classes: 'rounded'}); return; 
+
                 snapshot.forEach(doc => {
                 let toilet_reserve = doc.data()                
                 console.log("sjs ===> toilet_reserve = " + doc.data().nickname)                                 
                 this.toilet_reserves.push({
-                    location : toilet_reserve.location,
+                    location : toilet_reserve.location, 
                     nickname : toilet_reserve.nickname,
                     phone_num : toilet_reserve.phone_num, 
                     resv_channel : toilet_reserve.resv_channel,
                     resv_dttm : moment(toilet_reserve.resv_dttm).format("MM/DD HH:mm") ,
                     seq : toilet_reserve.seq   
                     }) 
+                
+                cnt = cnt + 1;
+                console.log("this.cnt2 = " + cnt)
                 })
-                 
-                var elem= document.querySelector('#view_reservation');
-                var instance = M.Modal.init(elem);
-                instance.open();
+                
+                if(cnt == 0){
+                   
+                   M.toast({html: '예약자가 없습니다. 지금 가세요~!', classes: 'rounded'}); return;
+
+                }else{
+                  
+                    var elem= document.querySelector('#view_reservation');
+                    var instance = M.Modal.init(elem);
+                    instance.open();
+
+                }
+                
             })  
             
 

@@ -12,7 +12,7 @@
         "deploy": "gh-pages -d build"
     },
     "dependencies": {
-        "ajv": "^6.10.2",
+        "ajv": "^6.12.3",
         "axios": "^0.19.2",
         "build": "^0.1.4",
         "firebase": "^7.8.1",
